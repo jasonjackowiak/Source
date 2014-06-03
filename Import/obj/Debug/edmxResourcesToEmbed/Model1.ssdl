@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HousingSADB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="HousingSADBStoreContainer">
+    <EntitySet Name="AuditLog" EntityType="HousingSADB.Store.AuditLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Bucket" EntityType="HousingSADB.Store.Bucket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BucketConnection" EntityType="HousingSADB.Store.BucketConnection" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BucketReporting" EntityType="HousingSADB.Store.BucketReporting" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Entity" EntityType="HousingSADB.Store.Entity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntityRelationship" EntityType="HousingSADB.Store.EntityRelationship" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntityResidence" EntityType="HousingSADB.Store.EntityResidence" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Interface" EntityType="HousingSADB.Store.Interface" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InterfaceReporting" EntityType="HousingSADB.Store.InterfaceReporting" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InternalInterface" EntityType="HousingSADB.Store.InternalInterface" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="JobCardDefinition" EntityType="HousingSADB.Store.JobCardDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReportDefinition" EntityType="HousingSADB.Store.ReportDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RuleDefinition" EntityType="HousingSADB.Store.RuleDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ScreenDefinition" EntityType="HousingSADB.Store.ScreenDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TableDefinition" EntityType="HousingSADB.Store.TableDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TransactionDefinition" EntityType="HousingSADB.Store.TransactionDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TriggerDefinition" EntityType="HousingSADB.Store.TriggerDefinition" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="AuditLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LogTime" Type="datetime" />
+    <Property Name="Line" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Bucket">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BucketConnection">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CallingBucket" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="NumberCalledInterfaces" Type="int" Nullable="false" />
+    <Property Name="CalledBucket" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BucketReporting">
+    <Key>
+      <PropertyRef Name="BucketId" />
+    </Key>
+    <Property Name="BucketId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="Entities" Type="int" Nullable="false" />
+    <Property Name="NumberCallingBuckets" Type="int" Nullable="false" />
+    <Property Name="CallingBuckets" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NumberCalleduckets" Type="int" Nullable="false" />
+    <Property Name="CalledBuckets" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="NumberInternalInterfaces" Type="int" Nullable="false" />
+    <Property Name="NumberExternalInterfaces" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SourceId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="SourceUnit" Type="nvarchar" MaxLength="8" />
+    <Property Name="NormalisedUnit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="EntityRelationship">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CallingEntityId" Type="int" Nullable="false" />
+    <Property Name="CalledEntityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EntityResidence">
+    <Key>
+      <PropertyRef Name="EntityId" />
+    </Key>
+    <Property Name="EntityId" Type="int" Nullable="false" />
+    <Property Name="InternalWeight" Type="int" Nullable="false" />
+    <Property Name="ExternalWeight" Type="int" Nullable="false" />
+    <Property Name="ExternalSources" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Interface">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TargetEntityId" Type="int" Nullable="false" />
+    <Property Name="TargetUnit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="EntityRelationshipIds" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterfaceReporting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="InterfaceId" Type="int" Nullable="false" />
+    <Property Name="TargetEntityId" Type="int" Nullable="false" />
+    <Property Name="TargetUnit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="TotalEntitySources" Type="int" Nullable="false" />
+    <Property Name="TotalBucketsSources" Type="int" Nullable="false" />
+    <Property Name="SourceBuckets" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="InternalInterface">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TargetEntityId" Type="int" Nullable="false" />
+    <Property Name="TargetUnit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="EntityRelationshipIds" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JobCardDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CardNumber" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Body" Type="nvarchar" Nullable="false" MaxLength="400" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="ReportDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ReportTable" Type="nvarchar" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="RuleDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="CodeLine" Type="int" Nullable="false" />
+    <Property Name="Body" Type="nvarchar" Nullable="false" MaxLength="400" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="ScreenDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ScreenTable" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="TableDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="FieldName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="FieldType" Type="nvarchar" MaxLength="10" />
+    <Property Name="FieldSyntax" Type="nvarchar" MaxLength="10" />
+    <Property Name="FieldLength" Type="int" />
+    <Property Name="FieldDecimal" Type="int" />
+    <Property Name="FieldNumber" Type="int" />
+    <Property Name="KeyType" Type="nvarchar" MaxLength="10" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="TableType" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TransactionDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="BuildRule" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="PFKey" Type="nvarchar" MaxLength="50" />
+    <Property Name="PFKeyRule" Type="nvarchar" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="TriggerDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TableSourceId" Type="int" Nullable="false" />
+    <Property Name="TableName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="RuleSourceId" Type="int" Nullable="false" />
+    <Property Name="RuleName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Access" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,106 @@
+
+Housing Extract : 8:26:07 AM Tuesday, 15 May 2012
+15/05/2012 8:26:07 AM: ************** IMPORT ******************
+15/05/2012 8:26:07 AM: Extract Table Definitions to local variables - start
+15/05/2012 8:26:07 AM: Incorrect format of the Table Definitions file. Error:Index and length must refer to a location within the string.
+Parameter name: length
+15/05/2012 8:26:07 AM: Extract Rule Definitions to local variables - start
+15/05/2012 8:26:07 AM: Incorrect format of the Rule file. Error:Index and length must refer to a location within the string.
+Parameter name: length
+15/05/2012 8:26:07 AM: Extract ReportDefinitions to local variables - start
+15/05/2012 8:26:07 AM: ReportDefinitions file is missing
+15/05/2012 8:26:07 AM: Extract Screen Definitions to local variables - start
+15/05/2012 8:26:07 AM: Extract Screen Definitions to local variables - complete
+15/05/2012 8:26:07 AM: Extract Transaction Definitions to local variables - start
+15/05/2012 8:26:07 AM: Extract Transaction Definitions to local variables - complete
+15/05/2012 8:26:07 AM: Extract Job Cards to local variables - start
+15/05/2012 8:26:07 AM: Extract Job Cards to local variables - complete
+15/05/2012 8:26:07 AM: Extract Triggers to local variables - start
+15/05/2012 8:26:07 AM: Extract Triggers to local variables - complete
+15/05/2012 8:26:07 AM: Clearing Table table in DB
+15/05/2012 8:26:08 AM: Persist Table Definitions to DB - start
+15/05/2012 8:26:08 AM: Persist Table Definitions to DB - complete
+15/05/2012 8:26:08 AM: Clearing Rule table in DB
+15/05/2012 8:26:08 AM: Persist Rule Definitions to DB - start
+15/05/2012 8:26:08 AM: Persist Rule Definitions to DB - complete
+15/05/2012 8:26:08 AM: Clearing Report table in DB
+15/05/2012 8:26:08 AM: Extract Report Definitions to DB - start
+15/05/2012 8:26:08 AM: Extract Report Definitions to DB - complete
+15/05/2012 8:26:08 AM: Clearing Screen table in DB
+15/05/2012 8:26:08 AM: Extract Screen Definitions to DB - start
+15/05/2012 8:26:24 AM: Extract Screen Definitions to DB - complete
+15/05/2012 8:26:24 AM: Clearing Transaction table in DB
+15/05/2012 8:26:24 AM: Persist Transaction Definitions to DB - start
+15/05/2012 8:27:08 AM: Persist Transaction Definitions to DB - complete
+15/05/2012 8:27:08 AM: Clearing Job Card table in DB
+15/05/2012 8:27:08 AM: Extract Job Card Definitions to DB - start
+15/05/2012 8:27:27 AM: Extract Job Card Definitions to DB - complete
+15/05/2012 8:27:27 AM: Clearing Trigger table in DB
+15/05/2012 8:27:27 AM: Extract Triggers to DB - start
+15/05/2012 8:27:27 AM: Error persisting Triggers Definitions to DB: An error occurred while updating the entries. See the inner exception for details.: 
+15/05/2012 8:27:27 AM: Assign Entities - start
+15/05/2012 8:27:27 AM: 0 Rule Definitions added
+15/05/2012 8:27:27 AM: 0 Table Definitions added
+15/05/2012 8:27:27 AM: 0 Report Definitions added
+15/05/2012 8:27:27 AM: 1282 Screen Definitions added
+15/05/2012 8:27:27 AM: 17 Transaction Definitions added
+15/05/2012 8:27:27 AM: 23 Trigger Definitions added
+15/05/2012 8:27:27 AM: 110 Job Card Definitions added
+15/05/2012 8:27:27 AM: Assign Entities - complete
+15/05/2012 8:27:27 AM: 1432 Entities found
+15/05/2012 8:27:27 AM: Clearing Entity table in DB
+15/05/2012 8:27:27 AM: Extract Entities to DB - start
+15/05/2012 8:27:27 AM: Erorr extracting Entities to DB: An error occurred while updating the entries. See the inner exception for details.
+
+Housing Extract : 1:32:31 PM Tuesday, 15 May 2012
+15/05/2012 1:32:31 PM: ************** IMPORT ******************
+15/05/2012 1:32:31 PM: Extract ReportDefinitions to local variables - start
+15/05/2012 1:32:31 PM: ReportDefinitions file is missing
+15/05/2012 1:32:31 PM: Extract Table Definitions to local variables - start
+15/05/2012 1:32:31 PM: Extract Screen Definitions to local variables - start
+15/05/2012 1:32:31 PM: Clearing Report table in DB
+15/05/2012 1:32:31 PM: Extract Rule Definitions to local variables - start
+15/05/2012 1:32:31 PM: Extract Transaction Definitions to local variables - start
+15/05/2012 1:32:31 PM: Incorrect format of the Table Definitions file. Error:Index and length must refer to a location within the string.
+Parameter name: length
+15/05/2012 1:32:32 PM: Incorrect format of the Rule file. Error:Index and length must refer to a location within the string.
+Parameter name: length
+15/05/2012 1:32:32 PM: Extract Screen Definitions to local variables - complete
+15/05/2012 1:32:32 PM: Extract Job Cards to local variables - start
+15/05/2012 1:32:32 PM: Extract Screen Definitions to local variables - complete
+15/05/2012 1:32:32 PM: Extract Job Cards to local variables - start
+15/05/2012 1:32:32 PM: Extract Job Cards to local variables - complete
+15/05/2012 1:32:32 PM: Extract Transaction Definitions to local variables - complete
+
+Housing Extract : 1:37:31 PM Tuesday, 15 May 2012
+15/05/2012 1:37:31 PM: ************** IMPORT ******************
+15/05/2012 1:37:31 PM: Extract ReportDefinitions to local variables - start
+15/05/2012 1:37:31 PM: Extract Table Definitions to local variables - start
+15/05/2012 1:37:31 PM: Extract Screen Definitions to local variables - start
+15/05/2012 1:37:31 PM: Extract Rule Definitions to local variables - start
+15/05/2012 1:37:31 PM: Extract ReportDefinitions to local variables - complete
+15/05/2012 1:37:31 PM: Extract Screen Definitions to local variables - complete
+15/05/2012 1:37:31 PM: Extract Transaction Definitions to local variables - start
+15/05/2012 1:37:31 PM: Clearing Report table in DB
+15/05/2012 1:37:32 PM: Extract Job Cards to local variables - start
+15/05/2012 1:37:32 PM: Extract Transaction Definitions to local variables - complete
+15/05/2012 1:37:32 PM: Extract Job Cards to local variables - complete
+15/05/2012 1:37:32 PM: Extract Table Definitions to local variables - complete
+15/05/2012 1:37:32 PM: Extract Report Definitions to DB - start
+15/05/2012 1:37:33 PM: Extract Rule Definitions to local variables - complete
+15/05/2012 1:37:36 PM: Extract Report Definitions to DB - complete
+15/05/2012 1:37:36 PM: Clearing Table table in DB
+15/05/2012 1:37:36 PM: Persist Table Definitions to DB - start
+15/05/2012 1:38:15 PM: Persist Table Definitions to DB - complete
+15/05/2012 1:38:15 PM: Clearing Rule table in DB
+15/05/2012 1:38:15 PM: Persist Rule Definitions to DB - start
+15/05/2012 1:38:59 PM: Error persisting Rule Definitions to DB: Exception of type 'System.OutOfMemoryException' was thrown.
+15/05/2012 1:38:59 PM: Clearing Screen table in DB
+15/05/2012 1:38:59 PM: Extract Screen Definitions to DB - start
+15/05/2012 1:39:06 PM: Extract Screen Definitions to DB - complete
+15/05/2012 1:39:06 PM: Clearing Transaction table in DB
+15/05/2012 1:39:06 PM: Persist Transaction Definitions to DB - start
+15/05/2012 1:39:22 PM: Persist Transaction Definitions to DB - complete
+15/05/2012 1:39:22 PM: Clearing Job Card table in DB
+15/05/2012 1:39:22 PM: Persist Job Card Definitions to DB - start
+15/05/2012 1:39:27 PM: Persist Job Card Definitions to DB - complete

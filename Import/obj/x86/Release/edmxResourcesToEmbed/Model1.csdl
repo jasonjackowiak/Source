@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HousingSADB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="HousingSAModel" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AuditLogs" EntityType="HousingSADB.AuditLog" />
+    <EntitySet Name="Entities" EntityType="HousingSADB.Entity" />
+    <EntitySet Name="EntityRelationships" EntityType="HousingSADB.EntityRelationship" />
+    <EntitySet Name="JobCardDefinitions" EntityType="HousingSADB.JobCardDefinition" />
+    <EntitySet Name="ReportDefinitions" EntityType="HousingSADB.ReportDefinition" />
+    <EntitySet Name="RuleDefinitions" EntityType="HousingSADB.RuleDefinition" />
+    <EntitySet Name="RunTimeExceptions" EntityType="HousingSADB.RunTimeException" />
+    <EntitySet Name="ScreenDefinitions" EntityType="HousingSADB.ScreenDefinition" />
+    <EntitySet Name="sysdiagrams" EntityType="HousingSADB.sysdiagram" />
+    <EntitySet Name="TableDefinitions" EntityType="HousingSADB.TableDefinition" />
+    <EntitySet Name="TransactionDefinitions" EntityType="HousingSADB.TransactionDefinition" />
+    <EntitySet Name="Triggers" EntityType="HousingSADB.Trigger" />
+  </EntityContainer>
+  <EntityType Name="AuditLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LogTime" Type="DateTime" />
+    <Property Name="Line" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SourceId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Type" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="SourceUnit" Type="String" Nullable="true" MaxLength="8" Unicode="true" FixedLength="false" />
+    <Property Name="NormalisedUnit" Type="String" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="EntityRelationship">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CallingEntityId" Type="Int32" Nullable="false" />
+    <Property Name="CalledEntityId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="JobCardDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CardNumber" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Body" Type="String" Nullable="false" MaxLength="400" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="ReportDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ReportTable" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="RuleDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="CodeLine" Type="Int32" Nullable="false" />
+    <Property Name="Body" Type="String" Nullable="false" MaxLength="400" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="RunTimeException">
+    <Key>
+      <PropertyRef Name="Exception" />
+    </Key>
+    <Property Name="Exception" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="ScreenDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ScreenTable" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TableDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="FieldType" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="FieldSyntax" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="FieldLength" Type="Int32" />
+    <Property Name="FieldDecimal" Type="Int32" />
+    <Property Name="FieldNumber" Type="Int32" />
+    <Property Name="KeyType" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" Unicode="true" FixedLength="false" />
+    <Property Name="TableType" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TransactionDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="BuildRule" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PFKey" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="PFKeyRule" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Unit" Type="String" MaxLength="8" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Trigger">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TableSourceId" Type="Int32" Nullable="false" />
+    <Property Name="RuleSourceId" Type="Int32" Nullable="false" />
+    <Property Type="String" Name="Unit" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="TableName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="RuleName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Access" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,10 @@
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\UI.Console.exe.config
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\obj\Debug\UI.Console.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\UI.Console.exe
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\UI.Console.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\Import.exe
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\obj\Debug\UI.Console.exe
+C:\Users\J\Documents\GitHub\HSA\Source\UI.Console\obj\Debug\UI.Console.pdb

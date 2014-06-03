@@ -1,0 +1,22 @@
+D:\Code\HSA\HousingStatistics\Analyse\bin\Debug\Analyse.exe.config
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Analyse.exe.config
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Analyse.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Analyse.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Import.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Modularise.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Import.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\bin\Debug\Modularise.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\obj\x86\Debug\Analyse.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Analyse\obj\x86\Debug\Analyse.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Analyse.exe.config
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Analyse.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Analyse.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Import.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Modularise.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Import.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\bin\Debug\Modularise.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\obj\x86\Debug\Analyse.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Analyse\obj\x86\Debug\Analyse.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\x86\Debug\Analyse.csprojResolveAssemblyReference.cache

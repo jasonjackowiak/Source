@@ -1,0 +1,14 @@
+D:\Code\HSA\HousingStatistics\Build\bin\Release\Build.exe.config
+D:\Code\HSA\HousingStatistics\Build\bin\Release\Build.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Release\Build.pdb
+D:\Code\HSA\HousingStatistics\Build\bin\Release\Import.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Release\Import.pdb
+D:\Code\HSA\HousingStatistics\Run Files\Build.exe.config
+D:\Code\HSA\HousingStatistics\Run Files\Build.exe
+D:\Code\HSA\HousingStatistics\Run Files\Build.pdb
+D:\Code\HSA\HousingStatistics\MAAS\Executables\Build\Build.exe.config
+D:\Code\HSA\HousingStatistics\MAAS\Executables\Build\Build.exe
+D:\Code\HSA\HousingStatistics\MAAS\Executables\Build\Build.pdb
+D:\Code\HSA\HousingStatistics\Build\obj\Release\ResolveAssemblyReference.cache
+D:\Code\HSA\HousingStatistics\Build\obj\Release\Build.exe
+D:\Code\HSA\HousingStatistics\Build\obj\Release\Build.pdb

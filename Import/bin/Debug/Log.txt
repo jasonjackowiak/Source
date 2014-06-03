@@ -1,0 +1,287 @@
+
+Housing Extract : 4:31:42 PM Tuesday, 8 May 2012
+8/05/2012 4:31:42 PM: ************** IMPORT ******************
+8/05/2012 4:31:42 PM: Extract Table Definitions to local variables - start
+8/05/2012 4:31:42 PM: Extract Table Definitions to local variables - complete
+8/05/2012 4:31:42 PM: Extract Rule Definitions to local variables - start
+8/05/2012 4:31:42 PM: Rule file is missing
+8/05/2012 4:31:42 PM: Extract ReportDefinitions to local variables - start
+8/05/2012 4:31:42 PM: Extract ReportDefinitions to local variables - complete
+8/05/2012 4:31:42 PM: Extract Screen Definitions to local variables - start
+8/05/2012 4:31:42 PM: Extract Screen Definitions to local variables - complete
+8/05/2012 4:31:42 PM: Extract Transaction Definitions to local variables - start
+8/05/2012 4:31:42 PM: Extract Transaction Definitions to local variables - complete
+8/05/2012 4:31:42 PM: Extract Job Cards to local variables - start
+8/05/2012 4:31:42 PM: Extract Job Cards to local variables - complete
+8/05/2012 4:31:42 PM: Extract Triggers to local variables - start
+8/05/2012 4:31:42 PM: Extract Triggers to local variables - complete
+8/05/2012 4:31:42 PM: Extract Table Definitions to DB - start
+8/05/2012 4:32:14 PM: Extract Table Definitions to DB - complete
+8/05/2012 4:32:14 PM: Extract Rule Definitions to DB - start
+8/05/2012 4:32:14 PM: Extract Rule Definitions to DB - complete
+8/05/2012 4:32:14 PM: Extract ReportDefinitions to DB - start
+8/05/2012 4:32:20 PM: Extract ReportDefinitions to DB - complete
+8/05/2012 4:32:20 PM: Extract Screen Definitions to DB - start
+8/05/2012 4:32:26 PM: Extract Screen Definitions to DB - complete
+8/05/2012 4:32:26 PM: Extract Transaction Definitions to DB - start
+8/05/2012 4:32:41 PM: Extract Transaction Definitions to DB - complete
+8/05/2012 4:32:41 PM: Extract Job Cards to DB - start
+8/05/2012 4:32:46 PM: Extract Job Cards to DB - complete
+8/05/2012 4:32:46 PM: Extract Triggers to DB - start
+8/05/2012 4:32:46 PM: Extract Triggers to DB - complete
+8/05/2012 4:32:46 PM: Assign Entities - start
+8/05/2012 4:32:46 PM: 0 Rule Definitions added
+8/05/2012 4:32:46 PM: 2828 Table Definitions added
+8/05/2012 4:32:46 PM: 1282 Report Definitions added
+8/05/2012 4:32:46 PM: 1282 Screen Definitions added
+8/05/2012 4:32:46 PM: 1385 Transaction Definitions added
+8/05/2012 4:32:46 PM: 24 Trigger Definitions added
+8/05/2012 4:32:46 PM: 110 Job Card Definitions added
+8/05/2012 4:32:46 PM: Assign Entities - complete
+8/05/2012 4:32:46 PM: 6911 Entities found
+8/05/2012 4:32:46 PM: Extract Entities to DB - start
+8/05/2012 4:32:52 PM: Erorr extracting Entities to DB: Procedure or function 'AddEntity' expects parameter '@SourceUnit', which was not supplied.
+
+Housing Extract : 1:47:07 PM Tuesday, 15 May 2012
+15/05/2012 1:47:07 PM: ************** IMPORT ******************
+15/05/2012 1:47:07 PM: Extract ReportDefinitions to local variables - start
+15/05/2012 1:47:07 PM: Extract Table Definitions to local variables - start
+15/05/2012 1:47:07 PM: Extract ReportDefinitions to local variables - complete
+15/05/2012 1:47:07 PM: Clearing Report table in DB
+15/05/2012 1:47:07 PM: Extract Screen Definitions to local variables - start
+15/05/2012 1:47:07 PM: Extract Rule Definitions to local variables - start
+15/05/2012 1:47:07 PM: Extract Transaction Definitions to local variables - start
+15/05/2012 1:47:07 PM: Extract Screen Definitions to local variables - complete
+15/05/2012 1:47:07 PM: Extract Job Cards to local variables - start
+15/05/2012 1:47:07 PM: Extract Job Cards to local variables - complete
+15/05/2012 1:47:07 PM: Extract Transaction Definitions to local variables - complete
+15/05/2012 1:47:07 PM: Extract Table Definitions to local variables - complete
+15/05/2012 1:47:07 PM: Extract Report Definitions to DB - start
+15/05/2012 1:47:08 PM: Extract Rule Definitions to local variables - complete
+15/05/2012 1:47:11 PM: Extract Report Definitions to DB - complete
+15/05/2012 1:47:11 PM: Clearing Table table in DB
+15/05/2012 1:47:11 PM: Persist Table Definitions to DB - start
+15/05/2012 1:47:51 PM: Persist Table Definitions to DB - complete
+15/05/2012 1:47:51 PM: Clearing Rule table in DB
+15/05/2012 1:47:51 PM: Persist Rule Definitions to DB - start
+15/05/2012 1:48:29 PM: Error persisting Rule Definitions to DB: Exception of type 'System.OutOfMemoryException' was thrown.
+15/05/2012 1:48:29 PM: Clearing Screen table in DB
+15/05/2012 1:48:29 PM: Extract Screen Definitions to DB - start
+15/05/2012 1:48:37 PM: Extract Screen Definitions to DB - complete
+15/05/2012 1:48:37 PM: Clearing Transaction table in DB
+15/05/2012 1:48:37 PM: Persist Transaction Definitions to DB - start
+15/05/2012 1:48:52 PM: Persist Transaction Definitions to DB - complete
+15/05/2012 1:48:52 PM: Clearing Job Card table in DB
+15/05/2012 1:48:52 PM: Persist Job Card Definitions to DB - start
+15/05/2012 1:48:58 PM: Persist Job Card Definitions to DB - complete
+
+Housing Extract : 1:56:57 PM Tuesday, 15 May 2012
+15/05/2012 1:56:57 PM: ************** IMPORT ******************
+15/05/2012 1:56:57 PM: Extract ReportDefinitions to local variables - start
+15/05/2012 1:56:57 PM: Extract Table Definitions to local variables - start
+15/05/2012 1:56:57 PM: Extract ReportDefinitions to local variables - complete
+15/05/2012 1:56:57 PM: Extract Transaction Definitions to local variables - start
+15/05/2012 1:56:57 PM: Clearing Report table in DB
+15/05/2012 1:56:57 PM: Extract Rule Definitions to local variables - start
+15/05/2012 1:56:57 PM: Extract Screen Definitions to local variables - start
+15/05/2012 1:56:57 PM: Extract Screen Definitions to local variables - complete
+15/05/2012 1:56:57 PM: Extract Job Cards to local variables - start
+15/05/2012 1:56:57 PM: Extract Transaction Definitions to local variables - complete
+15/05/2012 1:56:58 PM: Extract Job Cards to local variables - complete
+15/05/2012 1:56:58 PM: Extract Report Definitions to DB - start
+15/05/2012 1:56:58 PM: Extract Table Definitions to local variables - complete
+15/05/2012 1:56:59 PM: Extract Rule Definitions to local variables - complete
+15/05/2012 1:57:01 PM: Extract Report Definitions to DB - complete
+15/05/2012 1:57:01 PM: Clearing Table table in DB
+15/05/2012 1:57:01 PM: Persist Table Definitions to DB - start
+15/05/2012 1:57:42 PM: Persist Table Definitions to DB - complete
+15/05/2012 1:57:42 PM: Clearing Rule table in DB
+15/05/2012 1:57:42 PM: Persist Rule Definitions to DB - start
+15/05/2012 1:58:26 PM: Error persisting Rule Definitions to DB: Exception of type 'System.OutOfMemoryException' was thrown.
+15/05/2012 1:58:26 PM: Clearing Screen table in DB
+15/05/2012 1:58:26 PM: Extract Screen Definitions to DB - start
+15/05/2012 1:58:33 PM: Extract Screen Definitions to DB - complete
+15/05/2012 1:58:33 PM: Clearing Transaction table in DB
+15/05/2012 1:58:33 PM: Persist Transaction Definitions to DB - start
+15/05/2012 1:58:50 PM: Persist Transaction Definitions to DB - complete
+15/05/2012 1:58:50 PM: Clearing Job Card table in DB
+15/05/2012 1:58:50 PM: Persist Job Card Definitions to DB - start
+15/05/2012 1:58:56 PM: Persist Job Card Definitions to DB - complete
+
+Housing Extract : 8:43:21 AM Wednesday, 16 May 2012
+16/05/2012 8:43:21 AM: ************** IMPORT ******************
+16/05/2012 8:43:22 AM: Extract ReportDefinitions to local variables - start
+16/05/2012 8:43:22 AM: Extract Table Definitions to local variables - start
+16/05/2012 8:43:22 AM: Extract Screen Definitions to local variables - start
+16/05/2012 8:43:22 AM: Extract Rule Definitions to local variables - start
+16/05/2012 8:43:22 AM: Extract ReportDefinitions to local variables - complete
+16/05/2012 8:43:22 AM: Extract Screen Definitions to local variables - complete
+16/05/2012 8:43:22 AM: Extract Transaction Definitions to local variables - start
+16/05/2012 8:43:22 AM: Extract Job Cards to local variables - start
+16/05/2012 8:43:22 AM: Clearing Report table in DB
+16/05/2012 8:43:22 AM: Extract Job Cards to local variables - complete
+16/05/2012 8:43:22 AM: Extract Transaction Definitions to local variables - complete
+16/05/2012 8:43:22 AM: Extract Table Definitions to local variables - complete
+16/05/2012 8:43:23 AM: Extract Report Definitions to DB - start
+16/05/2012 8:43:23 AM: Extract Rule Definitions to local variables - complete
+16/05/2012 8:43:28 AM: Extract Report Definitions to DB - complete
+16/05/2012 8:43:28 AM: Clearing Table table in DB
+16/05/2012 8:43:28 AM: Persist Table Definitions to DB - start
+16/05/2012 8:44:10 AM: Persist Table Definitions to DB - complete
+16/05/2012 8:44:10 AM: Clearing Rule table in DB
+16/05/2012 8:44:10 AM: Persist Rule Definitions to DB - start
+
+Housing Extract : 1:18:36 PM Friday, 18 May 2012
+18/05/2012 1:18:36 PM: ************** IMPORT ******************
+18/05/2012 1:18:36 PM: Extract ReportDefinitions to local variables - start
+18/05/2012 1:18:36 PM: Extract ReportDefinitions to local variables - complete
+18/05/2012 1:18:36 PM: Extract Rule Definitions to local variables - start
+18/05/2012 1:18:36 PM: Extract Table Definitions to local variables - start
+18/05/2012 1:18:36 PM: Extract Screen Definitions to local variables - start
+18/05/2012 1:18:36 PM: Clearing Report table in DB
+18/05/2012 1:18:36 PM: Extract Transaction Definitions to local variables - start
+18/05/2012 1:18:36 PM: Extract Screen Definitions to local variables - complete
+18/05/2012 1:18:36 PM: Extract Job Cards to local variables - start
+18/05/2012 1:18:36 PM: Extract Transaction Definitions to local variables - complete
+18/05/2012 1:18:36 PM: Extract Job Cards to local variables - complete
+18/05/2012 1:18:36 PM: Extract Table Definitions to local variables - complete
+18/05/2012 1:18:37 PM: Extract Report Definitions to DB - start
+18/05/2012 1:18:38 PM: Extract Rule Definitions to local variables - complete
+18/05/2012 1:18:42 PM: Extract Report Definitions to DB - complete
+18/05/2012 1:18:42 PM: Clearing Table table in DB
+18/05/2012 1:18:42 PM: Persist Table Definitions to DB - start
+18/05/2012 1:19:25 PM: Persist Table Definitions to DB - complete
+18/05/2012 1:19:25 PM: Clearing Rule table in DB
+18/05/2012 1:19:25 PM: Persist Rule Definitions to DB - start
+18/05/2012 5:07:05 PM: Error persisting Rule Definitions to DB: The changes to the database were committed successfully, but an error occurred while updating the object context. The ObjectContext might be in an inconsistent state. Inner exception message: AcceptChanges cannot continue because the object's key values conflict with another object in the ObjectStateManager. Make sure that the key values are unique before calling AcceptChanges.
+18/05/2012 5:07:05 PM: Clearing Screen table in DB
+18/05/2012 5:07:05 PM: Extract Screen Definitions to DB - start
+18/05/2012 5:07:12 PM: Extract Screen Definitions to DB - complete
+18/05/2012 5:07:12 PM: Clearing Transaction table in DB
+18/05/2012 5:07:12 PM: Persist Transaction Definitions to DB - start
+18/05/2012 5:07:29 PM: Persist Transaction Definitions to DB - complete
+18/05/2012 5:07:29 PM: Clearing Job Card table in DB
+18/05/2012 5:07:29 PM: Persist Job Card Definitions to DB - start
+18/05/2012 5:07:36 PM: Persist Job Card Definitions to DB - complete
+
+Housing Extract : 8:55:12 AM Monday, 21 May 2012
+21/05/2012 8:55:12 AM: Clearing tables in DB
+21/05/2012 8:55:12 AM: DB tables cleared
+21/05/2012 8:55:12 AM: ************** IMPORT ******************
+21/05/2012 8:55:12 AM: Extract ReportDefinitions to local variables - start
+21/05/2012 8:55:12 AM: Extract Table Definitions to local variables - start
+21/05/2012 8:55:12 AM: Extract ReportDefinitions to local variables - complete
+21/05/2012 8:55:12 AM: Extract Rule Definitions to local variables - start
+21/05/2012 8:55:12 AM: Extract Screen Definitions to local variables - start
+21/05/2012 8:55:12 AM: Extract Transaction Definitions to local variables - start
+21/05/2012 8:55:12 AM: Persist Report Definitions to DB - start
+21/05/2012 8:55:12 AM: Extract Screen Definitions to local variables - complete
+21/05/2012 8:55:12 AM: Extract Job Cards to local variables - start
+21/05/2012 8:55:12 AM: Extract Job Cards to local variables - complete
+21/05/2012 8:55:12 AM: Extract Transaction Definitions to local variables - complete
+21/05/2012 8:55:13 AM: Extract Table Definitions to local variables - complete
+21/05/2012 8:55:14 AM: Extract Rule Definitions to local variables - complete
+21/05/2012 8:55:16 AM: Persist Report Definitions to DB - complete
+21/05/2012 8:55:17 AM: Persist Table Definitions to DB - start
+21/05/2012 8:56:29 AM: Persist Table Definitions to DB - complete
+21/05/2012 8:56:29 AM: Persits Screen Definitions to DB - start
+21/05/2012 8:56:29 AM: Persist Rule Definitions to DB - start
+21/05/2012 8:56:39 AM: Persist Screen Definitions to DB - complete
+21/05/2012 8:56:39 AM: Persist Transaction Definitions to DB - start
+21/05/2012 8:57:24 AM: Persist Transaction Definitions to DB - complete
+21/05/2012 8:57:24 AM: Persist Job Card Definitions to DB - start
+21/05/2012 8:57:30 AM: Persist Job Card Definitions to DB - complete
+
+Housing Extract : 5:14:14 PM Monday, 21 May 2012
+21/05/2012 5:14:14 PM: Clearing tables in DB
+21/05/2012 5:14:14 PM: DB tables cleared
+21/05/2012 5:14:14 PM: ************** IMPORT ******************
+21/05/2012 5:14:14 PM: Extract ReportDefinitions to local variables - start
+21/05/2012 5:14:14 PM: Extract Table Definitions to local variables - start
+21/05/2012 5:14:14 PM: Extract ReportDefinitions to local variables - complete
+21/05/2012 5:14:14 PM: Extract Rule Definitions to local variables - start
+21/05/2012 5:14:14 PM: Extract Screen Definitions to local variables - start
+21/05/2012 5:14:14 PM: Persist Report Definitions to DB - start
+21/05/2012 5:14:14 PM: Extract Transaction Definitions to local variables - start
+21/05/2012 5:14:14 PM: Extract Screen Definitions to local variables - complete
+21/05/2012 5:14:15 PM: Extract Transaction Definitions to local variables - complete
+21/05/2012 5:14:15 PM: Extract Job Cards to local variables - start
+21/05/2012 5:14:15 PM: Extract Job Cards to local variables - complete
+21/05/2012 5:14:15 PM: Extract Table Definitions to local variables - complete
+21/05/2012 5:14:16 PM: Extract Rule Definitions to local variables - complete
+21/05/2012 5:14:19 PM: Persist Report Definitions to DB - complete
+21/05/2012 5:14:19 PM: Persist Table Definitions to DB - start
+21/05/2012 5:15:41 PM: Persist Table Definitions to DB - complete
+21/05/2012 5:15:41 PM: Persits Screen Definitions to DB - start
+21/05/2012 5:15:49 PM: Persist Screen Definitions to DB - complete
+21/05/2012 5:15:49 PM: Persist Transaction Definitions to DB - start
+21/05/2012 5:16:33 PM: Persist Transaction Definitions to DB - complete
+21/05/2012 5:16:33 PM: Persist Job Card Definitions to DB - start
+21/05/2012 5:16:40 PM: Persist Job Card Definitions to DB - complete
+21/05/2012 5:16:40 PM: Persist Rule Definitions to DB - start
+21/05/2012 5:29:29 PM: Persist Rule Definitions to DB - complete
+21/05/2012 5:29:29 PM: Extract Triggers to local variables - start
+21/05/2012 5:29:31 PM: Extract Triggers to local variables - complete
+21/05/2012 5:29:31 PM: Persist Triggers to DB - start
+21/05/2012 5:29:32 PM: Error persisting Triggers Definitions to DB: An error occurred while updating the entries. See the inner exception for details.: 
+21/05/2012 5:29:32 PM: Assign Entities - start
+21/05/2012 5:29:32 PM: 41267 Rule Definitions added
+21/05/2012 5:29:32 PM: 6722 Table Definitions added
+21/05/2012 5:29:32 PM: 506 Report Definitions added
+21/05/2012 5:29:32 PM: 1562 Screen Definitions added
+21/05/2012 5:29:32 PM: 1385 Transaction Definitions added
+21/05/2012 5:29:32 PM: 60 Trigger Definitions added
+21/05/2012 5:29:32 PM: 110 Job Card Definitions added
+21/05/2012 5:29:32 PM: Assign Entities - complete
+21/05/2012 5:29:32 PM: 51612 Entities found
+21/05/2012 5:29:32 PM: Clearing Entity table in DB
+21/05/2012 5:29:32 PM: Extract Entities to DB - start
+21/05/2012 5:33:13 PM: Extract Entities to DB - complete
+21/05/2012 5:33:13 PM: ************** IMPORT END ******************
+
+Housing Extract : 9:48:46 AM Tuesday, 22 May 2012
+22/05/2012 9:48:46 AM: Clearing tables in DB
+22/05/2012 9:48:47 AM: DB tables cleared
+22/05/2012 9:48:47 AM: ************** IMPORT ******************
+22/05/2012 9:48:47 AM: Extract ReportDefinitions to local variables - start
+22/05/2012 9:48:47 AM: Extract Table Definitions to local variables - start
+22/05/2012 9:48:47 AM: Extract ReportDefinitions to local variables - complete
+22/05/2012 9:48:47 AM: Extract Screen Definitions to local variables - start
+22/05/2012 9:48:47 AM: Extract Rule Definitions to local variables - start
+22/05/2012 9:48:47 AM: Extract Transaction Definitions to local variables - start
+22/05/2012 9:48:47 AM: Persist Report Definitions to DB - start
+22/05/2012 9:48:47 AM: Extract Screen Definitions to local variables - complete
+22/05/2012 9:48:47 AM: Extract Job Cards to local variables - start
+22/05/2012 9:48:47 AM: Extract Job Cards to local variables - complete
+22/05/2012 9:48:47 AM: Extract Table Definitions to local variables - complete
+22/05/2012 9:48:47 AM: Extract Transaction Definitions to local variables - complete
+22/05/2012 9:48:49 AM: Extract Rule Definitions to local variables - complete
+22/05/2012 9:49:14 AM: Persist Report Definitions to DB - complete
+22/05/2012 9:49:14 AM: Persist Table Definitions to DB - start
+22/05/2012 9:50:35 AM: Persist Table Definitions to DB - complete
+22/05/2012 9:50:35 AM: Persits Screen Definitions to DB - start
+22/05/2012 9:50:43 AM: Persist Screen Definitions to DB - complete
+22/05/2012 9:50:43 AM: Persist Transaction Definitions to DB - start
+22/05/2012 9:55:28 AM: Persist Transaction Definitions to DB - complete
+22/05/2012 9:55:28 AM: Persist Job Card Definitions to DB - start
+22/05/2012 9:55:35 AM: Persist Job Card Definitions to DB - complete
+22/05/2012 9:55:35 AM: Persist Rule Definitions to DB - start
+22/05/2012 10:08:39 AM: Persist Rule Definitions to DB - complete
+22/05/2012 10:08:39 AM: Extract Triggers to local variables - start
+22/05/2012 10:08:40 AM: Extract Triggers to local variables - complete
+22/05/2012 10:08:40 AM: Persist Triggers to DB - start
+22/05/2012 10:08:40 AM: Persist Triggers to DB - complete
+22/05/2012 10:08:40 AM: Assign Entities - start
+22/05/2012 10:08:40 AM: 41267 Rule Definitions added
+22/05/2012 10:08:40 AM: 6722 Table Definitions added
+22/05/2012 10:08:40 AM: 506 Report Definitions added
+22/05/2012 10:08:40 AM: 1562 Screen Definitions added
+22/05/2012 10:08:40 AM: 1385 Transaction Definitions added
+22/05/2012 10:08:40 AM: 23 Trigger Definitions added
+22/05/2012 10:08:40 AM: 110 Job Card Definitions added
+22/05/2012 10:08:40 AM: Assign Entities - complete
+22/05/2012 10:08:40 AM: 51575 Entities found
+22/05/2012 10:08:40 AM: Clearing Entity table in DB
+22/05/2012 10:08:41 AM: Extract Entities to DB - start
+22/05/2012 10:26:34 AM: Extract Entities to DB - complete
+22/05/2012 10:26:34 AM: ************** IMPORT END ******************

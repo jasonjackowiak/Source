@@ -1,0 +1,34 @@
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.exe.config
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.pdb
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.pdb
+D:\Code\HSA\HousingStatistics\Build\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Code\HSA\HousingStatistics\Build\obj\x86\Debug\Build.exe
+D:\Code\HSA\HousingStatistics\Build\obj\x86\Debug\Build.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\bin\Debug\Build.exe.config
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\bin\Debug\Build.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\bin\Debug\Build.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\bin\Debug\Import.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\bin\Debug\Import.pdb
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\obj\x86\Debug\Build.exe
+D:\Code\Asciano\PN\TMS\TMSAAS\Build\obj\x86\Debug\Build.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\bin\Debug\Build.exe.config
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\bin\Debug\Build.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\bin\Debug\Build.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\bin\Debug\Import.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\bin\Debug\Import.pdb
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\obj\x86\Debug\Build.exe
+D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Build\obj\x86\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\x86\Debug\Build.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.exe.config
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Import.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\x86\Debug\Build.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\x86\Debug\Build.pdb

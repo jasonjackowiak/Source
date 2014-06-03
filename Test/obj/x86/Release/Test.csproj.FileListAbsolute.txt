@@ -1,0 +1,11 @@
+D:\Code\HSA\HousingStatistics\Test\bin\Release\Test.exe
+D:\Code\HSA\HousingStatistics\Test\bin\Release\Test.pdb
+D:\Code\HSA\HousingStatistics\Test\bin\Release\DataAccess.dll
+D:\Code\HSA\HousingStatistics\Test\bin\Release\HousingStatistics.exe
+D:\Code\HSA\HousingStatistics\Test\bin\Release\nunit.framework.dll
+D:\Code\HSA\HousingStatistics\Test\bin\Release\DataAccess.pdb
+D:\Code\HSA\HousingStatistics\Test\bin\Release\HousingStatistics.pdb
+D:\Code\HSA\HousingStatistics\Test\bin\Release\nunit.framework.xml
+D:\Code\HSA\HousingStatistics\Test\obj\x86\Release\ResolveAssemblyReference.cache
+D:\Code\HSA\HousingStatistics\Test\obj\x86\Release\Test.exe
+D:\Code\HSA\HousingStatistics\Test\obj\x86\Release\Test.pdb

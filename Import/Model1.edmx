@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HousingSADB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="AuditLogs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogTime" Type="datetime" />
+          <Property Name="Line" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Buckets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubSystem1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SourceUnit" Type="nvarchar" MaxLength="8" />
+          <Property Name="NormalisedUnit" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="EntityOwnershipStrengths">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntityId" Type="int" Nullable="false" />
+          <Property Name="InternalWeight" Type="int" />
+          <Property Name="ExternalWeight" Type="int" />
+          <Property Name="ExternalSources" Type="int" />
+          <Property Name="RecommendNewUnit" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="EntityRelationships">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallingEntityId" Type="int" Nullable="false" />
+          <Property Name="CalledEntityId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Interfaces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TargetUnit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="EntityRelationshipIds" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TargetEntityId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InternalInterfaces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TargetEntityId" Type="int" Nullable="false" />
+          <Property Name="TargetUnit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="EntityRelationshipIds" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RuleDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeLine" Type="int" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TableDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FieldType" Type="nvarchar" MaxLength="10" />
+          <Property Name="FieldSyntax" Type="nvarchar" MaxLength="10" />
+          <Property Name="FieldLength" Type="int" />
+          <Property Name="FieldDecimal" Type="int" />
+          <Property Name="FieldNumber" Type="int" />
+          <Property Name="KeyType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="TableType" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BuildRule" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="PFKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="PFKeyRule" Type="nvarchar" MaxLength="50" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="TriggerDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableSourceId" Type="int" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RuleSourceId" Type="int" Nullable="false" />
+          <Property Name="RuleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Access" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProcedureDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeLine" Type="int" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="SubSystem" Type="nvarchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TableDefinitions1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TriggerDefinitions1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TriggeringEvent" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="WhenClause" Type="nvarchar" MaxLength="400" />
+          <Property Name="CodeLine" Type="int" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityContainer Name="HousingSADBStoreContainer">
+          <EntitySet Name="AuditLogs" EntityType="Self.AuditLogs" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="Buckets" EntityType="Self.Buckets" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="Entities" EntityType="Self.Entities" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="EntityOwnershipStrengths" EntityType="Self.EntityOwnershipStrengths" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="EntityRelationships" EntityType="Self.EntityRelationships" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="Interfaces" EntityType="Self.Interfaces" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="InternalInterfaces" EntityType="Self.InternalInterfaces" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="RuleDefinitions" EntityType="Self.RuleDefinitions" Schema="OSB" store:Type="Tables" />
+          <EntitySet Name="TableDefinitions" EntityType="Self.TableDefinitions" Schema="OSB" store:Type="Tables" />
+          <EntitySet Name="TransactionDefinitions" EntityType="Self.TransactionDefinitions" Schema="OSB" store:Type="Tables" />
+          <EntitySet Name="TriggerDefinitions" EntityType="Self.TriggerDefinitions" Schema="OSB" store:Type="Tables" />
+          <EntitySet Name="ProcedureDefinitions" EntityType="Self.ProcedureDefinitions" Schema="SQL" store:Type="Tables" />
+          <EntitySet Name="TableDefinitions1" EntityType="Self.TableDefinitions1" Schema="SQL" Table="TableDefinitions" store:Type="Tables" />
+          <EntitySet Name="TriggerDefinitions1" EntityType="Self.TriggerDefinitions1" Schema="SQL" Table="TriggerDefinitions" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HousingSADB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="HousingSAModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuditLogs" EntityType="HousingSADB.AuditLog" />
+          <EntitySet Name="Entities" EntityType="HousingSADB.Entity" />
+          <EntitySet Name="EntityOwnershipStrengths" EntityType="HousingSADB.EntityOwnershipStrength" />
+          <EntitySet Name="EntityRelationships" EntityType="HousingSADB.EntityRelationship" />
+          <EntitySet Name="Interfaces" EntityType="HousingSADB.Interface" />
+          <EntitySet Name="InternalInterfaces" EntityType="HousingSADB.InternalInterface" />
+          <EntitySet Name="TableDefinitions" EntityType="HousingSADB.TableDefinition" />
+          <EntitySet Name="ProcedureDefinitions" EntityType="HousingSADB.ProcedureDefinition" />
+          <EntitySet Name="Buckets" EntityType="HousingSADB.Bucket" />
+          <EntitySet Name="TableDefinitions1" EntityType="HousingSADB.TableDefinitions1" />
+          <EntitySet Name="TransactionDefinitions" EntityType="HousingSADB.TransactionDefinition" />
+          <EntitySet Name="TriggerDefinitions1" EntityType="HousingSADB.TriggerDefinitions1" />
+          <EntitySet Name="RuleDefinitions" EntityType="HousingSADB.RuleDefinition" />
+          <EntitySet Name="TriggerDefinitions" EntityType="HousingSADB.TriggerDefinition" />
+        </EntityContainer>
+        <EntityType Name="AuditLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
+          <Property Name="Line" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SourceUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="NormalisedUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EntityOwnershipStrength">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntityId" Type="Int32" Nullable="false" />
+          <Property Name="InternalWeight" Type="Int32" />
+          <Property Name="ExternalWeight" Type="Int32" />
+          <Property Name="ExternalSources" Type="Int32" />
+          <Property Name="RecommendNewUnit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EntityRelationship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallingEntityId" Type="Int32" Nullable="false" />
+          <Property Name="CalledEntityId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Interface">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TargetUnit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="EntityRelationshipIds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TargetEntityId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InternalInterface">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TargetEntityId" Type="Int32" Nullable="false" />
+          <Property Name="TargetUnit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="EntityRelationshipIds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TableDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FieldSyntax" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FieldLength" Type="Int32" />
+          <Property Name="FieldDecimal" Type="Int32" />
+          <Property Name="FieldNumber" Type="Int32" />
+          <Property Name="KeyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="TableType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProcedureDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="SubSystem" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Bucket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubSystem1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TableDefinitions1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TransactionDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildRule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PFKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PFKeyRule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TriggerDefinitions1">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TriggeringEvent" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhenClause" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RuleDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TriggerDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableSourceId" Type="Int32" Nullable="false" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RuleSourceId" Type="Int32" Nullable="false" />
+          <Property Name="RuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Access" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HousingSADBStoreContainer" CdmEntityContainer="HousingSAModel">
+          <EntitySetMapping Name="AuditLogs">
+            <EntityTypeMapping TypeName="HousingSADB.AuditLog">
+              <MappingFragment StoreEntitySet="AuditLogs">
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entities">
+            <EntityTypeMapping TypeName="HousingSADB.Entity">
+              <MappingFragment StoreEntitySet="Entities">
+                <ScalarProperty Name="NormalisedUnit" ColumnName="NormalisedUnit" />
+                <ScalarProperty Name="SourceUnit" ColumnName="SourceUnit" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityOwnershipStrengths">
+            <EntityTypeMapping TypeName="HousingSADB.EntityOwnershipStrength">
+              <MappingFragment StoreEntitySet="EntityOwnershipStrengths">
+                <ScalarProperty Name="RecommendNewUnit" ColumnName="RecommendNewUnit" />
+                <ScalarProperty Name="ExternalSources" ColumnName="ExternalSources" />
+                <ScalarProperty Name="ExternalWeight" ColumnName="ExternalWeight" />
+                <ScalarProperty Name="InternalWeight" ColumnName="InternalWeight" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityRelationships">
+            <EntityTypeMapping TypeName="HousingSADB.EntityRelationship">
+              <MappingFragment StoreEntitySet="EntityRelationships">
+                <ScalarProperty Name="CalledEntityId" ColumnName="CalledEntityId" />
+                <ScalarProperty Name="CallingEntityId" ColumnName="CallingEntityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Interfaces">
+            <EntityTypeMapping TypeName="HousingSADB.Interface">
+              <MappingFragment StoreEntitySet="Interfaces">
+                <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
+                <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
+                <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InternalInterfaces">
+            <EntityTypeMapping TypeName="HousingSADB.InternalInterface">
+              <MappingFragment StoreEntitySet="InternalInterfaces">
+                <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
+                <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
+                <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableDefinitions">
+            <EntityTypeMapping TypeName="HousingSADB.TableDefinition">
+              <MappingFragment StoreEntitySet="TableDefinitions">
+                <ScalarProperty Name="TableType" ColumnName="TableType" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+                <ScalarProperty Name="FieldNumber" ColumnName="FieldNumber" />
+                <ScalarProperty Name="FieldDecimal" ColumnName="FieldDecimal" />
+                <ScalarProperty Name="FieldLength" ColumnName="FieldLength" />
+                <ScalarProperty Name="FieldSyntax" ColumnName="FieldSyntax" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcedureDefinitions">
+            <EntityTypeMapping TypeName="HousingSADB.ProcedureDefinition">
+              <MappingFragment StoreEntitySet="ProcedureDefinitions">
+                <ScalarProperty Name="SubSystem" ColumnName="SubSystem" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buckets">
+            <EntityTypeMapping TypeName="HousingSADB.Bucket">
+              <MappingFragment StoreEntitySet="Buckets">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SubSystem1" ColumnName="SubSystem1" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TableDefinitions1">
+            <EntityTypeMapping TypeName="HousingSADB.TableDefinitions1">
+              <MappingFragment StoreEntitySet="TableDefinitions1">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionDefinitions">
+            <EntityTypeMapping TypeName="HousingSADB.TransactionDefinition">
+              <MappingFragment StoreEntitySet="TransactionDefinitions">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="PFKeyRule" ColumnName="PFKeyRule" />
+                <ScalarProperty Name="PFKey" ColumnName="PFKey" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BuildRule" ColumnName="BuildRule" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TriggerDefinitions1">
+            <EntityTypeMapping TypeName="HousingSADB.TriggerDefinitions1">
+              <MappingFragment StoreEntitySet="TriggerDefinitions1">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="TriggeringEvent" ColumnName="TriggeringEvent" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RuleDefinitions">
+            <EntityTypeMapping TypeName="HousingSADB.RuleDefinition">
+              <MappingFragment StoreEntitySet="RuleDefinitions">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TriggerDefinitions">
+            <EntityTypeMapping TypeName="HousingSADB.TriggerDefinition">
+              <MappingFragment StoreEntitySet="TriggerDefinitions">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+                <ScalarProperty Name="RuleSourceId" ColumnName="RuleSourceId" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="TableSourceId" ColumnName="TableSourceId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1" ZoomLevel="91">
+        <EntityTypeShape EntityType="HousingSADB.AuditLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HousingSADB.Entity" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HousingSADB.EntityOwnershipStrength" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HousingSADB.EntityRelationship" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HousingSADB.Interface" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HousingSADB.InternalInterface" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="HousingSADB.TableDefinition" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HousingSADB.ProcedureDefinition" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="HousingSADB.Bucket" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HousingSADB.TableDefinitions1" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="HousingSADB.TransactionDefinition" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="HousingSADB.TriggerDefinitions1" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="HousingSADB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HousingSADB.TriggerDefinition" Width="1.5" PointX="0.75" PointY="10.75" />
+      </Diagram>
+      <Diagram DiagramId="34e71bec20b44a87a54fb393f3f69158" Name="Diagram1" >
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

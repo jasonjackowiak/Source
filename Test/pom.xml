@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://maven.apache.org/POM/4.0.0">
+	<parent>
+		<modelVersion>4.0.0</modelVersion>
+		<groupId>maas.solution</groupId>
+		<artifactId>HousingStatistics</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>maas.solution</groupId>
+	<artifactId>Test</artifactId>
+	<packaging>sln</packaging>
+	<name>Test.csproj</name>
+</project>

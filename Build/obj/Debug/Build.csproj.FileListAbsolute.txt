@@ -1,0 +1,8 @@
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.exe.config
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Build.pdb
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.exe
+D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.pdb
+D:\Code\HSA\HousingStatistics\Build\obj\Debug\ResolveAssemblyReference.cache
+D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.exe
+D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.pdb

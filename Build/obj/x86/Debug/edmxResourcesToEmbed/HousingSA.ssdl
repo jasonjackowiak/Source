@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HousingSAModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="HousingSAModelStoreContainer">
+    <EntitySet Name="AuditLog" EntityType="HousingSAModel.Store.AuditLog" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Entity" EntityType="HousingSAModel.Store.Entity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EntityRelationships" EntityType="HousingSAModel.Store.EntityRelationships" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileBody" EntityType="HousingSAModel.Store.FileBody" store:Type="Tables" store:Schema="dbo" store:Name="FileBody">
+      <DefiningQuery>SELECT 
+      [FileBody].[Id] AS [Id], 
+      [FileBody].[RuleName] AS [RuleName], 
+      [FileBody].[CodeLine] AS [CodeLine], 
+      [FileBody].[Body] AS [Body]
+      FROM [dbo].[FileBody] AS [FileBody]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ImportAudit" EntityType="HousingSAModel.Store.ImportAudit" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="JobCardDefinition" EntityType="HousingSAModel.Store.JobCardDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ReportDefinition" EntityType="HousingSAModel.Store.ReportDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RuleDefinition" EntityType="HousingSAModel.Store.RuleDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RunTimeExceptions" EntityType="HousingSAModel.Store.RunTimeExceptions" store:Type="Tables" store:Schema="dbo" store:Name="RunTimeExceptions">
+      <DefiningQuery>SELECT 
+      [RunTimeExceptions].[Exception] AS [Exception]
+      FROM [dbo].[RunTimeExceptions] AS [RunTimeExceptions]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="ScreenDefinition" EntityType="HousingSAModel.Store.ScreenDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="HousingSAModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TableDefinition" EntityType="HousingSAModel.Store.TableDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TransactionDefinition" EntityType="HousingSAModel.Store.TransactionDefinition" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Triggers" EntityType="HousingSAModel.Store.Triggers" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="AuditLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="LogTime" Type="datetime" />
+    <Property Name="Line" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SourceId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Type" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="SourceUnit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="NormalisedUnit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="EntityRelationships">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CallingEntityId" Type="int" Nullable="false" />
+    <Property Name="CalledEntityId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'HousingSA.dbo.FileBody' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="FileBody">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="RuleName" />
+      <PropertyRef Name="CodeLine" />
+      <PropertyRef Name="Body" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="RuleName" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="CodeLine" Type="int" Nullable="false" />
+    <Property Name="Body" Type="nvarchar" Nullable="false" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="ImportAudit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Line" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="JobCardDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CardNumber" Type="int" Nullable="false" />
+    <Property Name="JobCardName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Body" Type="nvarchar" Nullable="false" MaxLength="400" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="ReportDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ReportName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ReportTable" Type="nvarchar" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="RuleDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RuleName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="CodeLine" Type="int" Nullable="false" />
+    <Property Name="Body" Type="nvarchar" Nullable="false" MaxLength="400" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'HousingSA.dbo.RunTimeExceptions' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="RunTimeExceptions">
+    <Key>
+      <PropertyRef Name="Exception" />
+    </Key>
+    <Property Name="Exception" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ScreenDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ScreenName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ScreenTable" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TableDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TableName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="FieldName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="FieldType" Type="nvarchar" MaxLength="10" />
+    <Property Name="FieldSyntax" Type="nvarchar" MaxLength="10" />
+    <Property Name="FieldLength" Type="int" />
+    <Property Name="FieldDecimal" Type="int" />
+    <Property Name="FieldNumber" Type="int" />
+    <Property Name="KeyType" Type="nvarchar" MaxLength="10" />
+    <Property Name="Unit" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="TableType" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TransactionDefinition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TransactionName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="BuildRule" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="PFKey" Type="nvarchar" MaxLength="50" />
+    <Property Name="PFKeyRule" Type="nvarchar" MaxLength="50" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="Triggers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="TableSourceId" Type="int" Nullable="false" />
+    <Property Name="RuleSourceId" Type="int" Nullable="false" />
+  </EntityType>
+</Schema>
