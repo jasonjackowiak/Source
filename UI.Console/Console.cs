@@ -10,8 +10,9 @@ namespace UI.Console
     class Console
     {
 
-        private Settings _settings = new Settings();
+        public Settings _settings = new Settings();
         private DateTime startTime = new DateTime();
+        
 
         public void StartConsole()
         {
@@ -37,7 +38,7 @@ namespace UI.Console
             }
         }
 
-        private static void ImportInput(string language)
+        private void ImportInput(string language)
         {
             System.Console.WriteLine(string.Format("Please Select your phase:"));
             System.Console.WriteLine(string.Format("Import (I)"));
@@ -52,8 +53,9 @@ namespace UI.Console
             switch (line)
             {
                 case "I":
-                    ProcessOSBInputs extract = new ProcessOSBInputs();
-                    extract.Extract();
+                    //ProcessOSBInputs import = new ProcessOSBInputs();
+                    ProcessSQLInputs import = new ProcessSQLInputs();
+                    import.ProcessInputs(_settings);
                     break;
                 case "B":
                     System.Console.WriteLine("Please enter a valid phase.");

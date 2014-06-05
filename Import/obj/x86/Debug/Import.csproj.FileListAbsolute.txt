@@ -23,4 +23,3 @@ C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\EntityFramework.dll
 C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\x86\Debug\Import.exe
 C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\x86\Debug\Import.pdb
-C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\x86\Debug\Import.csprojResolveAssemblyReference.cache

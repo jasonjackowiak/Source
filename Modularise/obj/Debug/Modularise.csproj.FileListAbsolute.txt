@@ -6,3 +6,6 @@ D:\Code\HSA\HousingStatistics\Modularise\bin\Debug\Import.pdb
 D:\Code\HSA\HousingStatistics\Modularise\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\Modularise\obj\Debug\Modularise.exe
 D:\Code\HSA\HousingStatistics\Modularise\obj\Debug\Modularise.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.pdb

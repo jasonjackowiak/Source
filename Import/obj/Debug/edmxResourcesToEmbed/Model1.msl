@@ -3,110 +3,40 @@
   <EntityContainerMapping StorageEntityContainer="HousingSADBStoreContainer" CdmEntityContainer="HousingSAModel">
     <EntitySetMapping Name="AuditLogs">
       <EntityTypeMapping TypeName="HousingSADB.AuditLog">
-        <MappingFragment StoreEntitySet="AuditLog">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+        <MappingFragment StoreEntitySet="AuditLogs">
           <ScalarProperty Name="Line" ColumnName="Line" />
+          <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Entities">
       <EntityTypeMapping TypeName="HousingSADB.Entity">
-        <MappingFragment StoreEntitySet="Entity">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="SourceId" ColumnName="SourceId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="SourceUnit" ColumnName="SourceUnit" />
+        <MappingFragment StoreEntitySet="Entities">
           <ScalarProperty Name="NormalisedUnit" ColumnName="NormalisedUnit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="JobCardDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.JobCardDefinition">
-        <MappingFragment StoreEntitySet="JobCardDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Body" ColumnName="Body" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ReportDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.ReportDefinition">
-        <MappingFragment StoreEntitySet="ReportDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ReportTable" ColumnName="ReportTable" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RuleDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.RuleDefinition">
-        <MappingFragment StoreEntitySet="RuleDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-          <ScalarProperty Name="Body" ColumnName="Body" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="ScreenDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.ScreenDefinition">
-        <MappingFragment StoreEntitySet="ScreenDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ScreenTable" ColumnName="ScreenTable" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TableDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.TableDefinition">
-        <MappingFragment StoreEntitySet="TableDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
-          <ScalarProperty Name="FieldType" ColumnName="FieldType" />
-          <ScalarProperty Name="FieldSyntax" ColumnName="FieldSyntax" />
-          <ScalarProperty Name="FieldLength" ColumnName="FieldLength" />
-          <ScalarProperty Name="FieldDecimal" ColumnName="FieldDecimal" />
-          <ScalarProperty Name="FieldNumber" ColumnName="FieldNumber" />
-          <ScalarProperty Name="KeyType" ColumnName="KeyType" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-          <ScalarProperty Name="TableType" ColumnName="TableType" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TransactionDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.TransactionDefinition">
-        <MappingFragment StoreEntitySet="TransactionDefinition">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="BuildRule" ColumnName="BuildRule" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="PFKey" ColumnName="PFKey" />
-          <ScalarProperty Name="PFKeyRule" ColumnName="PFKeyRule" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Buckets">
-      <EntityTypeMapping TypeName="HousingSADB.Bucket">
-        <MappingFragment StoreEntitySet="Bucket">
+          <ScalarProperty Name="SourceUnit" ColumnName="SourceUnit" />
           <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EntityOwnershipStrengths">
+      <EntityTypeMapping TypeName="HousingSADB.EntityOwnershipStrength">
+        <MappingFragment StoreEntitySet="EntityOwnershipStrengths">
+          <ScalarProperty Name="RecommendNewUnit" ColumnName="RecommendNewUnit" />
+          <ScalarProperty Name="ExternalSources" ColumnName="ExternalSources" />
+          <ScalarProperty Name="ExternalWeight" ColumnName="ExternalWeight" />
+          <ScalarProperty Name="InternalWeight" ColumnName="InternalWeight" />
+          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="EntityRelationships">
       <EntityTypeMapping TypeName="HousingSADB.EntityRelationship">
-        <MappingFragment StoreEntitySet="EntityRelationship">
+        <MappingFragment StoreEntitySet="EntityRelationships">
           <ScalarProperty Name="CalledEntityId" ColumnName="CalledEntityId" />
           <ScalarProperty Name="CallingEntityId" ColumnName="CallingEntityId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
@@ -115,30 +45,17 @@
     </EntitySetMapping>
     <EntitySetMapping Name="Interfaces">
       <EntityTypeMapping TypeName="HousingSADB.Interface">
-        <MappingFragment StoreEntitySet="Interface">
+        <MappingFragment StoreEntitySet="Interfaces">
           <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
           <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
           <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TriggerDefinitions">
-      <EntityTypeMapping TypeName="HousingSADB.TriggerDefinition">
-        <MappingFragment StoreEntitySet="TriggerDefinition">
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
-          <ScalarProperty Name="Access" ColumnName="Access" />
-          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
-          <ScalarProperty Name="RuleSourceId" ColumnName="RuleSourceId" />
-          <ScalarProperty Name="TableName" ColumnName="TableName" />
-          <ScalarProperty Name="TableSourceId" ColumnName="TableSourceId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="InternalInterfaces">
       <EntityTypeMapping TypeName="HousingSADB.InternalInterface">
-        <MappingFragment StoreEntitySet="InternalInterface">
+        <MappingFragment StoreEntitySet="InternalInterfaces">
           <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
           <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
           <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
@@ -146,52 +63,101 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EntityResidences">
-      <EntityTypeMapping TypeName="HousingSADB.EntityResidence">
-        <MappingFragment StoreEntitySet="EntityResidence">
-          <ScalarProperty Name="ExternalSources" ColumnName="ExternalSources" />
-          <ScalarProperty Name="ExternalWeight" ColumnName="ExternalWeight" />
-          <ScalarProperty Name="InternalWeight" ColumnName="InternalWeight" />
-          <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="InterfaceReportings">
-      <EntityTypeMapping TypeName="HousingSADB.InterfaceReporting">
-        <MappingFragment StoreEntitySet="InterfaceReporting">
-          <ScalarProperty Name="TotalBucketsSources" ColumnName="TotalBucketsSources" />
-          <ScalarProperty Name="SourceBuckets" ColumnName="SourceBuckets" />
-          <ScalarProperty Name="TotalEntitySources" ColumnName="TotalEntitySources" />
-          <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
-          <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
-          <ScalarProperty Name="InterfaceId" ColumnName="InterfaceId" />
+    <EntitySetMapping Name="TableDefinitions">
+      <EntityTypeMapping TypeName="HousingSADB.TableDefinition">
+        <MappingFragment StoreEntitySet="TableDefinitions">
+          <ScalarProperty Name="TableType" ColumnName="TableType" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+          <ScalarProperty Name="FieldNumber" ColumnName="FieldNumber" />
+          <ScalarProperty Name="FieldDecimal" ColumnName="FieldDecimal" />
+          <ScalarProperty Name="FieldLength" ColumnName="FieldLength" />
+          <ScalarProperty Name="FieldSyntax" ColumnName="FieldSyntax" />
+          <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+          <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="BucketReportings">
-      <EntityTypeMapping TypeName="HousingSADB.BucketReporting">
-        <MappingFragment StoreEntitySet="BucketReporting">
-          <ScalarProperty Name="NumberExternalInterfaces" ColumnName="NumberExternalInterfaces" />
-          <ScalarProperty Name="NumberInternalInterfaces" ColumnName="NumberInternalInterfaces" />
-          <ScalarProperty Name="CalledBuckets" ColumnName="CalledBuckets" />
-          <ScalarProperty Name="NumberCalleduckets" ColumnName="NumberCalleduckets" />
-          <ScalarProperty Name="CallingBuckets" ColumnName="CallingBuckets" />
-          <ScalarProperty Name="NumberCallingBuckets" ColumnName="NumberCallingBuckets" />
-          <ScalarProperty Name="Entities" ColumnName="Entities" />
-          <ScalarProperty Name="Unit" ColumnName="Unit" />
+    <EntitySetMapping Name="ProcedureDefinitions">
+      <EntityTypeMapping TypeName="HousingSADB.ProcedureDefinition">
+        <MappingFragment StoreEntitySet="ProcedureDefinitions">
+          <ScalarProperty Name="SubSystem" ColumnName="SubSystem" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="BucketConnections">
-      <EntityTypeMapping TypeName="HousingSADB.BucketConnection">
-        <MappingFragment StoreEntitySet="BucketConnection">
-          <ScalarProperty Name="CalledBucket" ColumnName="CalledBucket" />
-          <ScalarProperty Name="NumberCalledInterfaces" ColumnName="NumberCalledInterfaces" />
-          <ScalarProperty Name="CallingBucket" ColumnName="CallingBucket" />
+    <EntitySetMapping Name="Buckets">
+      <EntityTypeMapping TypeName="HousingSADB.Bucket">
+        <MappingFragment StoreEntitySet="Buckets">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SubSystem1" ColumnName="SubSystem1" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TableDefinitions1">
+      <EntityTypeMapping TypeName="HousingSADB.TableDefinitions1">
+        <MappingFragment StoreEntitySet="TableDefinitions1">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransactionDefinitions">
+      <EntityTypeMapping TypeName="HousingSADB.TransactionDefinition">
+        <MappingFragment StoreEntitySet="TransactionDefinitions">
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="PFKeyRule" ColumnName="PFKeyRule" />
+          <ScalarProperty Name="PFKey" ColumnName="PFKey" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="BuildRule" ColumnName="BuildRule" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TriggerDefinitions1">
+      <EntityTypeMapping TypeName="HousingSADB.TriggerDefinitions1">
+        <MappingFragment StoreEntitySet="TriggerDefinitions1">
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+          <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="TriggeringEvent" ColumnName="TriggeringEvent" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RuleDefinitions">
+      <EntityTypeMapping TypeName="HousingSADB.RuleDefinition">
+        <MappingFragment StoreEntitySet="RuleDefinitions">
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TriggerDefinitions">
+      <EntityTypeMapping TypeName="HousingSADB.TriggerDefinition">
+        <MappingFragment StoreEntitySet="TriggerDefinitions">
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Access" ColumnName="Access" />
+          <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+          <ScalarProperty Name="RuleSourceId" ColumnName="RuleSourceId" />
+          <ScalarProperty Name="TableName" ColumnName="TableName" />
+          <ScalarProperty Name="TableSourceId" ColumnName="TableSourceId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

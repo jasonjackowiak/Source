@@ -22,4 +22,3 @@ D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Modularise\bin\Debug\Import.pdb
 D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Modularise\obj\x86\Debug\ResolveAssemblyReference.cache
 D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Modularise\obj\x86\Debug\Modularise.exe
 D:\Code\Asciano TMSAAS\Dev\R1-Dev\Source\Modularise\obj\x86\Debug\Modularise.pdb
-C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\x86\Debug\Modularise.csprojResolveAssemblyReference.cache

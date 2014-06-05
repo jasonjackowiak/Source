@@ -17,10 +17,11 @@ namespace Import
   public class ProcessOSBInputs
   {
     #region vars
-      private Settings _settings = new Settings();
+      private Settings log = new Settings();
       private List<TableDefinition> _tables = new List<TableDefinition>();
 	  private List<RuleDefinition> _rules = new List<RuleDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
+      private List<TransactionDefinition> _transactions = new List<TransactionDefinition>();
       private List<Entity> _entity = new List<Entity>();
       
       private Dictionary<string, int> ruleNames = new Dictionary<string, int>(); //Unique list of rules
@@ -29,9 +30,9 @@ namespace Import
       #endregion
 
     #region run extract
-      public void Extract ()
+      public void ProcessInputs(Settings log)
     {
-      _settings.Log("************** IMPORT *****************");
+      log.Log("************** IMPORT *****************");
 
       ClearTables();
 
@@ -49,142 +50,113 @@ namespace Import
 		CreateEntities();
 		PopulateEntities();
 
-        _settings.Log("************ IMPORT END ***************");
-        _settings.EndLog();
+        log.Log("************ IMPORT END ***************");
+        log.EndLog();
 
             }
       #endregion
 
-	//#region Triggers
-	//  private bool ExtractTriggers (Workbook xlWorkbook)
-	//{
-	//  string reportFile = _settings.GetFromConfig("Triggers");
-	//  string line;
-	//  int lineNo = 0;
-	//  int triggerCount = 0;
-      
-	//  _settings.Log("Extract Triggers to local variables - start");
+      #region Triggers
+      private bool ExtractTriggers()
+      {
+          string reportFile = log.GetFromConfig("Triggers");
+          string line;
+          int lineNo = 0;
+          int triggerCount = 0;
 
+          log.Log("Extract Triggers to local variables - start");
 
-	//      //THIS IS NEW PROCESSING TO USE XLS INSTEAD OF TXT FORMAT
-	//        _Worksheet bucketSheet = xlWorkbook.Sheets[1];
-	//        Range xlRange = bucketSheet.UsedRange;
+          if (File.Exists(reportFile))
+          {
+              StreamReader triggersFile = new StreamReader(reportFile);
+              try
+              {
+                  while ((line = triggersFile.ReadLine()) != null) // loop through all extract lines
+                  {
+                      lineNo++;
 
-	//        int rowCount = xlRange.Rows.Count;
-	//        int colCount = xlRange.Columns.Count;
-	//        TriggerDefinition trigger = new TriggerDefinition();
+                      if (lineNo > Constants.triggerLinesToSkip)
+                      {
+                          triggerCount++;
 
-	//        _settings.Log("Importing Triggers - start");
+                          TriggerDefinition trigger = new TriggerDefinition();
+                          trigger.TableName = line.Substring(Constants.posTriggerTableName, Constants.posTriggerRuleName - Constants.posTriggerTableName).Trim();
+                          trigger.RuleName = line.Substring(Constants.posTriggerRuleName, Constants.lenTriggerRuleName).Trim();
+                          trigger.Access = line.Substring(Constants.posTriggerAccess).Trim();
 
-	//      //iterate through all columns/rows in xls
-	//        for (int i = 2; i != rowCount + 1; i++)
-	//        {
-	//            int count = 1;
-	//            string name = bucketSheet.Cells[i, count].Value2.ToString();
-	//            count++;
-	//            string unit = bucketSheet.Cells[i, count].Value2.ToString();
-	//            //write processing output to same line
-	//            Console.Write("Reading trigger for  {0}             \r", trigger.TableName);
+                          foreach (TableDefinition table in _tables)
+                          {
+                              if (table.Name.Equals(trigger.TableName.ToString()))
+                              {
+                                  trigger.TableSourceId = table.Id;
+                                  trigger.Unit = table.Unit;
+                              }
+                          }
+                          foreach (RuleDefinition rule in _rules)
+                          {
+                              if (rule.Name.Equals(trigger.RuleName.ToString()))
+                              {
+                                  trigger.RuleSourceId = rule.Id;
+                                  break;
+                              }
+                          }
 
-	//            CreateBucket(unit, name, "Application");
-	//        }
+                          //write processing output to same line
+                          Console.Write("Reading trigger for  {0}             \r", trigger.TableName);
 
-	//        _settings.Log("Creating normalised bucket list - complete");
-	//    }
+                          _triggers.Add(trigger);
+                      }
+                  }
 
+                  triggersFile.Close();
+                  log.Log("Extract Triggers to local variables - complete");
+              }
+              catch (Exception ex)
+              {
+                  triggersFile.Close();
+                  log.Log(string.Format("Incorrect format of the Triggers file. Error:{0}", ex.Message));
+                  return false;
+              }
+          }
+          else
+          {
+              log.Log("Triggers Data file is missing");
+              return false;
+          }
+          return true;
+      }
 
-	//  //if (File.Exists(reportFile))
-	//  //{
-	//  //  StreamReader triggersFile = new StreamReader(reportFile);
-	//  //  try
-	//  //  {
-	//  //    while ((line = triggersFile.ReadLine()) != null) // loop through all extract lines
-	//  //    {
-	//  //      lineNo++;
+      private void PopulateTriggers()
+      {
+          HousingSAModel _context = new HousingSAModel();
 
-	//  //      if (lineNo > Constants.triggerLinesToSkip)
-	//  //      {
-	//  //          triggerCount++;
-              
-	//  //        TriggerDefinition trigger = new TriggerDefinition();
-	//  //        trigger.TableName = line.Substring(Constants.posTriggerTableName, Constants.posTriggerRuleName - Constants.posTriggerTableName).Trim();
-	//  //        trigger.RuleName = line.Substring(Constants.posTriggerRuleName, Constants.lenTriggerRuleName).Trim();
-	//  //        trigger.Access = line.Substring(Constants.posTriggerAccess).Trim();
+          log.Log("Persist Triggers to DB - start");
+          try
+          {
+              foreach (TriggerDefinition item in _triggers)
+              {
+                  _context.TriggerDefinitions.Add(item);
+                  _context.SaveChanges();
+              }
+              log.Log("Persist Triggers to DB - complete");
+          }
+          catch (Exception e)
+          {
+              log.Log(string.Format("Error persisting Triggers Definitions to DB: {0}: ", e.Message));
+          }
+      }
+      #endregion
 
-	//  //        foreach (TableDefinition table in _tables)
-	//  //        {
-	//  //            if (table.Name.Equals(trigger.TableName.ToString()))
-	//  //            {
-	//  //                trigger.TableSourceId = table.Id;
-	//  //                trigger.Unit = table.Unit;
-	//  //            }
-	//  //        }
-	//  //                foreach (ProcedureDefinition rule in _rules)
-	//  //                {
-	//  //                    if (rule.Name.Equals(trigger.RuleName.ToString()))
-	//  //                    {
-	//  //                        trigger.RuleSourceId = rule.Id;
-	//  //                        break;
-	//  //                    }
-	//  //            }
-
-	//                  //write processing output to same line
-	//                  Console.Write("Reading trigger for  {0}             \r", trigger.TableName);
-
-	//          _triggers.Add(trigger);
-	//        }
-	//    }
-      
-	//      triggersFile.Close();
-	//      _settings.Log("Extract Triggers to local variables - complete");
-	//    }
-	//    catch (Exception ex)
-	//    {
-	//      triggersFile.Close();
-	//      _settings.Log(string.Format("Incorrect format of the Triggers file. Error:{0}", ex.Message));
-	//      return false;
-	//    }
-	//  }
-	//  else
-	//  {
-	//    _settings.Log("Triggers Data file is missing");
-	//    return false;
-	//  }
-	//  return true;
-	//}
-
-	//private void PopulateTriggers ()
-	//{
-	//     HousingSAModel _context = new HousingSAModel();
-
-	//    _settings.Log("Persist Triggers to DB - start");
-	//    try
-	//    {
-	//        foreach (TriggerDefinition item in _triggers)
-	//    {
-	//        _context.AddToTriggerDefinitions(item);
-	//        _context.SaveChanges();
-	//    }
-	//    _settings.Log("Persist Triggers to DB - complete");
-	//    }
-	//    catch (Exception e)
-	//    {
-	//        _settings.Log(string.Format("Error persisting Triggers Definitions to DB: {0}: ", e.Message));
-	//    }
-	//}
- 
-	//#endregion
-
-    #region Tables
+      #region Tables
 
       private bool ExtractTables()
       {
-          string tableFile = _settings.GetFromConfig("Tables");
+          string tableFile = log.GetFromConfig("Tables");
           string line;
           int lineNo = 0;
           int tableCount = 0;
 
-          _settings.Log("Extract Table Definitions to local variables - start");
+          log.Log("Extract Table Definitions to local variables - start");
 
           if (File.Exists(tableFile))
           {
@@ -214,14 +186,14 @@ namespace Import
                           }
                           catch (FormatException fex)
                           {
-                            _settings.Log("Input string is not a sequence of digits.");
-                            _settings.Log(fex.Message);
+                            log.Log("Input string is not a sequence of digits.");
+                            log.Log(fex.Message);
                             return false;
                           }
                           catch (OverflowException oxe)
                           {
-                            _settings.Log("The number cannot fit in an Int32.");
-                            _settings.Log(oxe.Message);
+                            log.Log("The number cannot fit in an Int32.");
+                            log.Log(oxe.Message);
                             return false;
                           }
 
@@ -235,18 +207,18 @@ namespace Import
                   }
 
                   tablesFile.Close();
-                  _settings.Log("Extract Table Definitions to local variables - complete");
+                  log.Log("Extract Table Definitions to local variables - complete");
               }
               catch (Exception ex)
               {
                   tablesFile.Close();
-                  _settings.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
+                  log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
                   return false;
               }
           }
           else
           {
-              _settings.Log("Table Definitions file is missing");
+              log.Log("Table Definitions file is missing");
               return false;
           }
           return true;
@@ -257,7 +229,7 @@ namespace Import
         HousingSAModel _context = new HousingSAModel();
 
 
-      _settings.Log("Persist Table Definitions to DB - start");
+      log.Log("Persist Table Definitions to DB - start");
       try
       {
           foreach (TableDefinition item in _tables)
@@ -268,11 +240,11 @@ namespace Import
           }
        //   );
             _context.SaveChanges();
-          _settings.Log("Persist Table Definitions to DB - complete");
+          log.Log("Persist Table Definitions to DB - complete");
       }
       catch (Exception e)
       {
-          _settings.Log(string.Format("Error persisting Table Definitions to DB: {0}: ", e.Message));
+          log.Log(string.Format("Error persisting Table Definitions to DB: {0}: ", e.Message));
       }
     }
  
@@ -290,12 +262,12 @@ namespace Import
         string ruleName = String.Empty; // extracted rule name
         int lineNo = 0;
         int ruleCount = 0;
-        string ruleFile = _settings.GetFromConfig("Rules");
+        string ruleFile = log.GetFromConfig("Rules");
         string unit = "";
         int unitpos = 0;
         int lineCount = 0;
 
-        _settings.Log("Extract Rule Definitions to local variables - start");
+        log.Log("Extract Rule Definitions to local variables - start");
 
         if (File.Exists(ruleFile))
         {
@@ -346,25 +318,25 @@ namespace Import
                                 ruleDefinition.Body = line;
                                 ruleDefinition.Unit = unit;
                                 ruleDefinition.Id = lineCount;
-                                _procedures.Add(ruleDefinition);
+                                _rules.Add(ruleDefinition);
                             }
                     }
 
                 }
 
                 rulesFile.Close();
-                _settings.Log("Extract Rule Definitions to local variables - complete");
+                log.Log("Extract Rule Definitions to local variables - complete");
             }
             catch (Exception ex)
             {
                 rulesFile.Close();
-                _settings.Log(string.Format("Incorrect format of the Rule file. Error:{0}", ex.Message));
+                log.Log(string.Format("Incorrect format of the Rule file. Error:{0}", ex.Message));
                 return false;
             }
         }
         else
         {
-            _settings.Log("Rule file is missing");
+            log.Log("Rule file is missing");
             return false;
         }
         return true;
@@ -373,7 +345,7 @@ namespace Import
     private string GetRuleSeparator ()
     {
       // this is a separator between rules - note, can change!
-      string ruleSeparator = _settings.GetFromConfig("RuleSeparator");
+      string ruleSeparator = log.GetFromConfig("RuleSeparator");
       if (string.IsNullOrEmpty(ruleSeparator))
         ruleSeparator = "###";
       return ruleSeparator;
@@ -382,7 +354,7 @@ namespace Import
     private void PopulateRules()
     {
         HousingSAModel _context = new HousingSAModel();
-        _settings.Log("Persist Rule Definitions to DB - start");
+        log.Log("Persist Rule Definitions to DB - start");
         try
         {
             foreach (RuleDefinition item in _rules)
@@ -390,11 +362,11 @@ namespace Import
                 _context.RuleDefinitions.Add(item);
             }
             _context.SaveChanges();
-            _settings.Log("Persist Rule Definitions to DB - complete");
+            log.Log("Persist Rule Definitions to DB - complete");
         }
         catch (Exception e)
         {
-            _settings.Log(string.Format("Error persisting Rule Definitions to DB: {0}", e.Message)); 
+            log.Log(string.Format("Error persisting Rule Definitions to DB: {0}", e.Message)); 
         }
     }
        
@@ -406,12 +378,12 @@ namespace Import
     {
         string oldName = "";
         int count = 0;
-        _settings.Log("Assign Entities - start");
+        log.Log("Assign Entities - start");
 
-        if (CreateRuleEntities(oldName, count) && CreateTableEntities(oldName, count) && CreateReportEntities(oldName, count) && CreateScreenEntities(oldName, count) && CreateTransactionEntities(oldName, count) && CreateTriggerEntities(oldName, count) && CreateJobCardEntities(oldName, count))
+        if (CreateRuleEntities(oldName, count) && CreateTableEntities(oldName, count) && CreateTransactionEntities(oldName, count) && CreateTriggerEntities(oldName, count))
         {
-            _settings.Log("Assign Entities - complete");
-            _settings.Log(string.Format("{0} Entities found", entityCount));
+            log.Log("Assign Entities - complete");
+            log.Log(string.Format("{0} Entities found", entityCount));
             return true;
         }
         else
@@ -423,7 +395,7 @@ namespace Import
     private bool CreateRuleEntities(string oldName, int count)
     {
         int ruleCount = 0;
-        foreach (ProcedureDefinition item in _rules)
+        foreach (RuleDefinition item in _rules)
         {
             count++;
             if (item.Name != oldName)
@@ -441,7 +413,7 @@ namespace Import
                 _entity.Add(rule);
             }
         }
-        _settings.Log(string.Format("{0} Rule Definitions added", ruleCount));
+        log.Log(string.Format("{0} Rule Definitions added", ruleCount));
         return true;
     }
 
@@ -467,61 +439,9 @@ namespace Import
 				_entity.Add(table);
 			}
 		}
-		_settings.Log(string.Format("{0} Table Definitions added", tableCount));
+		log.Log(string.Format("{0} Table Definitions added", tableCount));
 		return true;
 	}
-
-	//private bool CreateReportEntities(string oldName, int count)
-	//{
-	//    int reportCount = 0;
-	//    foreach (ReportDefinition item in _reports)
-	//    {
-	//        count++;
-	//        if (item.Name != oldName)
-	//        {
-	//            reportCount++;
-	//            entityCount++;
-	//            Entity report = new Entity();
-	//            report.Name = item.Name;
-	//            oldName = item.Name;
-	//            report.Type = "REPORT";
-	//            report.SourceUnit = item.Unit;
-	//            report.SourceId = item.Id;
-	//            report.NormalisedUnit = "N/A";
-	//            report.Id = entityCount;
-
-	//            _entity.Add(report);
-	//        }
-	//    }
-	//    _settings.Log(string.Format("{0} Report Definitions added", reportCount));
-	//    return true;
-	//}
-
-	//private bool CreateScreenEntities(string oldName, int count)
-	//{
-	//    int screenCount = 0;
-	//    foreach (ScreenDefinition item in _screens)
-	//    {
-	//        count++;
-	//        if (item.Name != oldName)
-	//        {
-	//            screenCount++;
-	//            entityCount++;
-	//            Entity screen = new Entity();
-	//            screen.Name = item.Name;
-	//            oldName = item.Name;
-	//            screen.Type = "SCREEN";
-	//            screen.SourceUnit = item.Unit;
-	//            screen.SourceId = item.Id;
-	//            screen.NormalisedUnit = "N/A";
-	//            screen.Id = entityCount;
-
-	//            _entity.Add(screen);
-	//        }
-	//    }
-	//    _settings.Log(string.Format("{0} Screen Definitions added", screenCount));
-	//    return true;
-	//}
 
     private bool CreateTransactionEntities(string oldName, int count)
     {
@@ -545,7 +465,7 @@ namespace Import
                 _entity.Add(transaction);
             }
         }
-        _settings.Log(string.Format("{0} Transaction Definitions added", transCount));
+        log.Log(string.Format("{0} Transaction Definitions added", transCount));
         return true;
     }
 
@@ -573,7 +493,7 @@ namespace Import
                 _entity.Add(trigger);
             }
         }
-        _settings.Log(string.Format("{0} Trigger Definitions added", triggerCount));
+        log.Log(string.Format("{0} Trigger Definitions added", triggerCount));
         return true;
     }
 
@@ -599,7 +519,7 @@ namespace Import
 	//            _entity.Add(jobCard);
 	//        }
 	//    }
-	//    _settings.Log(string.Format("{0} Job Card Definitions added", jobCardCount));
+	//    log.Log(string.Format("{0} Job Card Definitions added", jobCardCount));
 	//    return true;
 	//}
 
@@ -607,19 +527,19 @@ namespace Import
     {
         HousingSAModel _context = new HousingSAModel();
 
-        _settings.Log("Extract Entities to DB - start");
+        log.Log("Extract Entities to DB - start");
         try
         {
             foreach (Entity item in _entity)
             {
-                _context.AddToEntities(item);
+                _context.Entities.Add(item);
             }
             _context.SaveChanges();
-            _settings.Log("Extract Entities to DB - complete");
+            log.Log("Extract Entities to DB - complete");
         }
         catch (Exception e)
         {
-            _settings.Log(string.Format("Erorr extracting Entities to DB: {0}", e.Message));
+            log.Log(string.Format("Erorr extracting Entities to DB: {0}", e.Message));
         }
 
     }
@@ -649,40 +569,32 @@ namespace Import
             ClearTables();
         }
 
-        ClearTable("ProcedureDefinition");
-        ClearTable("TableDefinition");
-        ClearTable("ReportDefinition");
-        ClearTable("ScreenDefinition");
-        ClearTable("JobCardDefinition");
-        ClearTable("TransactionDefinition");
-        ClearTable("TriggerDefinition");
-        ClearTable("Bucket");
-        ClearTable("Entity");
-        ClearTable("EntityRelationship");
-        ClearTable("Interface");
-        ClearTable("InternalInterface");
-        ClearTable("EntityResidence");
-        ClearTable("InterfaceReporting");
-        ClearTable("BucketReporting");
-        ClearTable("BucketConnection");
+        ClearTable("OSB.RuleDefinitions");
+        ClearTable("OSB.TableDefinitions");
+        ClearTable("OSB.TransactionDefinitions");
+        ClearTable("OSB.TriggerDefinitions");
+        ClearTable("Admin.Buckets");
+        ClearTable("Admin.Entities");
+        ClearTable("Admin.EntityRelationships");
+        ClearTable("Admin.Interfaces");
+        ClearTable("Admin.InternalInterfaces");
     }
 
     public void ClearTable(string table)
     {
         HousingSAModel _context = new HousingSAModel();
-        //_settings.Log(string.Format("Clearing {0} table in DB", table));
 
         try
         {
             _context.Database.ExecuteSqlCommand(string.Format("truncate table {0}", table));
             _context.SaveChanges();
 
-            _settings.Log(string.Format("{0} table cleared", table));
+            log.Log(string.Format("{0} table cleared", table));
         }
 
         catch (Exception e)
         {
-            _settings.Log(string.Format("Error clearing {0} table in DB: {1}", table, e.Message));
+            log.Log(string.Format("Error clearing {0} table in DB: {1}", table, e.Message));
 
         }
     }
