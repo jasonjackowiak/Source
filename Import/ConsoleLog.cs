@@ -10,7 +10,7 @@ using System.Collections.Specialized;
 
 namespace Import
 {
-  public class Settings
+  public class ConsoleLog
   {
      #region vars
         NameValueCollection appSettings = ConfigurationManager.AppSettings;
@@ -21,7 +21,7 @@ namespace Import
         private DateTime startTime;
       #endregion
 
-    public Settings ()
+    public ConsoleLog ()
     {
     }
 
@@ -58,7 +58,7 @@ namespace Import
 
     }
 
-    public void BeginLog(string line)
+    public void BeginLog()
     {
             string logFileName = GetFromConfig("LogFilePath");
             if (!File.Exists(logFileName))
@@ -77,18 +77,20 @@ namespace Import
     public void Log (string logMessage)
     {
       DateTime logTime = DateTime.Now;
+
+        //Write to Console
       System.Console.WriteLine("{0}: {1}", logTime, logMessage);
+
+        //Write to AuditLog table
       AuditLog auditLog = new AuditLog();
       auditLog.LogTime = logTime;
       auditLog.Line = logMessage;
-        _auditLog.Add(auditLog);
+      _auditLog.Add(auditLog);
 
-        if (line.Equals("Y"))
-        {
-            _logFile.WriteLine("{0}: {1}", logTime, logMessage);
-            // Update the underlying file.
-            _logFile.Flush();
-        }
+        //Write to log file
+    _logFile.WriteLine("{0}: {1}", logTime, logMessage);
+    // Update the underlying file.
+    _logFile.Flush();
     }
 
     public void PopulateLog ()

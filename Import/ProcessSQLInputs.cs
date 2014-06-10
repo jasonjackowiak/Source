@@ -17,7 +17,7 @@ namespace Import
   public class ProcessSQLInputs
   {
     #region vars
-      private Settings log = new Settings();
+      private ConsoleLog log = new ConsoleLog();
       private List<TableDefinition> _tables = new List<TableDefinition>();
 	  private List<ProcedureDefinition> _procedures = new List<ProcedureDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
@@ -29,11 +29,11 @@ namespace Import
       #endregion
 
     #region run extract
-      public void ProcessInputs(Settings log)
+      public void ProcessInputs(ConsoleLog log)
     {
       log.Log("************** IMPORT *****************");
 
-      ClearTables();
+      ClearTables(log);
 
         var f = Task.Factory;
         var extractTables = f.StartNew(() => ReadExcelTables());
@@ -610,14 +610,14 @@ namespace Import
       /// <summary>
       /// Clear all database tables except audit log.
       /// </summary>
-    private void ClearTables()
+    private void ClearTables(ConsoleLog log)
     {
         System.Console.Write("Clear AuditLog table (Y/N)?");
         string line = System.Console.ReadLine();
         line = line.ToUpper();
         if (line.Trim().Equals("Y"))
         {
-            ClearTable("AuditLog");
+            ClearTable("AuditLog", log);
         }
         else if (line.Trim().Equals("N"))
         {
@@ -626,19 +626,19 @@ namespace Import
         else
         {
             System.Console.WriteLine(string.Format("Invalid option entered: {0}", line));
-            ClearTables();
+            ClearTables(log);
         }
 
-        ClearTable("SQL.ProcedureDefinitions");
-        ClearTable("SQL.TableDefinitions");
-        ClearTable("Admin.Buckets");
-        ClearTable("Admin.Entities");
-        ClearTable("Admin.EntityRelationships");
-        ClearTable("Admin.Interfaces");
-        ClearTable("Admin.InternalInterfaces");
+        ClearTable("SQL.ProcedureDefinitions", log);
+        ClearTable("SQL.TableDefinitions", log);
+        ClearTable("Admin.Buckets", log);
+        ClearTable("Admin.Entities", log);
+        ClearTable("Admin.EntityRelationships", log);
+        ClearTable("Admin.Interfaces", log);
+        ClearTable("Admin.InternalInterfaces", log);
     }
 
-    public void ClearTable(string table)
+    public void ClearTable(string table, ConsoleLog log)
     {
         HousingSAModel _context = new HousingSAModel();
 

@@ -8,6 +8,3 @@ D:\Code\HSA\HousingStatistics\Analyse\bin\Debug\Modularise.pdb
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\Analyse.exe
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\Analyse.pdb
-C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.csprojResolveAssemblyReference.cache
-C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.exe
-C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.pdb

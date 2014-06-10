@@ -13,7 +13,7 @@ namespace Build
     public class BuildRelationships
     {
         #region vars
-        private Settings _settings = new Settings();
+        private ConsoleLog _settings = new ConsoleLog();
         private List<Entity> _entities = new List<Entity>();
         public List<EntityRelationship> _entityRelations = new List<EntityRelationship>();
         public List<Link> _links = new List<Link>();

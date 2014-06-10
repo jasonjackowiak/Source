@@ -17,7 +17,7 @@ namespace Import
   public class ProcessOSBInputs
   {
     #region vars
-      private Settings log = new Settings();
+      private ConsoleLog log = new ConsoleLog();
       private List<TableDefinition> _tables = new List<TableDefinition>();
 	  private List<RuleDefinition> _rules = new List<RuleDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
@@ -30,7 +30,7 @@ namespace Import
       #endregion
 
     #region run extract
-      public void ProcessInputs(Settings log)
+      public void ProcessInputs(ConsoleLog log)
     {
       log.Log("************** IMPORT *****************");
 

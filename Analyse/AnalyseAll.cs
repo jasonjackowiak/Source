@@ -12,7 +12,7 @@ namespace Analyse
     {
         #region vars
         //global
-        private Settings _settings = new Settings();
+        private ConsoleLog _settings = new ConsoleLog();
         private List<Entity> _entities = new List<Entity>();
         ProcessExtracts p = new ProcessExtracts();
 

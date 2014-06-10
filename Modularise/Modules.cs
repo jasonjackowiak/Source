@@ -12,7 +12,7 @@ namespace Modularise
     {
         #region vars
 
-        private Settings _settings = new Settings();
+        private ConsoleLog _settings = new ConsoleLog();
         private List<EntityMap> _mappedEntities = new List<EntityMap>();
         private List<Bucket> _buckets = new List<Bucket>();
         private List<UnitMap> _mappedUnits = new List<UnitMap>();
