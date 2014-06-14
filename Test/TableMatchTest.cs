@@ -16,7 +16,7 @@ namespace Test
         private string table;
 
         private bool tablebool;
-        BuildRelationships i = new BuildRelationships();
+        BuildSQLRelationships i = new BuildSQLRelationships();
         List<Link> _links = new List<Link>();
 
         [SetUp]

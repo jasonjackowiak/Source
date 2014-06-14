@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Import;
+using Build;
 
 namespace UI.Console
 {
@@ -58,9 +59,11 @@ namespace UI.Console
                     import.ProcessInputs(_log);
                     break;
                 case "B":
-                    _log.Log("Please enter a valid phase.");
-                    _log.Log("Build is under construction.");
-                    ImportInput(language);
+                    //_log.Log("Please enter a valid phase.");
+                    //_log.Log("Build is under construction.");
+                    //ImportInput(language);
+                    //Build
+
                     break;
                 case "A":
                     _log.Log("Please enter a valid phase.");

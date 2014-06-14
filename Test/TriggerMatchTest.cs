@@ -15,7 +15,7 @@ namespace Test
         RuleDefinition rule = new RuleDefinition();
         private string triggerName;
         TriggerDefinition trigger = new TriggerDefinition();
-        BuildRelationships i = new BuildRelationships();
+        BuildSQLRelationships i = new BuildSQLRelationships();
         List<Link> _links = new List<Link>();
 
         [SetUp]

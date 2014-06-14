@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,16 +43,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Console.cs" />
+    <Compile Include="ConsoleLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Build\Build.csproj">
+      <Project>{c5d4d706-1c77-4176-8a3d-564f69ef3a33}</Project>
+      <Name>Build</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Import\Import.csproj">
       <Project>{1afa2a88-0de0-4ecb-91a2-78495318c86f}</Project>
       <Name>Import</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project1\Project1.csproj">
+      <Project>{3f52d1b8-2a99-4efb-bc0a-79fb33292715}</Project>
+      <Name>Project1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

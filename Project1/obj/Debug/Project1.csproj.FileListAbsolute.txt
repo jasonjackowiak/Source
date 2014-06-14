@@ -1,0 +1,8 @@
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\bin\Debug\Project1.exe.config
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\bin\Debug\Project1.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\obj\Debug\Project1.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\obj\Debug\Project1.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Project1\obj\Debug\Project1.pdb

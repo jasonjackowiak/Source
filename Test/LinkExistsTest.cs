@@ -13,7 +13,7 @@ namespace Test
     {
 
         private bool added;
-        BuildRelationships i = new BuildRelationships();
+        BuildSQLRelationships i = new BuildSQLRelationships();
         List<Link> _links = new List<Link>();
 
         [SetUp]

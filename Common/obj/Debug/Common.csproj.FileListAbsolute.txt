@@ -1,0 +1,5 @@
+C:\Users\J\Documents\GitHub\HSA\Source\Common\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Common\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Common\obj\Debug\Common.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Common\obj\Debug\Common.pdb

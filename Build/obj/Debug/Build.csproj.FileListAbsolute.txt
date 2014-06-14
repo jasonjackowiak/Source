@@ -6,3 +6,4 @@ D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.pdb
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.exe
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\Debug\Build.csprojResolveAssemblyReference.cache

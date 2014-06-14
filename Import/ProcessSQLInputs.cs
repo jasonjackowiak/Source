@@ -17,8 +17,8 @@ namespace Import
   public class ProcessSQLInputs
   {
     #region vars
-      private ConsoleLog log = new ConsoleLog();
-      private List<TableDefinition> _tables = new List<TableDefinition>();
+      private ConsoleLog log;
+      private List<TableDefinitions1> _tables = new List<TableDefinitions1>();
 	  private List<ProcedureDefinition> _procedures = new List<ProcedureDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
       private List<Entity> _entity = new List<Entity>();
@@ -29,14 +29,16 @@ namespace Import
       #endregion
 
     #region run extract
-      public void ProcessInputs(ConsoleLog log)
+      public void ProcessInputs(ConsoleLog importLog)
     {
+      log = importLog;
+
       log.Log("************** IMPORT *****************");
 
       ClearTables(log);
 
         var f = Task.Factory;
-        var extractTables = f.StartNew(() => ReadExcelTables());
+        var extractTables = f.StartNew(() => ReadTables());
         //var extractRules = f.StartNew(() => ExtractRules());
         
         Task.WaitAll(extractTables);
@@ -46,8 +48,8 @@ namespace Import
         //PopulateRules();
 		//ExtractTriggers();
 		//PopulateTriggers();
-		//CreateEntities();
-		//PopulateEntities();
+        CreateEntities();
+        PopulateEntities();
 
         log.Log("************ IMPORT END ***************");
         log.EndLog();
@@ -177,6 +179,15 @@ namespace Import
 
     #region Tables
 
+      private void ReadTables()
+      {
+          string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, log.GetFromConfig("Tables"));
+          if (file.Contains(".txt"))
+              ExtractTextTables();
+          else if (file.Contains(".xls"))
+              ReadExcelTables();
+      }
+
 	  private void ReadExcelTables()
 	  {
 		  string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, log.GetFromConfig("Tables"));
@@ -187,7 +198,7 @@ namespace Import
 			  {
 				  Application xlApp = new Application();
 				  Workbook xlWorkbook = xlApp.Workbooks.Open(file);
-				  ExtractTables(xlWorkbook);
+				  ExtractExcelTables(xlWorkbook);
 				  xlWorkbook.Close();
 				  xlApp.Quit();
 			  }
@@ -198,8 +209,7 @@ namespace Import
 		  }
 	  }
 
-
-	  private void ExtractTables(Workbook xlWorkbook)
+	  private void ExtractExcelTables(Workbook xlWorkbook)
 	  {
 		  int tableCount = 0;
 
@@ -211,7 +221,7 @@ namespace Import
 
 		  int rowCount = xlRange.Rows.Count;
 		  int colCount = xlRange.Columns.Count;
-		  TableDefinition table = new TableDefinition();
+		  TableDefinitions1 table = new TableDefinitions1();
 
 		  log.Log("Importing Tables - start");
 
@@ -234,81 +244,52 @@ namespace Import
 		  log.Log("Importing Tables - complete");
 	  }
 
+      private bool ExtractTextTables()
+      {
+          string tableFile = log.GetFromConfig("Tables");
+          string line;
+          int lineNo = 0;
+          int tableCount = 0;
 
-	//private bool ExtractTables ()
-	//{
-	//  string tableFile = log.GetFromConfig("Tables");
-	//  string line;
-	//  int lineNo = 0;
-	//  int tableCount = 0;
+          log.Log("Extract Table Definitions to local variables - start");
 
-	//  log.Log("Extract Table Definitions to local variables - start");
+          if (File.Exists(tableFile))
+          {
+              StreamReader tablesFile = new StreamReader(tableFile);
+              try
+              {
+                  while ((line = tablesFile.ReadLine()) != null) // loop through all table extract lines
+                  {
+                      lineNo++;
 
-	//  if (File.Exists(tableFile))
-	//  {
-	//    StreamReader tablesFile = new StreamReader(tableFile);
-	//    try
-	//    {
-	//      while ((line = tablesFile.ReadLine()) != null) // loop through all table extract lines
-	//      {
-	//        lineNo++;
-	//        if (lineNo > Constants.tableLinesToSkip)
-	//        {
-	//            tableCount++;
-	//          TableDefinition tableDefinition = new TableDefinition();
-	//          tableDefinition.Name = line.Substring(Constants.posTableName, Constants.lenTableName).Trim();
-	//          //tableDefinition.FieldName = line.Substring(Constants.posFieldName, Constants.lenFieldName).Trim();
-	//          //tableDefinition.FieldType = line.Substring(Constants.posFieldType, Constants.lenFieldType).Trim();
-	//          //tableDefinition.FieldSyntax = line.Substring(Constants.posFieldSyntax, Constants.lenFieldSyntax).Trim();
-	//          //tableDefinition.Unit = line.Substring(Constants.posTableUnit, Constants.lenTableUnit).Trim();
-	//          //tableDefinition.TableType = line.Substring(Constants.posTableType, Constants.lenTableType).Trim();
-	//          tableDefinition.Id = tableCount;
+                          tableCount++;
+                          TableDefinitions1 tableDefinition = new TableDefinitions1();
+                          tableDefinition.Name = line.Trim();
+                          tableDefinition.Id = tableCount;
 
-	//          //try
-	//          //{
-	//          //  tableDefinition.FieldLength = Convert.ToInt32(line.Substring(Constants.posFieldLength, Constants.lenFieldLength).Trim());
-	//          //  tableDefinition.FieldDecimal = Convert.ToInt32(line.Substring(Constants.posFieldDecimal, Constants.lenFieldDecimal).Trim());
-	//          //  tableDefinition.FieldNumber = Convert.ToInt32(line.Substring(Constants.posFieldNumber, Constants.lenFieldNumber).Trim());
-	//          //}
-	//          //catch (FormatException fex)
-	//          //{
-	//          //  log.Log("Input string is not a sequence of digits.");
-	//          //  log.Log(fex.Message);
-	//          //  return false;
-	//          //}
-	//          //catch (OverflowException oxe)
-	//          //{
-	//          //  log.Log("The number cannot fit in an Int32.");
-	//          //  log.Log(oxe.Message);
-	//          //  return false;
-	//          //}
+                          //write processing output to same line
+                          log.Log(string.Format("Reading table {0}             \r", tableDefinition.Name));
 
-	//          //write processing output to same line
-	//          Console.Write("Reading table {0}             \r", tableDefinition.Name);
+                          _tables.Add(tableDefinition);
+                      }
 
-	//          //tableDefinition.KeyType = line.Substring(Constants.posKeyType, Constants.lenKeyType).Trim();
-	//          _tables.Add(tableDefinition);
-	//        }
-
-	//      }
-
-	//      tablesFile.Close();
-	//      log.Log("Extract Table Definitions to local variables - complete");
-	//    }
-	//    catch (Exception ex)
-	//    {
-	//      tablesFile.Close();
-	//      log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
-	//      return false;
-	//    }
-	//  }
-	//  else
-	//  {
-	//    log.Log("Table Definitions file is missing");
-	//    return false;
-	//  }
-	//  return true;
-	//}
+                  tablesFile.Close();
+                  log.Log("Extract Table Definitions to local variables - complete");
+              }
+              catch (Exception ex)
+              {
+                  tablesFile.Close();
+                  log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
+                  return false;
+              }
+          }
+          else
+          {
+              log.Log("Table Definitions file is missing");
+              return false;
+          }
+          return true;
+      }
 
     private void PopulateTables ()
     {
@@ -318,10 +299,10 @@ namespace Import
       log.Log("Persist Table Definitions to DB - start");
       try
       {
-          foreach (TableDefinition item in _tables)
+          foreach (TableDefinitions1 item in _tables)
           //Parallel.ForEach(_tables, item =>
           {
-              _context.TableDefinitions.Add(item);
+              _context.TableDefinitions1.Add(item);
               
           }
        //   );
@@ -478,35 +459,10 @@ namespace Import
         }
     }
 
-	//private bool CreateRuleEntities(string oldName, int count)
-	//{
-	//    int ruleCount = 0;
-	//    foreach (ProcedureDefinition item in _rules)
-	//    {
-	//        count++;
-	//        if (item.Name != oldName)
-	//        {
-	//            ruleCount++;
-	//            entityCount++;
-	//            Entity rule = new Entity();
-	//            rule.Name = item.Name;
-	//            oldName = item.Name;
-	//            rule.Type = "RULE";
-	//            rule.SourceUnit = item.Unit;
-	//            rule.SourceId = item.Id;
-	//            rule.NormalisedUnit = "N/A";
-	//            rule.Id = entityCount;
-	//            _entity.Add(rule);
-	//        }
-	//    }
-	//    log.Log(string.Format("{0} Rule Definitions added", ruleCount));
-	//    return true;
-	//}
-
 	private bool CreateTableEntities(string oldName, int count)
 	{
 		int tableCount = 0;
-		foreach (TableDefinition item in _tables)
+		foreach (TableDefinitions1 item in _tables)
 		{
 			count++;
 			if (item.Name != oldName)
@@ -528,32 +484,6 @@ namespace Import
 		log.Log(string.Format("{0} Table Definitions added", tableCount));
 		return true;
 	}
-
-	//private bool CreateTransactionEntities(string oldName, int count)
-	//{
-	//    int transCount = 0;
-	//    foreach (TransactionDefinition item in _transactions)
-	//    {
-	//        count++;
-	//        if (item.Name != oldName)
-	//        {
-	//            transCount++;
-	//            entityCount++;
-	//            Entity transaction = new Entity();
-	//            transaction.Name = item.Name;
-	//            oldName = item.Name;
-	//            transaction.Type = "TRAN";
-	//            transaction.SourceUnit = item.Unit;
-	//            transaction.SourceId = item.Id;
-	//            transaction.NormalisedUnit = "N/A";
-	//            transaction.Id = entityCount;
-
-	//            _entity.Add(transaction);
-	//        }
-	//    }
-	//    log.Log(string.Format("{0} Transaction Definitions added", transCount));
-	//    return true;
-	//}
 
 	//private bool CreateTriggerEntities(string oldName, int count)
 	//{
@@ -612,22 +542,22 @@ namespace Import
       /// </summary>
     private void ClearTables(ConsoleLog log)
     {
-        System.Console.Write("Clear AuditLog table (Y/N)?");
-        string line = System.Console.ReadLine();
-        line = line.ToUpper();
-        if (line.Trim().Equals("Y"))
-        {
-            ClearTable("AuditLog", log);
-        }
-        else if (line.Trim().Equals("N"))
-        {
-            System.Console.WriteLine("AuditLog table NOT cleared");
-        }
-        else
-        {
-            System.Console.WriteLine(string.Format("Invalid option entered: {0}", line));
-            ClearTables(log);
-        }
+        //System.Console.Write("Clear Admin.AuditLog table (Y/N)?");
+        //string line = System.Console.ReadLine();
+        //line = line.ToUpper();
+        //if (line.Trim().Equals("Y"))
+        //{
+        //    ClearTable("Admin.AuditLog", log);
+        //}
+        //else if (line.Trim().Equals("N"))
+        //{
+        //    System.Console.WriteLine("Admin.AuditLog table NOT cleared");
+        //}
+        //else
+        //{
+        //    System.Console.WriteLine(string.Format("Invalid option entered: {0}", line));
+        //    ClearTables(log);
+        //}
 
         ClearTable("SQL.ProcedureDefinitions", log);
         ClearTable("SQL.TableDefinitions", log);
@@ -636,25 +566,6 @@ namespace Import
         ClearTable("Admin.EntityRelationships", log);
         ClearTable("Admin.Interfaces", log);
         ClearTable("Admin.InternalInterfaces", log);
-    }
-
-    public void ClearTable(string table, ConsoleLog log)
-    {
-        HousingSAModel _context = new HousingSAModel();
-
-        try
-        {
-            _context.Database.ExecuteSqlCommand(string.Format("truncate table {0}", table));
-            _context.SaveChanges();
-
-            log.Log(string.Format("{0} table cleared", table));
-        }
-
-        catch (Exception e)
-        {
-            log.Log(string.Format("Error clearing {0} table in DB: {1}", table, e.Message));
-
-        }
     }
     }
     #endregion

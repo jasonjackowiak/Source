@@ -84,10 +84,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuildOSBRelationships.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BuildRelationships.cs" />
+    <Compile Include="BuildSQLRelationships.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
