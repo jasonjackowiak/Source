@@ -4,4 +4,3 @@ D:\Code\HSA\HousingStatistics\HousingStatistics\Import\bin\Debug\Import.pdb
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\Import.exe
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\Import.pdb
-C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.csprojResolveAssemblyReference.cache

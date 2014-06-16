@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Import;
 using System.Threading;
 using System.Threading.Tasks;
+using Project1;
+using Common;
 
 namespace Build
 {
@@ -29,13 +30,13 @@ namespace Build
         #endregion
 
         #region build relations
-        public void BuildRelations(ConsoleLog log)
+        public void BuildRelations(ConsoleLog log, string[] input)
         {
             
-            BuildRuleRuleCalls(log);
+            BuildRuleRuleCalls(log, input);
         }
 
-        private void BuildRuleRuleCalls(ConsoleLog log)
+        private void BuildRuleRuleCalls(ConsoleLog log, string[] input)
         {
             log.Log("************** BUILD ******************");
 
@@ -55,7 +56,7 @@ namespace Build
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetRuleEntityCalls(_ruleDefinitions, uniqueRules, uniqueTables, uniqueTriggers);
+            GetRuleEntityCalls(_ruleDefinitions, uniqueRules, uniqueTables, uniqueTriggers, input);
 
             CreateMasterList();
             ConvertEntityCallsToInt();
@@ -65,10 +66,10 @@ namespace Build
             log.EndLog();
         }
 
-        private void GetRuleEntityCalls(List<RuleDefinition> _rules, List<string> uniqueRules, List<string> uniqueTables, List<string> uniqueTriggers)
+        private void GetRuleEntityCalls(List<RuleDefinition> _rules, List<string> uniqueRules, List<string> uniqueTables, List<string> uniqueTriggers, string[] input)
     {
 
-        string[] words = BuildInput();
+        string[] words = input;
         List<Task> _tasks = new List<Task>();
         bool rules = false;
         bool tables = false;
@@ -447,13 +448,15 @@ namespace Build
 
     private void ClearTables()
     {
-        p.ClearTable("Admin.EntityRelationship");
-        p.ClearTable("Admin.Bucket");
-        p.ClearTable("Admin.Interface");
-        p.ClearTable("Admin.InternalInterface");
-        p.ClearTable("Admin.EntityResidence");
-        p.ClearTable("Admin.InterfaceReporting");
-        p.ClearTable("Admin.BucketReporting");
+        Utility bla = new Utility();
+
+        bla.ClearTable("Admin.EntityRelationship");
+        bla.ClearTable("Admin.Bucket");
+        bla.ClearTable("Admin.Interface");
+        bla.ClearTable("Admin.InternalInterface");
+        bla.ClearTable("Admin.EntityResidence");
+        bla.ClearTable("Admin.InterfaceReporting");
+        bla.ClearTable("Admin.BucketReporting");
     }
     #endregion 
 

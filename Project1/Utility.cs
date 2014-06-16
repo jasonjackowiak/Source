@@ -16,21 +16,18 @@ namespace Project1
 
         public void ClearTable(string table)
         {
-            
             HousingSAModel _context = new HousingSAModel();
 
             try
             {
                 _context.Database.ExecuteSqlCommand(string.Format("truncate table {0}", table));
                 _context.SaveChanges();
-
                 //log.Log(string.Format("{0} table cleared", table));
             }
 
             catch (Exception e)
             {
-                //log.Log(string.Format("Error clearing {0} table in DB: {1}", table, e.Message));
-
+                Console.WriteLine(string.Format("Error clearing {0} table in DB: {1}", table, e.Message));
             }
         }
 

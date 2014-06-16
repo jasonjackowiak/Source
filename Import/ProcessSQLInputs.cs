@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using Project1;
+using Common;
 
 namespace Import
 {
@@ -18,7 +20,10 @@ namespace Import
   {
     #region vars
       private ConsoleLog log;
+      NameValueCollection appSettings = ConfigurationManager.AppSettings;
+
       private List<TableDefinitions1> _tables = new List<TableDefinitions1>();
+      private List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
 	  private List<ProcedureDefinition> _procedures = new List<ProcedureDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
       private List<Entity> _entity = new List<Entity>();
@@ -181,7 +186,7 @@ namespace Import
 
       private void ReadTables()
       {
-          string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, log.GetFromConfig("Tables"));
+          string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("Tables"));
           if (file.Contains(".txt"))
               ExtractTextTables();
           else if (file.Contains(".xls"))
@@ -190,7 +195,7 @@ namespace Import
 
 	  private void ReadExcelTables()
 	  {
-		  string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, log.GetFromConfig("Tables"));
+		  string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("Tables"));
 		  log.Log(string.Format("Opening {0} Excel file", file));
 		  try
 		  {
@@ -246,7 +251,7 @@ namespace Import
 
       private bool ExtractTextTables()
       {
-          string tableFile = log.GetFromConfig("Tables");
+          string tableFile = GetFromConfig("Tables");
           string line;
           int lineNo = 0;
           int tableCount = 0;
@@ -291,6 +296,59 @@ namespace Import
           return true;
       }
 
+      private bool ExtractTableForeignConstraints()
+      {
+          string tableConastraintFile = GetFromConfig("TableForeignConstraints");
+          string line;
+          int lineNo = 0;
+          int tableCount = 0;
+
+          log.Log("Extract Table Foreign Constraints to local variables - start");
+
+          if (File.Exists(tableConastraintFile))
+          {
+              StreamReader tablesFile = new StreamReader(tableConastraintFile);
+              try
+              {
+                  while ((line = tablesFile.ReadLine()) != null) // loop through all table extract lines
+                  {
+                      lineNo++;
+
+                      tableCount++;
+                      TableForeignConstraint tableForeignConstraint = new TableForeignConstraint();
+                      tableForeignConstraint.Name = line.Trim();
+                      //tableForeignConstraint.Constraint = ???
+                      tableForeignConstraint.Id = tableCount;
+
+                      //write processing output to same line
+                      log.Log(string.Format("Reading table {0}             \r", tableForeignConstraint.Name));
+
+                      _tableForeignConstraints.Add(tableForeignConstraint);
+                  }
+
+                  tablesFile.Close();
+                  log.Log("Extract Table Definitions to local variables - complete");
+              }
+              catch (Exception ex)
+              {
+                  tablesFile.Close();
+                  log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
+                  return false;
+              }
+          }
+          else
+          {
+              log.Log("Table Definitions file is missing");
+              return false;
+          }
+          return true;
+      }
+
+      private string GetFromConfig(string p)
+      {
+          return appSettings.Get(p);
+      }
+
     private void PopulateTables ()
     {
         HousingSAModel _context = new HousingSAModel();
@@ -329,7 +387,7 @@ namespace Import
         string ruleName = String.Empty; // extracted rule name
         int lineNo = 0;
         int ruleCount = 0;
-        string ruleFile = log.GetFromConfig("Rules");
+        string ruleFile = GetFromConfig("Rules");
         string unit = "";
         int unitpos = 0;
         int lineCount = 0;
@@ -412,7 +470,7 @@ namespace Import
     private string GetRuleSeparator ()
     {
       // this is a separator between rules - note, can change!
-      string ruleSeparator = log.GetFromConfig("RuleSeparator");
+      string ruleSeparator = GetFromConfig("RuleSeparator");
       if (string.IsNullOrEmpty(ruleSeparator))
         ruleSeparator = "###";
       return ruleSeparator;
@@ -542,30 +600,15 @@ namespace Import
       /// </summary>
     private void ClearTables(ConsoleLog log)
     {
-        //System.Console.Write("Clear Admin.AuditLog table (Y/N)?");
-        //string line = System.Console.ReadLine();
-        //line = line.ToUpper();
-        //if (line.Trim().Equals("Y"))
-        //{
-        //    ClearTable("Admin.AuditLog", log);
-        //}
-        //else if (line.Trim().Equals("N"))
-        //{
-        //    System.Console.WriteLine("Admin.AuditLog table NOT cleared");
-        //}
-        //else
-        //{
-        //    System.Console.WriteLine(string.Format("Invalid option entered: {0}", line));
-        //    ClearTables(log);
-        //}
+        Utility bla = new Utility();
 
-        ClearTable("SQL.ProcedureDefinitions", log);
-        ClearTable("SQL.TableDefinitions", log);
-        ClearTable("Admin.Buckets", log);
-        ClearTable("Admin.Entities", log);
-        ClearTable("Admin.EntityRelationships", log);
-        ClearTable("Admin.Interfaces", log);
-        ClearTable("Admin.InternalInterfaces", log);
+        bla.ClearTable("SQL.ProcedureDefinitions");
+        bla.ClearTable("SQL.TableDefinitions");
+        bla.ClearTable("Admin.Buckets");
+        bla.ClearTable("Admin.Entities");
+        bla.ClearTable("Admin.EntityRelationships");
+        bla.ClearTable("Admin.Interfaces");
+        bla.ClearTable("Admin.InternalInterfaces");
     }
     }
     #endregion

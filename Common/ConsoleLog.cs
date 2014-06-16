@@ -7,13 +7,14 @@ using System.Text;
 using System.IO;
 using System.Configuration;
 using System.Collections.Specialized;
+using Project1;
 
-namespace Import
+namespace Common
 {
   public class ConsoleLog
   {
      #region vars
-        NameValueCollection appSettings = ConfigurationManager.AppSettings;
+        //NameValueCollection appSettings = ConfigurationManager.AppSettings;
         StreamWriter _logFile;
         List<AuditLog> _auditLog = new List<AuditLog>();
         private HousingSAModel _context = new HousingSAModel();
@@ -26,10 +27,10 @@ namespace Import
     }
 
     #region AppConfig
-    public string GetFromConfig (string section)
-    {
-      return appSettings.Get(section);
-    }
+    //public string GetFromConfig (string section)
+    //{
+    //  return appSettings.Get(section);
+    //}
     #endregion
 
     #region Logging
@@ -60,7 +61,8 @@ namespace Import
 
     public void BeginLog()
     {
-            string logFileName = GetFromConfig("LogFilePath");
+            //string logFileName = GetFromConfig("LogFilePath");
+            string logFileName = "C:\\Users\\J\\Documents\\GitHub\\HSA\\Log.txt";
             if (!File.Exists(logFileName))
             {
                 FileStream fs = System.IO.File.Create(logFileName);
@@ -99,7 +101,7 @@ namespace Import
       {
          _context.AuditLogs.Add(item);
       }
-        _context.SaveChanges();
+      _context.SaveChanges();
     }
       
     #endregion

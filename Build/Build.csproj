@@ -96,9 +96,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Import\Import.csproj">
-      <Project>{1AFA2A88-0DE0-4ECB-91A2-78495318C86F}</Project>
-      <Name>Import</Name>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{248fa5ef-3efb-4119-8a2c-b8aaec802678}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project1\Project1.csproj">
+      <Project>{3f52d1b8-2a99-4efb-bc0a-79fb33292715}</Project>
+      <Name>Project1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

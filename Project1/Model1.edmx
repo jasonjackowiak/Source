@@ -138,6 +138,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="TableForeignConstraints">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ConastraintName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="TriggerDefinitions1">
           <Key>
             <PropertyRef Name="Id" />
@@ -166,6 +174,7 @@
           <EntitySet Name="TriggerDefinitions" EntityType="Self.TriggerDefinitions" Schema="OSB" store:Type="Tables" />
           <EntitySet Name="ProcedureDefinitions" EntityType="Self.ProcedureDefinitions" Schema="SQL" store:Type="Tables" />
           <EntitySet Name="TableDefinitions1" EntityType="Self.TableDefinitions1" Schema="SQL" Table="TableDefinitions" store:Type="Tables" />
+          <EntitySet Name="TableForeignConstraints" EntityType="Self.TableForeignConstraints" Schema="SQL" store:Type="Tables" />
           <EntitySet Name="TriggerDefinitions1" EntityType="Self.TriggerDefinitions1" Schema="SQL" Table="TriggerDefinitions" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -187,6 +196,7 @@
           <EntitySet Name="TriggerDefinitions1" EntityType="HousingSADB.TriggerDefinitions1" />
           <EntitySet Name="RuleDefinitions" EntityType="HousingSADB.RuleDefinition" />
           <EntitySet Name="TriggerDefinitions" EntityType="HousingSADB.TriggerDefinition" />
+          <EntitySet Name="TableForeignConstraints" EntityType="HousingSADB.TableForeignConstraint" />
         </EntityContainer>
         <EntityType Name="AuditLog">
           <Key>
@@ -334,6 +344,14 @@
           <Property Name="RuleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Access" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TableForeignConstraint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ConastraintName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -502,6 +520,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TableForeignConstraints">
+            <EntityTypeMapping TypeName="HousingSADB.TableForeignConstraint">
+              <MappingFragment StoreEntitySet="TableForeignConstraints">
+                <ScalarProperty Name="ConastraintName" ColumnName="ConastraintName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -538,6 +565,7 @@
         <EntityTypeShape EntityType="HousingSADB.TriggerDefinitions1" Width="1.5" PointX="7.375" PointY="9.75" />
         <EntityTypeShape EntityType="HousingSADB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="HousingSADB.TriggerDefinition" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="HousingSADB.TableForeignConstraint" Width="1.5" PointX="3.375" PointY="10.75" />
       </Diagram>
       <Diagram DiagramId="34e71bec20b44a87a54fb393f3f69158" Name="Diagram1" >
       </Diagram>

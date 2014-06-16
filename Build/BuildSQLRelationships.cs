@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Import;
 using System.Threading;
 using System.Threading.Tasks;
+using Project1;
+using Common;
 
 namespace Build
 {
@@ -25,17 +26,15 @@ namespace Build
         public List<ProcedureDefinition> _procedureDefinitions = new List<ProcedureDefinition>();
         public List<TableDefinition> _tableDefinitions = new List<TableDefinition>();
         public List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
-        //private ProcessExtracts p = new ProcessExtracts();
         #endregion
 
         #region build relations
-        public void BuildRelations(ConsoleLog log)
+        public void BuildRelations(ConsoleLog log, string[] input)
         {
-
-            BuildProcedureProcedureCalls(log);
+            BuildProcedureProcedureCalls(log, input);
         }
 
-        private void BuildProcedureProcedureCalls(ConsoleLog log)
+        private void BuildProcedureProcedureCalls(ConsoleLog log, string[] input)
         {
             log.Log("************** BUILD ******************");
 
@@ -55,7 +54,7 @@ namespace Build
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetProcedureEntityCalls(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers);
+            GetProcedureEntityCalls(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input);
 
             CreateMasterList();
             ConvertEntityCallsToInt();
@@ -65,10 +64,10 @@ namespace Build
             log.EndLog();
         }
 
-        private void GetProcedureEntityCalls(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers)
+        private void GetProcedureEntityCalls(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input)
     {
 
-        string[] words = BuildInput();
+        string[] words = input;
         List<Task> _tasks = new List<Task>();
         bool procedures = false;
         bool tables = false;
@@ -146,7 +145,7 @@ namespace Build
 
         private void BuildCalledTables(List<ProcedureDefinition> _procedures, List<string> uniqueTables)
     {
-        log.Log("Finding table references - start");
+        log.Log("Finding table references in procedures - start");
         foreach (ProcedureDefinition procedure in _procedures)
         {
             try
@@ -160,10 +159,27 @@ namespace Build
             }
             catch (Exception e)
             {
-                log.Log(string.Format("Error reading rule definitions for table references: {0}", e.Message));
+                log.Log(string.Format("Error reading procedure definitions for table references: {0}", e.Message));
             }
+
         }
-        log.Log("Finding table references - start");
+        //log.Log("Finding table references in procedures - start");
+        //foreach (TableDefinitions1 in _tables)
+        //{
+        //    try
+        //    {
+        //        foreach (String tableName in uniqueTables)
+        //        {
+        //            TableInProcedureMatch(tableName, procedure, _tableLinks);
+        //            //write processing output to same line
+        //            Console.Write("Searching for {0} in {1}            \r", tableName, procedure.Name);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        log.Log(string.Format("Error reading procedure definitions for table references: {0}", e.Message));
+        //    }
+        //}
     }
 
         private void BuildCalledProcedures(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures)
@@ -444,13 +460,15 @@ namespace Build
 
     private void ClearTables()
     {
-        p.ClearTable("EntityRelationship");
-        p.ClearTable("Bucket");
-        p.ClearTable("Interface");
-        p.ClearTable("InternalInterface");
-        p.ClearTable("EntityResidence");
-        p.ClearTable("InterfaceReporting");
-        p.ClearTable("BucketReporting");
+        Utility bla = new Utility();
+
+        bla.ClearTable("EntityRelationship");
+        bla.ClearTable("Bucket");
+        bla.ClearTable("Interface");
+        bla.ClearTable("InternalInterface");
+        bla.ClearTable("EntityResidence");
+        bla.ClearTable("InterfaceReporting");
+        bla.ClearTable("BucketReporting");
     }
     #endregion 
 

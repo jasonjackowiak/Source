@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Console.cs" />
-    <Compile Include="ConsoleLog.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -56,6 +55,10 @@
     <ProjectReference Include="..\Build\Build.csproj">
       <Project>{c5d4d706-1c77-4176-8a3d-564f69ef3a33}</Project>
       <Name>Build</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{248fa5ef-3efb-4119-8a2c-b8aaec802678}</Project>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Import\Import.csproj">
       <Project>{1afa2a88-0de0-4ecb-91a2-78495318c86f}</Project>

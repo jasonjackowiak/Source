@@ -39,5 +39,6 @@ namespace Project1
         public DbSet<TriggerDefinitions1> TriggerDefinitions1 { get; set; }
         public DbSet<RuleDefinition> RuleDefinitions { get; set; }
         public DbSet<TriggerDefinition> TriggerDefinitions { get; set; }
+        public DbSet<TableForeignConstraint> TableForeignConstraints { get; set; }
     }
 }

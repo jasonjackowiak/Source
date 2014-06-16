@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Import;
 using Build;
+using Common;
 
 namespace UI.Console
 {
@@ -59,11 +60,9 @@ namespace UI.Console
                     import.ProcessInputs(_log);
                     break;
                 case "B":
-                    //_log.Log("Please enter a valid phase.");
-                    //_log.Log("Build is under construction.");
-                    //ImportInput(language);
-                    //Build
-
+                    string[] input = SQLBuildInput();
+                    BuildSQLRelationships build = new BuildSQLRelationships();
+                    build.BuildRelations(_log, input);
                     break;
                 case "A":
                     _log.Log("Please enter a valid phase.");
@@ -94,6 +93,40 @@ namespace UI.Console
             foreach (string s in words)
             {
                 if (s.Trim().Equals("RULES"))
+                {
+                }
+                else if (s.Trim().Equals("TABLES"))
+                {
+                }
+                else if (s.Trim().Equals("TRIGGERS"))
+                {
+                }
+                else if (s.Trim().Equals("ALL"))
+                {
+                }
+                else
+                {
+                    _log.Log(string.Format("Invalid entity entered: {0}", s));
+                    //clear array and run method again
+                    Array.Clear(words, 0, words.Count());
+                    OSBBuildInput();
+                }
+            }
+            return words;
+        }
+
+        private string[] SQLBuildInput()
+        {
+            _log.Log("Please enter the entities you wish to build, seperated by a comma(,). Valid entities are: ");
+            _log.Log("procedures, tables, triggers");
+            _log.Log("Enter entity(s): ");
+            string line = System.Console.ReadLine();
+            line = line.ToUpper();
+            string[] words = line.Split(',');
+
+            foreach (string s in words)
+            {
+                if (s.Trim().Equals("PROCEDURES"))
                 {
                 }
                 else if (s.Trim().Equals("TABLES"))

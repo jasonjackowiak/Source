@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using Project1;
+using Common;
 
 namespace Import
 {
@@ -18,6 +20,8 @@ namespace Import
   {
     #region vars
       private ConsoleLog log = new ConsoleLog();
+      NameValueCollection appSettings = ConfigurationManager.AppSettings;
+
       private List<TableDefinition> _tables = new List<TableDefinition>();
 	  private List<RuleDefinition> _rules = new List<RuleDefinition>();
       private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
@@ -59,7 +63,7 @@ namespace Import
       #region Triggers
       private bool ExtractTriggers()
       {
-          string reportFile = log.GetFromConfig("Triggers");
+          string reportFile = GetFromConfig("Triggers");
           string line;
           int lineNo = 0;
           int triggerCount = 0;
@@ -151,7 +155,7 @@ namespace Import
 
       private bool ExtractTables()
       {
-          string tableFile = log.GetFromConfig("Tables");
+          string tableFile = GetFromConfig("Tables");
           string line;
           int lineNo = 0;
           int tableCount = 0;
@@ -224,6 +228,11 @@ namespace Import
           return true;
       }
 
+      private string GetFromConfig(string p)
+      {
+          return appSettings.Get(p);
+      }
+
     private void PopulateTables ()
     {
         HousingSAModel _context = new HousingSAModel();
@@ -262,7 +271,7 @@ namespace Import
         string ruleName = String.Empty; // extracted rule name
         int lineNo = 0;
         int ruleCount = 0;
-        string ruleFile = log.GetFromConfig("Rules");
+        string ruleFile = GetFromConfig("Rules");
         string unit = "";
         int unitpos = 0;
         int lineCount = 0;
@@ -345,7 +354,7 @@ namespace Import
     private string GetRuleSeparator ()
     {
       // this is a separator between rules - note, can change!
-      string ruleSeparator = log.GetFromConfig("RuleSeparator");
+      string ruleSeparator = GetFromConfig("RuleSeparator");
       if (string.IsNullOrEmpty(ruleSeparator))
         ruleSeparator = "###";
       return ruleSeparator;

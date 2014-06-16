@@ -6,4 +6,15 @@ D:\Code\HSA\HousingStatistics\Build\bin\Debug\Import.pdb
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.exe
 D:\Code\HSA\HousingStatistics\Build\obj\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.exe.config
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Project1.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Build\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\Debug\Build.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\Debug\Build.exe
+C:\Users\J\Documents\GitHub\HSA\Source\Build\obj\Debug\Build.pdb
