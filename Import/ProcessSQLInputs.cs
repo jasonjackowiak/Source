@@ -44,10 +44,12 @@ namespace Import
 
         var f = Task.Factory;
         var extractTables = f.StartNew(() => ReadTables());
+        var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
         //var extractRules = f.StartNew(() => ExtractRules());
-        
-        Task.WaitAll(extractTables);
+
+        Task.WaitAll(extractTableForeignConstraints);
         PopulateTables();
+        PopulateTableForeignConstraints();
 
         //Task.WaitAll(extractRules);
         //PopulateRules();
@@ -162,7 +164,7 @@ namespace Import
 
 	//private void PopulateTriggers ()
 	//{
-	//     HousingSAModel _context = new HousingSAModel();
+	//     FAASDB _context = new FAASDB();
 
 	//    log.Log("Persist Triggers to DB - start");
 	//    try
@@ -298,26 +300,28 @@ namespace Import
 
       private bool ExtractTableForeignConstraints()
       {
-          string tableConastraintFile = GetFromConfig("TableForeignConstraints");
+          string tableConstraintFile = GetFromConfig("TableForeignConstraints");
           string line;
           int lineNo = 0;
           int tableCount = 0;
 
           log.Log("Extract Table Foreign Constraints to local variables - start");
 
-          if (File.Exists(tableConastraintFile))
+          if (File.Exists(tableConstraintFile))
           {
-              StreamReader tablesFile = new StreamReader(tableConastraintFile);
+              StreamReader tablesFile = new StreamReader(tableConstraintFile);
               try
               {
-                  while ((line = tablesFile.ReadLine()) != null) // loop through all table extract lines
+                  while ((line = tablesFile.ReadLine()) != null) // loop through all lines
                   {
-                      lineNo++;
+                      string[] tables = line.Split('>');
 
+                      lineNo++;
                       tableCount++;
+
                       TableForeignConstraint tableForeignConstraint = new TableForeignConstraint();
-                      tableForeignConstraint.Name = line.Trim();
-                      //tableForeignConstraint.Constraint = ???
+                      tableForeignConstraint.Name = tables[0].TrimEnd('-');
+                      tableForeignConstraint.ConastraintName = tables[1].TrimEnd(';');
                       tableForeignConstraint.Id = tableCount;
 
                       //write processing output to same line
@@ -351,19 +355,15 @@ namespace Import
 
     private void PopulateTables ()
     {
-        HousingSAModel _context = new HousingSAModel();
-
+      FAASDB _context = new FAASDB();
 
       log.Log("Persist Table Definitions to DB - start");
       try
       {
           foreach (TableDefinitions1 item in _tables)
-          //Parallel.ForEach(_tables, item =>
           {
               _context.TableDefinitions1.Add(item);
-              
           }
-       //   );
             _context.SaveChanges();
           log.Log("Persist Table Definitions to DB - complete");
       }
@@ -372,7 +372,27 @@ namespace Import
           log.Log(string.Format("Error persisting Table Definitions to DB: {0}: ", e.Message));
       }
     }
- 
+
+    private void PopulateTableForeignConstraints()
+    {
+        FAASDB _context = new FAASDB();
+
+        log.Log("Persist Table Foreign Constraints to DB - start");
+        try
+        {
+            foreach (TableForeignConstraint item in _tableForeignConstraints)
+            {
+                _context.TableForeignConstraints.Add(item);
+            }
+            _context.SaveChanges();
+            log.Log("Persist Table Foreign Constraints to DB - complete");
+        }
+        catch (Exception e)
+        {
+            log.Log(string.Format("Error persisting Table Definitions to DB: {0}: ", e.Message));
+        }
+    }
+
     #endregion
 
     #region Procedures
@@ -478,7 +498,7 @@ namespace Import
       
     private void PopulateRules()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
         log.Log("Persist Rule Definitions to DB - start");
         try
         {
@@ -573,7 +593,7 @@ namespace Import
 
     private void PopulateEntities()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
 
         log.Log("Extract Entities to DB - start");
         try
@@ -604,6 +624,7 @@ namespace Import
 
         bla.ClearTable("SQL.ProcedureDefinitions");
         bla.ClearTable("SQL.TableDefinitions");
+        bla.ClearTable("SQL.TableForeignConstraints");
         bla.ClearTable("Admin.Buckets");
         bla.ClearTable("Admin.Entities");
         bla.ClearTable("Admin.EntityRelationships");

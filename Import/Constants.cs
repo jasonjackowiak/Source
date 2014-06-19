@@ -34,11 +34,6 @@ namespace Import
     public const int tableLinesToSkip = 15; // number of Header lines
     // Table extract fields positions and lengths - end
 
-    // Table Foreign Constraint extract fields positions and lengths - start
-    public const int lenRuleUnit = 8;
-    public const int lenRuleSeperator = 3;
-    // Table Foreign Constraint extract fields positions and lengths - end
-
     // Rules extract fields positions and lengths - start
     //public const int charsToSkip = 30; // number of characters on each line to ignore - to cater for extracted data
     public const int charsToSkip = 35; // number of characters on each line to ignore - to cater for extracted data

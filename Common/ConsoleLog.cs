@@ -17,7 +17,7 @@ namespace Common
         //NameValueCollection appSettings = ConfigurationManager.AppSettings;
         StreamWriter _logFile;
         List<AuditLog> _auditLog = new List<AuditLog>();
-        private HousingSAModel _context = new HousingSAModel();
+        private FAASDB _context = new FAASDB();
         public string line = "";
         private DateTime startTime;
       #endregion

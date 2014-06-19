@@ -13,13 +13,38 @@
           <Property Name="LogTime" Type="datetime" />
           <Property Name="Line" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="BucketConnection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CallingBucket" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumberCalledInterfaces" Type="int" Nullable="false" />
+          <Property Name="CalledBucket" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BucketReporting">
+          <Key>
+            <PropertyRef Name="BucketId" />
+          </Key>
+          <Property Name="BucketId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Entities" Type="int" Nullable="false" />
+          <Property Name="NumberCallingBuckets" Type="int" Nullable="false" />
+          <Property Name="CallingBuckets" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NumberCalleduckets" Type="int" Nullable="false" />
+          <Property Name="CalledBuckets" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NumberInternalInterfaces" Type="int" Nullable="false" />
+          <Property Name="NumberExternalInterfaces" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Buckets">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SubSystem1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Entities">
           <Key>
@@ -50,6 +75,28 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CallingEntityId" Type="int" Nullable="false" />
           <Property Name="CalledEntityId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntityResidence">
+          <Key>
+            <PropertyRef Name="EntityId" />
+          </Key>
+          <Property Name="EntityId" Type="int" Nullable="false" />
+          <Property Name="InternalWeight" Type="int" Nullable="false" />
+          <Property Name="ExternalWeight" Type="int" Nullable="false" />
+          <Property Name="ExternalSources" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InterfaceReporting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InterfaceId" Type="int" Nullable="false" />
+          <Property Name="TargetEntityId" Type="int" Nullable="false" />
+          <Property Name="TargetUnit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TotalEntitySources" Type="int" Nullable="false" />
+          <Property Name="TotalBucketsSources" Type="int" Nullable="false" />
+          <Property Name="SourceBuckets" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Interfaces">
           <Key>
@@ -162,10 +209,14 @@
         </EntityType>
         <EntityContainer Name="HousingSADBStoreContainer">
           <EntitySet Name="AuditLogs" EntityType="Self.AuditLogs" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="BucketConnection" EntityType="Self.BucketConnection" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="BucketReporting" EntityType="Self.BucketReporting" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="Buckets" EntityType="Self.Buckets" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="Entities" EntityType="Self.Entities" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="EntityOwnershipStrengths" EntityType="Self.EntityOwnershipStrengths" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="EntityRelationships" EntityType="Self.EntityRelationships" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="EntityResidence" EntityType="Self.EntityResidence" Schema="Admin" store:Type="Tables" />
+          <EntitySet Name="InterfaceReporting" EntityType="Self.InterfaceReporting" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="Interfaces" EntityType="Self.Interfaces" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="InternalInterfaces" EntityType="Self.InternalInterfaces" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="RuleDefinitions" EntityType="Self.RuleDefinitions" Schema="OSB" store:Type="Tables" />
@@ -180,23 +231,27 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HousingSADB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="HousingSAModel" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AuditLogs" EntityType="HousingSADB.AuditLog" />
-          <EntitySet Name="Entities" EntityType="HousingSADB.Entity" />
-          <EntitySet Name="EntityOwnershipStrengths" EntityType="HousingSADB.EntityOwnershipStrength" />
-          <EntitySet Name="EntityRelationships" EntityType="HousingSADB.EntityRelationship" />
-          <EntitySet Name="Interfaces" EntityType="HousingSADB.Interface" />
-          <EntitySet Name="InternalInterfaces" EntityType="HousingSADB.InternalInterface" />
-          <EntitySet Name="TableDefinitions" EntityType="HousingSADB.TableDefinition" />
-          <EntitySet Name="ProcedureDefinitions" EntityType="HousingSADB.ProcedureDefinition" />
-          <EntitySet Name="Buckets" EntityType="HousingSADB.Bucket" />
-          <EntitySet Name="TableDefinitions1" EntityType="HousingSADB.TableDefinitions1" />
-          <EntitySet Name="TransactionDefinitions" EntityType="HousingSADB.TransactionDefinition" />
-          <EntitySet Name="TriggerDefinitions1" EntityType="HousingSADB.TriggerDefinitions1" />
-          <EntitySet Name="RuleDefinitions" EntityType="HousingSADB.RuleDefinition" />
-          <EntitySet Name="TriggerDefinitions" EntityType="HousingSADB.TriggerDefinition" />
-          <EntitySet Name="TableForeignConstraints" EntityType="HousingSADB.TableForeignConstraint" />
+      <Schema Namespace="FAASDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="FAASModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AuditLogs" EntityType="FAASDB.AuditLog" />
+          <EntitySet Name="Entities" EntityType="FAASDB.Entity" />
+          <EntitySet Name="EntityOwnershipStrengths" EntityType="FAASDB.EntityOwnershipStrength" />
+          <EntitySet Name="EntityRelationships" EntityType="FAASDB.EntityRelationship" />
+          <EntitySet Name="Interfaces" EntityType="FAASDB.Interface" />
+          <EntitySet Name="InternalInterfaces" EntityType="FAASDB.InternalInterface" />
+          <EntitySet Name="TableDefinitions" EntityType="FAASDB.TableDefinition" />
+          <EntitySet Name="ProcedureDefinitions" EntityType="FAASDB.ProcedureDefinition" />
+          <EntitySet Name="TableDefinitions1" EntityType="FAASDB.TableDefinitions1" />
+          <EntitySet Name="TransactionDefinitions" EntityType="FAASDB.TransactionDefinition" />
+          <EntitySet Name="TriggerDefinitions1" EntityType="FAASDB.TriggerDefinitions1" />
+          <EntitySet Name="RuleDefinitions" EntityType="FAASDB.RuleDefinition" />
+          <EntitySet Name="TriggerDefinitions" EntityType="FAASDB.TriggerDefinition" />
+          <EntitySet Name="TableForeignConstraints" EntityType="FAASDB.TableForeignConstraint" />
+          <EntitySet Name="BucketConnections" EntityType="FAASDB.BucketConnection" />
+          <EntitySet Name="BucketReportings" EntityType="FAASDB.BucketReporting" />
+          <EntitySet Name="EntityResidences" EntityType="FAASDB.EntityResidence" />
+          <EntitySet Name="Buckets" EntityType="FAASDB.Bucket" />
+          <EntitySet Name="InterfaceReportings" EntityType="FAASDB.InterfaceReporting" />
         </EntityContainer>
         <EntityType Name="AuditLog">
           <Key>
@@ -282,14 +337,6 @@
           <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="SubSystem" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Bucket">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SubSystem1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="TableDefinitions1">
           <Key>
             <PropertyRef Name="Id" />
@@ -353,14 +400,69 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ConastraintName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="BucketConnection">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CallingBucket" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberCalledInterfaces" Type="Int32" Nullable="false" />
+          <Property Name="CalledBucket" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="BucketReporting">
+          <Key>
+            <PropertyRef Name="BucketId" />
+          </Key>
+          <Property Name="BucketId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Entities" Type="Int32" Nullable="false" />
+          <Property Name="NumberCallingBuckets" Type="Int32" Nullable="false" />
+          <Property Name="CallingBuckets" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NumberCalleduckets" Type="Int32" Nullable="false" />
+          <Property Name="CalledBuckets" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NumberInternalInterfaces" Type="Int32" Nullable="false" />
+          <Property Name="NumberExternalInterfaces" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EntityResidence">
+          <Key>
+            <PropertyRef Name="EntityId" />
+          </Key>
+          <Property Name="EntityId" Type="Int32" Nullable="false" />
+          <Property Name="InternalWeight" Type="Int32" Nullable="false" />
+          <Property Name="ExternalWeight" Type="Int32" Nullable="false" />
+          <Property Name="ExternalSources" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bucket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Unit" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="InterfaceReporting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InterfaceId" Type="Int32" Nullable="false" />
+          <Property Name="TargetEntityId" Type="Int32" Nullable="false" />
+          <Property Name="TargetUnit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TotalEntitySources" Type="Int32" Nullable="false" />
+          <Property Name="TotalBucketsSources" Type="Int32" Nullable="false" />
+          <Property Name="SourceBuckets" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="HousingSADBStoreContainer" CdmEntityContainer="HousingSAModel">
+  <EntityContainerMapping StorageEntityContainer="HousingSADBStoreContainer" CdmEntityContainer="FAASModel">
           <EntitySetMapping Name="AuditLogs">
-            <EntityTypeMapping TypeName="HousingSADB.AuditLog">
+            <EntityTypeMapping TypeName="FAASDB.AuditLog">
               <MappingFragment StoreEntitySet="AuditLogs">
                 <ScalarProperty Name="Line" ColumnName="Line" />
                 <ScalarProperty Name="LogTime" ColumnName="LogTime" />
@@ -369,7 +471,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Entities">
-            <EntityTypeMapping TypeName="HousingSADB.Entity">
+            <EntityTypeMapping TypeName="FAASDB.Entity">
               <MappingFragment StoreEntitySet="Entities">
                 <ScalarProperty Name="NormalisedUnit" ColumnName="NormalisedUnit" />
                 <ScalarProperty Name="SourceUnit" ColumnName="SourceUnit" />
@@ -381,7 +483,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EntityOwnershipStrengths">
-            <EntityTypeMapping TypeName="HousingSADB.EntityOwnershipStrength">
+            <EntityTypeMapping TypeName="FAASDB.EntityOwnershipStrength">
               <MappingFragment StoreEntitySet="EntityOwnershipStrengths">
                 <ScalarProperty Name="RecommendNewUnit" ColumnName="RecommendNewUnit" />
                 <ScalarProperty Name="ExternalSources" ColumnName="ExternalSources" />
@@ -393,7 +495,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EntityRelationships">
-            <EntityTypeMapping TypeName="HousingSADB.EntityRelationship">
+            <EntityTypeMapping TypeName="FAASDB.EntityRelationship">
               <MappingFragment StoreEntitySet="EntityRelationships">
                 <ScalarProperty Name="CalledEntityId" ColumnName="CalledEntityId" />
                 <ScalarProperty Name="CallingEntityId" ColumnName="CallingEntityId" />
@@ -402,7 +504,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Interfaces">
-            <EntityTypeMapping TypeName="HousingSADB.Interface">
+            <EntityTypeMapping TypeName="FAASDB.Interface">
               <MappingFragment StoreEntitySet="Interfaces">
                 <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
                 <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
@@ -412,7 +514,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="InternalInterfaces">
-            <EntityTypeMapping TypeName="HousingSADB.InternalInterface">
+            <EntityTypeMapping TypeName="FAASDB.InternalInterface">
               <MappingFragment StoreEntitySet="InternalInterfaces">
                 <ScalarProperty Name="EntityRelationshipIds" ColumnName="EntityRelationshipIds" />
                 <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
@@ -422,7 +524,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TableDefinitions">
-            <EntityTypeMapping TypeName="HousingSADB.TableDefinition">
+            <EntityTypeMapping TypeName="FAASDB.TableDefinition">
               <MappingFragment StoreEntitySet="TableDefinitions">
                 <ScalarProperty Name="TableType" ColumnName="TableType" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
@@ -439,7 +541,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProcedureDefinitions">
-            <EntityTypeMapping TypeName="HousingSADB.ProcedureDefinition">
+            <EntityTypeMapping TypeName="FAASDB.ProcedureDefinition">
               <MappingFragment StoreEntitySet="ProcedureDefinitions">
                 <ScalarProperty Name="SubSystem" ColumnName="SubSystem" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
@@ -451,17 +553,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Buckets">
-            <EntityTypeMapping TypeName="HousingSADB.Bucket">
-              <MappingFragment StoreEntitySet="Buckets">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SubSystem1" ColumnName="SubSystem1" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TableDefinitions1">
-            <EntityTypeMapping TypeName="HousingSADB.TableDefinitions1">
+            <EntityTypeMapping TypeName="FAASDB.TableDefinitions1">
               <MappingFragment StoreEntitySet="TableDefinitions1">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -469,7 +562,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TransactionDefinitions">
-            <EntityTypeMapping TypeName="HousingSADB.TransactionDefinition">
+            <EntityTypeMapping TypeName="FAASDB.TransactionDefinition">
               <MappingFragment StoreEntitySet="TransactionDefinitions">
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="PFKeyRule" ColumnName="PFKeyRule" />
@@ -482,7 +575,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TriggerDefinitions1">
-            <EntityTypeMapping TypeName="HousingSADB.TriggerDefinitions1">
+            <EntityTypeMapping TypeName="FAASDB.TriggerDefinitions1">
               <MappingFragment StoreEntitySet="TriggerDefinitions1">
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
@@ -497,7 +590,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RuleDefinitions">
-            <EntityTypeMapping TypeName="HousingSADB.RuleDefinition">
+            <EntityTypeMapping TypeName="FAASDB.RuleDefinition">
               <MappingFragment StoreEntitySet="RuleDefinitions">
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
@@ -508,7 +601,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TriggerDefinitions">
-            <EntityTypeMapping TypeName="HousingSADB.TriggerDefinition">
+            <EntityTypeMapping TypeName="FAASDB.TriggerDefinition">
               <MappingFragment StoreEntitySet="TriggerDefinitions">
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Access" ColumnName="Access" />
@@ -521,10 +614,70 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TableForeignConstraints">
-            <EntityTypeMapping TypeName="HousingSADB.TableForeignConstraint">
+            <EntityTypeMapping TypeName="FAASDB.TableForeignConstraint">
               <MappingFragment StoreEntitySet="TableForeignConstraints">
                 <ScalarProperty Name="ConastraintName" ColumnName="ConastraintName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BucketConnections">
+            <EntityTypeMapping TypeName="FAASDB.BucketConnection">
+              <MappingFragment StoreEntitySet="BucketConnection">
+                <ScalarProperty Name="CalledBucket" ColumnName="CalledBucket" />
+                <ScalarProperty Name="NumberCalledInterfaces" ColumnName="NumberCalledInterfaces" />
+                <ScalarProperty Name="CallingBucket" ColumnName="CallingBucket" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BucketReportings">
+            <EntityTypeMapping TypeName="FAASDB.BucketReporting">
+              <MappingFragment StoreEntitySet="BucketReporting">
+                <ScalarProperty Name="NumberExternalInterfaces" ColumnName="NumberExternalInterfaces" />
+                <ScalarProperty Name="NumberInternalInterfaces" ColumnName="NumberInternalInterfaces" />
+                <ScalarProperty Name="CalledBuckets" ColumnName="CalledBuckets" />
+                <ScalarProperty Name="NumberCalleduckets" ColumnName="NumberCalleduckets" />
+                <ScalarProperty Name="CallingBuckets" ColumnName="CallingBuckets" />
+                <ScalarProperty Name="NumberCallingBuckets" ColumnName="NumberCallingBuckets" />
+                <ScalarProperty Name="Entities" ColumnName="Entities" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BucketId" ColumnName="BucketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EntityResidences">
+            <EntityTypeMapping TypeName="FAASDB.EntityResidence">
+              <MappingFragment StoreEntitySet="EntityResidence">
+                <ScalarProperty Name="ExternalSources" ColumnName="ExternalSources" />
+                <ScalarProperty Name="ExternalWeight" ColumnName="ExternalWeight" />
+                <ScalarProperty Name="InternalWeight" ColumnName="InternalWeight" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buckets">
+            <EntityTypeMapping TypeName="FAASDB.Bucket">
+              <MappingFragment StoreEntitySet="Buckets">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InterfaceReportings">
+            <EntityTypeMapping TypeName="FAASDB.InterfaceReporting">
+              <MappingFragment StoreEntitySet="InterfaceReporting">
+                <ScalarProperty Name="SourceBuckets" ColumnName="SourceBuckets" />
+                <ScalarProperty Name="TotalBucketsSources" ColumnName="TotalBucketsSources" />
+                <ScalarProperty Name="TotalEntitySources" ColumnName="TotalEntitySources" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TargetUnit" ColumnName="TargetUnit" />
+                <ScalarProperty Name="TargetEntityId" ColumnName="TargetEntityId" />
+                <ScalarProperty Name="InterfaceId" ColumnName="InterfaceId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -551,21 +704,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="Model1" ZoomLevel="91">
-        <EntityTypeShape EntityType="HousingSADB.AuditLog" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HousingSADB.Entity" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HousingSADB.EntityOwnershipStrength" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HousingSADB.EntityRelationship" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HousingSADB.Interface" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HousingSADB.InternalInterface" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="HousingSADB.TableDefinition" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HousingSADB.ProcedureDefinition" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="HousingSADB.Bucket" Width="1.5" PointX="7.375" PointY="6.75" />
-        <EntityTypeShape EntityType="HousingSADB.TableDefinitions1" Width="1.5" PointX="9.375" PointY="3.75" />
-        <EntityTypeShape EntityType="HousingSADB.TransactionDefinition" Width="1.5" PointX="9.375" PointY="6.75" />
-        <EntityTypeShape EntityType="HousingSADB.TriggerDefinitions1" Width="1.5" PointX="7.375" PointY="9.75" />
-        <EntityTypeShape EntityType="HousingSADB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HousingSADB.TriggerDefinition" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="HousingSADB.TableForeignConstraint" Width="1.5" PointX="3.375" PointY="10.75" />
+        <EntityTypeShape EntityType="FAASDB.AuditLog" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.Entity" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.EntityOwnershipStrength" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASDB.EntityRelationship" Width="1.5" PointX="2.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASDB.Interface" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.InternalInterface" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASDB.TableDefinition" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.ProcedureDefinition" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FAASDB.TableDefinitions1" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASDB.TransactionDefinition" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FAASDB.TriggerDefinitions1" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="FAASDB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.TriggerDefinition" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="FAASDB.TableForeignConstraint" Width="1.5" PointX="3.375" PointY="10.75" />
+        <EntityTypeShape EntityType="FAASDB.BucketConnection" Width="1.5" PointX="9.375" PointY="10.75" />
+        <EntityTypeShape EntityType="FAASDB.BucketReporting" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASDB.EntityResidence" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="FAASDB.Bucket" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FAASDB.InterfaceReporting" Width="1.5" PointX="11.375" PointY="10.75" />
       </Diagram>
       <Diagram DiagramId="34e71bec20b44a87a54fb393f3f69158" Name="Diagram1" >
       </Diagram>

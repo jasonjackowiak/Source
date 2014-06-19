@@ -16,7 +16,7 @@ namespace Project1
 
         public void ClearTable(string table)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
             try
             {

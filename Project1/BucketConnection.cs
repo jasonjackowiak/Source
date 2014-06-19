@@ -12,11 +12,11 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class Bucket
+    public partial class BucketConnection
     {
         public int Id { get; set; }
-        public string Unit { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
+        public string CallingBucket { get; set; }
+        public int NumberCalledInterfaces { get; set; }
+        public string CalledBucket { get; set; }
     }
 }

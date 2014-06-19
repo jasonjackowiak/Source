@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Import;
 using Modularise;
+using Common;
+using Project1;
 
 namespace Analyse
 {
@@ -12,9 +13,8 @@ namespace Analyse
     {
         #region vars
         //global
-        private ConsoleLog _settings = new ConsoleLog();
+        private ConsoleLog log = new ConsoleLog();
         private List<Entity> _entities = new List<Entity>();
-        ProcessExtracts p = new ProcessExtracts();
 
         //internal interfaces
         private List<InternalInterface> _internalInterfaces = new List<InternalInterface>();
@@ -43,8 +43,8 @@ namespace Analyse
 
         public void StartAnalysis()
         {
-            _settings.StartLog("Analysis");
-            _settings.Log("*************** ANALYSE ******************");
+            log.Log("Analysis");
+            log.Log("*************** ANALYSE ******************");
             ClearTables();
 
             BuildInternalInterfaces();
@@ -62,16 +62,16 @@ namespace Analyse
             BuildBucketConnections();
             PopulateBucketConnections();
 
-            _settings.Log("************* ANALYSE END ****************");
-            _settings.EndLog();
+            log.Log("************* ANALYSE END ****************");
+            log.EndLog();
         }
         #endregion
 
         #region internal interfaces
         private void BuildInternalInterfaces()
         {
-            HousingSAModel _context = new HousingSAModel();
-            _settings.Log("Build internal bucket Interfaces - start");
+            FAASDB _context = new FAASDB();
+            log.Log("Build internal bucket Interfaces - start");
 
             //get target id & unit for each relationship
             var f = (from r in _context.EntityRelationships
@@ -107,7 +107,7 @@ namespace Analyse
                     }
                 }
             }
-            _settings.Log("Build internal bucket Interfaces - complete");
+            log.Log("Build internal bucket Interfaces - complete");
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Analyse
         /// <returns></returns>
         private bool CheckInterface(int relId, int targetId, string targetUnit, int sourceId, string sourceUnit)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             bool exists = false;
 
             foreach (InternalInterface item in _internalInterfaces)
@@ -136,22 +136,22 @@ namespace Analyse
 
         private void PopulateInterfaces()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persist internal Interfaces to DB - start");
+            log.Log("Persist internal Interfaces to DB - start");
             try
             {
                 foreach (InternalInterface item in _internalInterfaces)
                 {
-                    _context.AddToInternalInterfaces(item);
+                    _context.InternalInterfaces.Add(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist internal Interfaces to DB - complete");
-                _settings.Log(string.Format("{0} internal Interfaces created", _internalInterfaces.Count()));
+                log.Log("Persist internal Interfaces to DB - complete");
+                log.Log(string.Format("{0} internal Interfaces created", _internalInterfaces.Count()));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting internal Intefaces to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting internal Intefaces to DB: {0}: ", e.Message));
             }
 
             
@@ -163,9 +163,9 @@ namespace Analyse
 
         private void BeginReferentialWeighting()
         {
-            _settings.Log("Assess entity residence - start");
+            log.Log("Assess entity residence - start");
 
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             _entities = _context.Entities.ToList();
             _internalInterfaces = _context.InternalInterfaces.ToList();
             _externalInterfaces = _context.Interfaces.ToList();
@@ -182,7 +182,7 @@ namespace Analyse
                 entStr.ExternalSources = InterfaceSources(entity, "external").Count;
                 _entStr.Add(entStr);
             }
-            _settings.Log("Assess entity residence - start");
+            log.Log("Assess entity residence - start");
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Analyse
         /// <returns></returns>
         private int GetStrength(Entity entity, string type)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             List<int> nums = new List<int>();
             int value = 0;
 
@@ -249,7 +249,7 @@ namespace Analyse
         /// <returns></returns>
         private HashSet<string> InterfaceSources(Entity entity, string type)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             List<string> _units = new List<string>();
             List<int> _relationIds = new List<int>();
             List<int> _sourceIds = new List<int>();
@@ -305,22 +305,22 @@ namespace Analyse
 
         private void PopulateEntityResidence()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persist entity ownership strength to DB - start");
+            log.Log("Persist entity ownership strength to DB - start");
             try
             {
                 foreach (EntityResidence item in _entStr)
                 {
-                    _context.AddToEntityResidences(item);
+                    _context.EntityResidences.Add(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist entity ownership strength to DB - complete");
-                _settings.Log(string.Format("{0} entities assessed", _entities.Count));
+                log.Log("Persist entity ownership strength to DB - complete");
+                log.Log(string.Format("{0} entities assessed", _entities.Count));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting entity ownership strength to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting entity ownership strength to DB: {0}: ", e.Message));
             }
 
         }
@@ -330,19 +330,21 @@ namespace Analyse
         #region utilities
         private void ClearTables()
         {
-            p.ClearTable("InternalInterface");
-            p.ClearTable("EntityResidence");
-            p.ClearTable("InterfaceReporting");
-            p.ClearTable("BucketReporting");
-            p.ClearTable("BucketConnection");
+            Utility bla = new Utility();
+
+            bla.ClearTable("InternalInterface");
+            bla.ClearTable("EntityResidence");
+            bla.ClearTable("InterfaceReporting");
+            bla.ClearTable("BucketReporting");
+            bla.ClearTable("BucketConnection");
         }
         #endregion 
 
         #region interface reporting
         private void BuildInterfaceReporting()
         {
-            _settings.Log("Build Interface Reports - start");
-            HousingSAModel _context = new HousingSAModel();
+            log.Log("Build Interface Reports - start");
+            FAASDB _context = new FAASDB();
             _entities = _context.Entities.ToList();
 
             foreach (Interface i in _externalInterfaces)
@@ -353,15 +355,15 @@ namespace Analyse
             {
                 _interfaceReports.Add(CreateInternalInterfaceReport(i, "internal"));
             }
-            _settings.Log("Build Interface Reports - complete");
+            log.Log("Build Interface Reports - complete");
 
         }
 
         private void PopulateInterfaceReporting()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persist Interface Reports to DB - start");
+            log.Log("Persist Interface Reports to DB - start");
             try
             {
                 foreach (InterfaceReporting item in _interfaceReports)
@@ -369,12 +371,12 @@ namespace Analyse
                     _context.AddToInterfaceReportings(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist Interface Reports to DB - complete");
-                _settings.Log(string.Format("{0} Interfaces assessed", _interfaceReports.Count));
+                log.Log("Persist Interface Reports to DB - complete");
+                log.Log(string.Format("{0} Interfaces assessed", _interfaceReports.Count));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting Interface Reports to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting Interface Reports to DB: {0}: ", e.Message));
             }
 
         }
@@ -464,7 +466,7 @@ namespace Analyse
         #region bucket reporting
         private void BuildBucketReporting()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             _buckets = _context.Buckets.ToList();
 
             foreach (Bucket bucket in _buckets)
@@ -519,22 +521,22 @@ namespace Analyse
 
         private void PopulateBucketReporting()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persist Bucket Reports to DB - start");
+            log.Log("Persist Bucket Reports to DB - start");
             try
             {
                 foreach (BucketReporting item in _bucketReports)
                 {
-                    _context.AddToBucketReportings(item);
+                    _context.BucketReportings.Add(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist Bucket Reports to DB - complete");
-                _settings.Log(string.Format("{0} Buckets assessed", _bucketReports.Count));
+                log.Log("Persist Bucket Reports to DB - complete");
+                log.Log(string.Format("{0} Buckets assessed", _bucketReports.Count));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting Bucket Reports to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting Bucket Reports to DB: {0}: ", e.Message));
             }
 
         }
@@ -626,7 +628,7 @@ namespace Analyse
         #region bucket connections
         private void BuildBucketConnections()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             _buckets = _context.Buckets.ToList();
 
             foreach (Bucket bucket in _buckets)
@@ -654,22 +656,22 @@ namespace Analyse
 
         private void PopulateBucketConnections()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persist Bucket Connections to DB - start");
+            log.Log("Persist Bucket Connections to DB - start");
             try
             {
                 foreach (BucketConnection item in _bucketConnections)
                 {
-                    _context.AddToBucketConnections(item);
+                    _context.BucketConnections.Add(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist Bucket Connections to DB - complete");
-                _settings.Log(string.Format("{0} bucket to bucket connections assessed", _bucketConnections.Count));
+                log.Log("Persist Bucket Connections to DB - complete");
+                log.Log(string.Format("{0} bucket to bucket connections assessed", _bucketConnections.Count));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting Bucket Connections to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting Bucket Connections to DB: {0}: ", e.Message));
             }
 
         }

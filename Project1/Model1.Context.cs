@@ -13,10 +13,10 @@ namespace Project1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HousingSAModel : DbContext
+    public partial class FAASDB : DbContext
     {
-        public HousingSAModel()
-            : base("name=HousingSAModel")
+        public FAASDB()
+            : base("name=FAASDB")
         {
         }
     
@@ -33,12 +33,15 @@ namespace Project1
         public DbSet<InternalInterface> InternalInterfaces { get; set; }
         public DbSet<TableDefinition> TableDefinitions { get; set; }
         public DbSet<ProcedureDefinition> ProcedureDefinitions { get; set; }
-        public DbSet<Bucket> Buckets { get; set; }
         public DbSet<TableDefinitions1> TableDefinitions1 { get; set; }
         public DbSet<TransactionDefinition> TransactionDefinitions { get; set; }
         public DbSet<TriggerDefinitions1> TriggerDefinitions1 { get; set; }
         public DbSet<RuleDefinition> RuleDefinitions { get; set; }
         public DbSet<TriggerDefinition> TriggerDefinitions { get; set; }
         public DbSet<TableForeignConstraint> TableForeignConstraints { get; set; }
+        public DbSet<BucketConnection> BucketConnections { get; set; }
+        public DbSet<BucketReporting> BucketReportings { get; set; }
+        public DbSet<EntityResidence> EntityResidences { get; set; }
+        public DbSet<Bucket> Buckets { get; set; }
     }
 }

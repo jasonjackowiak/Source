@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Import;
 using Build;
 using Common;
+using Modularise;
 
 namespace UI.Console
 {
@@ -70,9 +71,8 @@ namespace UI.Console
                     ImportInput(language);
                     break;
                 case "M":
-                    _log.Log("Please enter a valid phase.");
-                    _log.Log("Modularise is under construction.");
-                    ImportInput(language);
+                    Modules modularise = new Modules();
+                    modularise.ModulariseEntities(_log);
                     break;
                 default:
                     _log.Log("Please enter a valid phase.");

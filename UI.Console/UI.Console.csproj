@@ -64,6 +64,10 @@
       <Project>{1afa2a88-0de0-4ecb-91a2-78495318c86f}</Project>
       <Name>Import</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modularise\Modularise.csproj">
+      <Project>{c0d3d3ce-7875-402c-bc50-a521cf8c9c90}</Project>
+      <Name>Modularise</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Project1\Project1.csproj">
       <Project>{3f52d1b8-2a99-4efb-bc0a-79fb33292715}</Project>
       <Name>Project1</Name>

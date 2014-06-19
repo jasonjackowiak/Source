@@ -4,21 +4,24 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using Microsoft.Office.Interop.Excel;
-using Import;
+using Project1;
+using Common;
+using System.Collections.Specialized;
+using System.Configuration;
 
 namespace Modularise
 {
     public class Modules
     {
         #region vars
+        private ConsoleLog log;
+        private NameValueCollection appSettings = ConfigurationManager.AppSettings;
 
-        private ConsoleLog _settings = new ConsoleLog();
         private List<EntityMap> _mappedEntities = new List<EntityMap>();
         private List<Bucket> _buckets = new List<Bucket>();
         private List<UnitMap> _mappedUnits = new List<UnitMap>();
         private List<Entity> _entities = new List<Entity>();
         private List<Interface> _interfaces = new List<Interface>();
-        private ProcessExtracts p = new ProcessExtracts();
         private List<string> _types = new List<string>();
         #endregion
 
@@ -26,32 +29,34 @@ namespace Modularise
         {
         }
 
-        public void ModulariseEntities()
+        public void ModulariseEntities(ConsoleLog _log)
         {
-            ProcessUnitMap();
-            BuildExternalInterfaces();
+            log = _log;
+            ProcessUnitMap(log);
+            BuildExternalInterfaces(log);
         }
 
         #region utilities
         private void ClearTables()
         {
-            p.ClearTable("Bucket");
-            p.ClearTable("Interface");
-            p.ClearTable("InternalInterface");
-            p.ClearTable("EntityResidence");
-            p.ClearTable("InterfaceReporting");
-            p.ClearTable("BucketReporting");
-            p.ClearTable("BucketConnection");
+            Utility bla = new Utility();
+
+            bla.ClearTable("Admin.Bucket");
+            bla.ClearTable("Admin.Interface");
+            bla.ClearTable("Admin.InternalInterface");
+            bla.ClearTable("Admin.EntityResidence");
+            bla.ClearTable("Admin.InterfaceReporting");
+            bla.ClearTable("Admin.BucketReporting");
+            bla.ClearTable("Admin.BucketConnection");
         }
         #endregion
 
         #region buckets
-        public void ProcessUnitMap()
+        private void ProcessUnitMap(ConsoleLog log)
         {
-            _settings.StartLog("Modularise");
             ClearTables();
 
-            _settings.Log("Assigning entities to buckets - start");
+            log.Log("Assigning entities to buckets - start");
 
             ReadExcel();
             CreateManualBuckets();
@@ -59,7 +64,7 @@ namespace Modularise
             UpdateUnmappedEntities();
             PopulateBuckets();
 
-            _settings.Log("Assigning entities to buckets - complete");
+            log.Log("Assigning entities to buckets - complete");
         }
 
         #region Excel
@@ -71,9 +76,9 @@ namespace Modularise
 
         private void ReadExcelRulesBuckets()
 {
-    string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settings.GetFromConfig("RuleBucketMapFilePath"));
+    string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("RuleBucketMapFilePath"));
             
-            _settings.Log(string.Format("Opening {0} Excel file", file));
+            log.Log(string.Format("Opening {0} Excel file", file));
     try
     {
             if (File.Exists(file))
@@ -88,14 +93,14 @@ namespace Modularise
     }
     catch (Exception e)
     {
-        _settings.Log(string.Format("Error processing {0} Excel file: {1}", file, e.Message));
+        log.Log(string.Format("Error processing {0} Excel file: {1}", file, e.Message));
     }
 }
 
         private void ReadExcelTransactions()
         {
-            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settings.GetFromConfig("TransactionMapFilePath"));
-            _settings.Log(string.Format("Opening {0} Excel file", file));
+            string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("TransactionMapFilePath"));
+            log.Log(string.Format("Opening {0} Excel file", file));
             try
             {
                 if (File.Exists(file))
@@ -109,7 +114,7 @@ namespace Modularise
             }
             catch (Exception e)
                 {
-                    _settings.Log(string.Format("Error processing {0} Excel file: {1}", file, e.Message));
+                    log.Log(string.Format("Error processing {0} Excel file: {1}", file, e.Message));
                 }
         }
 
@@ -121,7 +126,7 @@ namespace Modularise
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
-            _settings.Log("Creating normalised bucket list - start");
+            log.Log("Creating normalised bucket list - start");
 
             for (int i = 2; i != rowCount + 1; i++)
             {
@@ -135,7 +140,7 @@ namespace Modularise
                 CreateBucket(unit, name, "Application");
             }
 
-            _settings.Log("Creating normalised bucket list - complete");
+            log.Log("Creating normalised bucket list - complete");
         }
 
         private void CreateTranUnitMappedEntities(Workbook xlWorkbook)
@@ -148,7 +153,7 @@ namespace Modularise
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
-            _settings.Log(string.Format("Normalise {0} units - start", type));
+            log.Log(string.Format("Normalise {0} units - start", type));
 
             //start at row 2, then grab details from each column
             for (int i = 2; i != rowCount + 1; i++)
@@ -167,7 +172,7 @@ namespace Modularise
                 EntityMap mappedEntity = new EntityMap(name, type, sourceUnit, normalisedUnit);
                 _mappedEntities.Add(mappedEntity);
             }
-            _settings.Log(string.Format("Normalise {0} units - complete", type));
+            log.Log(string.Format("Normalise {0} units - complete", type));
         }
 
         private void CreateRuleUnitMappedEntities(Workbook xlWorkbook)
@@ -180,7 +185,7 @@ namespace Modularise
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
 
-            _settings.Log(string.Format("Normalise {0} units - start", type));
+            log.Log(string.Format("Normalise {0} units - start", type));
 
             for (int i = 2; i != rowCount + 1; i++)
             {
@@ -196,7 +201,7 @@ namespace Modularise
                 Console.Write("Mapping rule {0} from {1} to {2}             \r", name, sourceUnit, normalisedUnit);
                 _mappedEntities.Add(mappedEntity);
             }
-            _settings.Log(string.Format("Normalise {0} units - complete", type));
+            log.Log(string.Format("Normalise {0} units - complete", type));
         }
         #endregion
 
@@ -205,20 +210,20 @@ namespace Modularise
             //Manual bucket creation to deal with any leftover/system entities after HSA mapping
             try
             {
-                _settings.Log("Creating manual bucket list - start");
+                log.Log("Creating manual bucket list - start");
                 CreateBucket("LONELY", "Unallocated", "Application");
-                _settings.Log("Creating manual bucket list - complete");
+                log.Log("Creating manual bucket list - complete");
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error creating manual bucket list: {0}", e.Message));
+                log.Log(string.Format("Error creating manual bucket list: {0}", e.Message));
             }
         }
 
         private void UpdateMappedEntities()
         {
-            HousingSAModel _context = new HousingSAModel();
-            _settings.Log("Persist mapped entity units to DB - start");
+            FAASDB _context = new FAASDB();
+            log.Log("Persist mapped entity units to DB - start");
             _entities = _context.Entities.ToList();
 
             foreach (EntityMap mappedEntity in _mappedEntities)
@@ -236,20 +241,20 @@ namespace Modularise
                 }
             }
             _context.SaveChanges();
-            _settings.Log("Persist mapped entity units to DB - complete");
+            log.Log("Persist mapped entity units to DB - complete");
 
             var count = (from x in _context.Entities
                          where x.NormalisedUnit != "N/A"
                          && x.NormalisedUnit != "LONELY"
                          select x).Count();
 
-            _settings.Log(string.Format("{0} entities Normalised", count));
+            log.Log(string.Format("{0} entities Normalised", count));
         }
 
         private void UpdateUnmappedEntities()
         {
-            HousingSAModel _context = new HousingSAModel();
-            _settings.Log("Persist unmapped entity units to DB - start");
+            FAASDB _context = new FAASDB();
+            log.Log("Persist unmapped entity units to DB - start");
             _entities = _context.Entities.ToList();
 
             foreach (Entity entity in _entities)
@@ -262,13 +267,13 @@ namespace Modularise
 
             //need to persist to DB
             _context.SaveChanges();
-            _settings.Log("Persist unmapped entity units to DB - complete");
+            log.Log("Persist unmapped entity units to DB - complete");
 
             var count = (from x in _context.Entities
                          where x.NormalisedUnit == "LONELY"
                          select x).Count();
 
-            _settings.Log(string.Format("{0} entities Unallocated", count));
+            log.Log(string.Format("{0} entities Unallocated", count));
 
         }
 
@@ -283,44 +288,44 @@ namespace Modularise
 
         private void PopulateBuckets()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persits Buckets to DB - start");
+            log.Log("Persits Buckets to DB - start");
             try
             {
                 foreach (Bucket item in _buckets)
                 {
-                    _context.AddToBuckets(item);
+                    _context.Buckets.Add(item);
 
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist Buckets to DB - complete");
-                _settings.Log(string.Format("{0} buckets created", _buckets.Count()));
+                log.Log("Persist Buckets to DB - complete");
+                log.Log(string.Format("{0} buckets created", _buckets.Count()));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting Buckets to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting Buckets to DB: {0}: ", e.Message));
             }
 
         }
         #endregion
 
         #region Interfaces
-        public void BuildExternalInterfaces()
+        public void BuildExternalInterfaces(ConsoleLog log)
         {
-            _settings.Log("Building Interfaces - start");
+            log.Log("Building Interfaces - start");
 
             BuildAllInterfaces();
             PopulateInterfaces();
 
-            _settings.Log("Building Interfaces - complete");
-            _settings.EndLog();
+            log.Log("Building Interfaces - complete");
+            log.EndLog();
         }
 
         private void BuildAllInterfaces()
         {
-            HousingSAModel _context = new HousingSAModel();
-            _settings.Log("Build bucket to bucket Interfaces - start");
+            FAASDB _context = new FAASDB();
+            log.Log("Build bucket to bucket Interfaces - start");
 
             //get target id & unit for each relationship
             var f = (from r in _context.EntityRelationships
@@ -357,7 +362,7 @@ namespace Modularise
                     }
                 }
             }
-            _settings.Log("Build bucket to bucket Interfaces - complete");
+            log.Log("Build bucket to bucket Interfaces - complete");
         }
 
         /// <summary>
@@ -369,7 +374,7 @@ namespace Modularise
         /// <returns></returns>
         private bool CheckInterface(int targetId, object targetUnit, int sourceId)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             bool exists = false;
 
             foreach (Interface item in _interfaces)
@@ -386,26 +391,29 @@ namespace Modularise
 
         private void PopulateInterfaces()
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
 
-            _settings.Log("Persits Interfaces to DB - start");
+            log.Log("Persits Interfaces to DB - start");
             try
             {
                 foreach (Interface item in _interfaces)
                 {
-                    _context.AddToInterfaces(item);
+                    _context.Interfaces.Add(item);
                 }
                 _context.SaveChanges();
-                _settings.Log("Persist Interfaces to DB - complete");
-                _settings.Log(string.Format("{0} interfaces created", _interfaces.Count()));
+                log.Log("Persist Interfaces to DB - complete");
+                log.Log(string.Format("{0} interfaces created", _interfaces.Count()));
             }
             catch (Exception e)
             {
-                _settings.Log(string.Format("Error persisting Intefaces to DB: {0}: ", e.Message));
+                log.Log(string.Format("Error persisting Intefaces to DB: {0}: ", e.Message));
             }
 
-            
+        }
 
+        private string GetFromConfig(string p)
+        {
+            return appSettings.Get(p);
         }
         #endregion
     }    

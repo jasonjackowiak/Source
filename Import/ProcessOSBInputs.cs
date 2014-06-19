@@ -132,7 +132,7 @@ namespace Import
 
       private void PopulateTriggers()
       {
-          HousingSAModel _context = new HousingSAModel();
+          FAASDB _context = new FAASDB();
 
           log.Log("Persist Triggers to DB - start");
           try
@@ -235,7 +235,7 @@ namespace Import
 
     private void PopulateTables ()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
 
 
       log.Log("Persist Table Definitions to DB - start");
@@ -362,7 +362,7 @@ namespace Import
       
     private void PopulateRules()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
         log.Log("Persist Rule Definitions to DB - start");
         try
         {
@@ -534,7 +534,7 @@ namespace Import
 
     private void PopulateEntities()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
 
         log.Log("Extract Entities to DB - start");
         try
@@ -591,7 +591,7 @@ namespace Import
 
     public void ClearTable(string table)
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
 
         try
         {

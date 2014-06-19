@@ -42,7 +42,7 @@ namespace Build
 
             //write processing output to same line
             Console.Write("Preparing global data...");
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             _entities = _context.Entities.ToList();
             _procedureDefinitions = _context.ProcedureDefinitions.ToList();
             _tableDefinitions = _context.TableDefinitions.ToList();
@@ -367,11 +367,11 @@ namespace Build
 
     #endregion
 
-        #region utilities
+    #region utilities
 
     private static List<string> ListOfNames(string type)
         {
-            HousingSAModel _context = new HousingSAModel();
+            FAASDB _context = new FAASDB();
             //create entity (of object type) object
             var uniqueNames = (from e in _context.Entities
                                       where e.Type.Equals(type)
@@ -413,7 +413,7 @@ namespace Build
 
             try
             {
-                HousingSAModel _context = new HousingSAModel();
+                FAASDB _context = new FAASDB();
                 log.Log("Converting entity link names into ID's & populating table - start");
                 //Parallel.ForEach(_links, link =>
                 foreach (Link link in _links)
@@ -440,7 +440,7 @@ namespace Build
 
     private void PopulateEntityRelationships()
     {
-        HousingSAModel _context = new HousingSAModel();
+        FAASDB _context = new FAASDB();
         log.Log("Persist Entity Relationship to DB - start");
         try
         {
