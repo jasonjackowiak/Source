@@ -222,7 +222,7 @@ namespace Modularise
 
         private void UpdateMappedEntities()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             log.Log("Persist mapped entity units to DB - start");
             _entities = _context.Entities.ToList();
 
@@ -253,7 +253,7 @@ namespace Modularise
 
         private void UpdateUnmappedEntities()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             log.Log("Persist unmapped entity units to DB - start");
             _entities = _context.Entities.ToList();
 
@@ -288,7 +288,7 @@ namespace Modularise
 
         private void PopulateBuckets()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persits Buckets to DB - start");
             try
@@ -324,7 +324,7 @@ namespace Modularise
 
         private void BuildAllInterfaces()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             log.Log("Build bucket to bucket Interfaces - start");
 
             //get target id & unit for each relationship
@@ -374,7 +374,7 @@ namespace Modularise
         /// <returns></returns>
         private bool CheckInterface(int targetId, object targetUnit, int sourceId)
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             bool exists = false;
 
             foreach (Interface item in _interfaces)
@@ -391,7 +391,7 @@ namespace Modularise
 
         private void PopulateInterfaces()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persits Interfaces to DB - start");
             try

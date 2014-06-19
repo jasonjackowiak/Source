@@ -44,7 +44,7 @@ namespace Build
 
             //write processing output to same line
             Console.Write("Preparing global data...");
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
             _ruleDefinitions = _context.RuleDefinitions.ToList();
             _tableDefinitions = _context.TableDefinitions.ToList();
@@ -359,7 +359,7 @@ namespace Build
 
     private static List<string> ListOfNames(string type)
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             //create entity (of object type) object
             var uniqueNames = (from e in _context.Entities
                                       where e.Type.Equals(type)
@@ -401,7 +401,7 @@ namespace Build
 
             try
             {
-                FAASDB _context = new FAASDB();
+                FAASModel _context = new FAASModel();
                 log.Log("Converting entity link names into ID's & populating table - start");
                 //Parallel.ForEach(_links, link =>
                 foreach (Link link in _links)
@@ -428,7 +428,7 @@ namespace Build
 
     private void PopulateEntityRelationships()
     {
-        FAASDB _context = new FAASDB();
+        FAASModel _context = new FAASModel();
         log.Log("Persist Entity Relationship to DB - start");
         try
         {

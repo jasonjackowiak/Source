@@ -164,7 +164,7 @@ namespace Import
 
 	//private void PopulateTriggers ()
 	//{
-	//     FAASDB _context = new FAASDB();
+	//     FAASModel _context = new FAASModel();
 
 	//    log.Log("Persist Triggers to DB - start");
 	//    try
@@ -355,7 +355,7 @@ namespace Import
 
     private void PopulateTables ()
     {
-      FAASDB _context = new FAASDB();
+      FAASModel _context = new FAASModel();
 
       log.Log("Persist Table Definitions to DB - start");
       try
@@ -375,7 +375,7 @@ namespace Import
 
     private void PopulateTableForeignConstraints()
     {
-        FAASDB _context = new FAASDB();
+        FAASModel _context = new FAASModel();
 
         log.Log("Persist Table Foreign Constraints to DB - start");
         try
@@ -498,7 +498,7 @@ namespace Import
       
     private void PopulateRules()
     {
-        FAASDB _context = new FAASDB();
+        FAASModel _context = new FAASModel();
         log.Log("Persist Rule Definitions to DB - start");
         try
         {
@@ -593,7 +593,7 @@ namespace Import
 
     private void PopulateEntities()
     {
-        FAASDB _context = new FAASDB();
+        FAASModel _context = new FAASModel();
 
         log.Log("Extract Entities to DB - start");
         try

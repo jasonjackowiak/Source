@@ -70,7 +70,7 @@ namespace Analyse
         #region internal interfaces
         private void BuildInternalInterfaces()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             log.Log("Build internal bucket Interfaces - start");
 
             //get target id & unit for each relationship
@@ -119,7 +119,7 @@ namespace Analyse
         /// <returns></returns>
         private bool CheckInterface(int relId, int targetId, string targetUnit, int sourceId, string sourceUnit)
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             bool exists = false;
 
             foreach (InternalInterface item in _internalInterfaces)
@@ -136,7 +136,7 @@ namespace Analyse
 
         private void PopulateInterfaces()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persist internal Interfaces to DB - start");
             try
@@ -165,7 +165,7 @@ namespace Analyse
         {
             log.Log("Assess entity residence - start");
 
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
             _internalInterfaces = _context.InternalInterfaces.ToList();
             _externalInterfaces = _context.Interfaces.ToList();
@@ -193,7 +193,7 @@ namespace Analyse
         /// <returns></returns>
         private int GetStrength(Entity entity, string type)
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             List<int> nums = new List<int>();
             int value = 0;
 
@@ -249,7 +249,7 @@ namespace Analyse
         /// <returns></returns>
         private HashSet<string> InterfaceSources(Entity entity, string type)
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             List<string> _units = new List<string>();
             List<int> _relationIds = new List<int>();
             List<int> _sourceIds = new List<int>();
@@ -305,7 +305,7 @@ namespace Analyse
 
         private void PopulateEntityResidence()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persist entity ownership strength to DB - start");
             try
@@ -344,7 +344,7 @@ namespace Analyse
         private void BuildInterfaceReporting()
         {
             log.Log("Build Interface Reports - start");
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
 
             foreach (Interface i in _externalInterfaces)
@@ -361,14 +361,14 @@ namespace Analyse
 
         private void PopulateInterfaceReporting()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persist Interface Reports to DB - start");
             try
             {
                 foreach (InterfaceReporting item in _interfaceReports)
                 {
-                    _context.AddToInterfaceReportings(item);
+                    _context.InterfaceReportings.Add(item);
                 }
                 _context.SaveChanges();
                 log.Log("Persist Interface Reports to DB - complete");
@@ -466,7 +466,7 @@ namespace Analyse
         #region bucket reporting
         private void BuildBucketReporting()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             _buckets = _context.Buckets.ToList();
 
             foreach (Bucket bucket in _buckets)
@@ -521,7 +521,7 @@ namespace Analyse
 
         private void PopulateBucketReporting()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persist Bucket Reports to DB - start");
             try
@@ -628,7 +628,7 @@ namespace Analyse
         #region bucket connections
         private void BuildBucketConnections()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
             _buckets = _context.Buckets.ToList();
 
             foreach (Bucket bucket in _buckets)
@@ -656,7 +656,7 @@ namespace Analyse
 
         private void PopulateBucketConnections()
         {
-            FAASDB _context = new FAASDB();
+            FAASModel _context = new FAASModel();
 
             log.Log("Persist Bucket Connections to DB - start");
             try
