@@ -13,7 +13,7 @@ namespace Analyse
     {
         #region vars
         //global
-        private ConsoleLog log = new ConsoleLog();
+        //private ConsoleLog log = new ConsoleLog();
         private List<Entity> _entities = new List<Entity>();
 
         //internal interfaces
@@ -41,26 +41,27 @@ namespace Analyse
         {
         }
 
-        public void StartAnalysis()
+        public void StartAnalysis(ConsoleLog log)
         {
+
             log.Log("Analysis");
             log.Log("*************** ANALYSE ******************");
             ClearTables();
 
-            BuildInternalInterfaces();
-            PopulateInterfaces();
+            BuildInternalInterfaces(log);
+            PopulateInterfaces(log);
 
-            BeginReferentialWeighting();
-            PopulateEntityResidence();
+            BeginReferentialWeighting(log);
+            PopulateEntityResidence(log);
 
-            BuildInterfaceReporting();
-            PopulateInterfaceReporting();
+            BuildInterfaceReporting(log);
+            PopulateInterfaceReporting(log);
 
-            BuildBucketReporting();
-            PopulateBucketReporting();
+            BuildBucketReporting(log);
+            PopulateBucketReporting(log);
 
-            BuildBucketConnections();
-            PopulateBucketConnections();
+            BuildBucketConnections(log);
+            PopulateBucketConnections(log);
 
             log.Log("************* ANALYSE END ****************");
             log.EndLog();
@@ -68,7 +69,7 @@ namespace Analyse
         #endregion
 
         #region internal interfaces
-        private void BuildInternalInterfaces()
+        private void BuildInternalInterfaces(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
             log.Log("Build internal bucket Interfaces - start");
@@ -134,7 +135,7 @@ namespace Analyse
             return exists;
         }
 
-        private void PopulateInterfaces()
+        private void PopulateInterfaces(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
 
@@ -161,7 +162,7 @@ namespace Analyse
 
         #region entity residence
 
-        private void BeginReferentialWeighting()
+        private void BeginReferentialWeighting(ConsoleLog log)
         {
             log.Log("Assess entity residence - start");
 
@@ -303,7 +304,7 @@ namespace Analyse
                 return uniqueUnits;
         }
 
-        private void PopulateEntityResidence()
+        private void PopulateEntityResidence(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
 
@@ -332,16 +333,16 @@ namespace Analyse
         {
             Utility bla = new Utility();
 
-            bla.ClearTable("InternalInterface");
-            bla.ClearTable("EntityResidence");
-            bla.ClearTable("InterfaceReporting");
-            bla.ClearTable("BucketReporting");
-            bla.ClearTable("BucketConnection");
+            bla.ClearTable("Admin.InternalInterface");
+            bla.ClearTable("Admin.EntityResidence");
+            bla.ClearTable("Admin.InterfaceReporting");
+            bla.ClearTable("Admin.BucketReporting");
+            bla.ClearTable("Admin.BucketConnection");
         }
         #endregion 
 
         #region interface reporting
-        private void BuildInterfaceReporting()
+        private void BuildInterfaceReporting(ConsoleLog log)
         {
             log.Log("Build Interface Reports - start");
             FAASModel _context = new FAASModel();
@@ -359,7 +360,7 @@ namespace Analyse
 
         }
 
-        private void PopulateInterfaceReporting()
+        private void PopulateInterfaceReporting(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
 
@@ -464,7 +465,7 @@ namespace Analyse
         #endregion
 
         #region bucket reporting
-        private void BuildBucketReporting()
+        private void BuildBucketReporting(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
             _buckets = _context.Buckets.ToList();
@@ -519,7 +520,7 @@ namespace Analyse
             return bucketReport;
         }
 
-        private void PopulateBucketReporting()
+        private void PopulateBucketReporting(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
 
@@ -626,7 +627,7 @@ namespace Analyse
         #endregion
 
         #region bucket connections
-        private void BuildBucketConnections()
+        private void BuildBucketConnections(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
             _buckets = _context.Buckets.ToList();
@@ -654,7 +655,7 @@ namespace Analyse
             }
         }
 
-        private void PopulateBucketConnections()
+        private void PopulateBucketConnections(ConsoleLog log)
         {
             FAASModel _context = new FAASModel();
 

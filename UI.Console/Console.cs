@@ -7,6 +7,8 @@ using Import;
 using Build;
 using Common;
 using Modularise;
+using Analyse;
+using Visualisation;
 
 namespace UI.Console
 {
@@ -48,6 +50,7 @@ namespace UI.Console
             _log.Log("Build (B)");
             _log.Log("Analyse (A)");
             _log.Log("Modularise (M)");
+            _log.Log("Visualization (V)");
 
             //User Inputs here
             string line = System.Console.ReadLine();
@@ -61,18 +64,22 @@ namespace UI.Console
                     import.ProcessInputs(_log);
                     break;
                 case "B":
-                    string[] input = SQLBuildInput();
+                    string[] bInput = SQLBuildInput();
                     BuildSQLRelationships build = new BuildSQLRelationships();
-                    build.BuildRelations(_log, input);
+                    build.BuildRelations(_log, bInput);
                     break;
                 case "A":
-                    _log.Log("Please enter a valid phase.");
-                    _log.Log("Analyse is under construction.");
-                    ImportInput(language);
+                    AnalyseAll analyse = new AnalyseAll();
+                    analyse.StartAnalysis(_log);
                     break;
                 case "M":
                     Modules modularise = new Modules();
                     modularise.ModulariseEntities(_log);
+                    break;
+                case "V":
+                    string[] vInput = VisualizationInput();
+                    BuildGraph buildGraphs = new BuildGraph();
+                    buildGraphs.StartGraph(_log, vInput);
                     break;
                 default:
                     _log.Log("Please enter a valid phase.");
@@ -149,5 +156,36 @@ namespace UI.Console
             return words;
         }
 
+        private string[] VisualizationInput()
+        {
+            _log.Log("Please enter the type of graph you wish to build, seperated by a comma(,). Valid types are: ");
+            _log.Log("entity, interface, all");
+            _log.Log("Enter type(s): ");
+            string line = System.Console.ReadLine();
+            line = line.ToUpper();
+            string[] words = line.Split(',');
+
+            foreach (string s in words)
+            {
+
+                if (s.Trim().Equals("ENTITY"))
+                {
+                }
+                else if (s.Trim().Equals("INTERFACE"))
+                {
+                }
+                else if (s.Trim().Equals("ALL"))
+                {
+                }
+                else
+                {
+                    _log.Log(string.Format("Invalid type entered: {0}", s));
+                    //clear array and run method again
+                    Array.Clear(words, 0, words.Count());
+                    VisualizationInput();
+                }
+            }
+            return words;
+        }
     }
 }

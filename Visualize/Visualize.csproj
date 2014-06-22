@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C4C1763E-E0D4-41FD-BB8E-277AF3E2BD37}</ProjectGuid>
+    <ProjectGuid>{63805C63-8F34-4BBF-91C6-4380D6811528}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UI.Console</RootNamespace>
-    <AssemblyName>UI.Console</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Visualize</RootNamespace>
+    <AssemblyName>Visualize</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -32,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -42,43 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Console.cs" />
+    <Compile Include="BuildEntityGraph.cs" />
+    <Compile Include="BuildGraph.cs" />
+    <Compile Include="BuildInterfaceGraph.cs" />
+    <Compile Include="Link.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Analyse\Analyse.csproj">
-      <Project>{e7274c51-114e-41c0-90e7-7e1b884de37a}</Project>
-      <Name>Analyse</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Build\Build.csproj">
-      <Project>{c5d4d706-1c77-4176-8a3d-564f69ef3a33}</Project>
-      <Name>Build</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{248fa5ef-3efb-4119-8a2c-b8aaec802678}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Import\Import.csproj">
-      <Project>{1afa2a88-0de0-4ecb-91a2-78495318c86f}</Project>
-      <Name>Import</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modularise\Modularise.csproj">
-      <Project>{c0d3d3ce-7875-402c-bc50-a521cf8c9c90}</Project>
-      <Name>Modularise</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Project1\Project1.csproj">
       <Project>{3f52d1b8-2a99-4efb-bc0a-79fb33292715}</Project>
       <Name>Project1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Visualize\Visualize.csproj">
-      <Project>{63805c63-8f34-4bbf-91c6-4380d6811528}</Project>
-      <Name>Visualize</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
