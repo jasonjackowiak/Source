@@ -4,3 +4,14 @@ D:\Code\HSA\HousingStatistics\HousingStatistics\Import\bin\Debug\Import.pdb
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\Import.exe
 D:\Code\HSA\HousingStatistics\HousingStatistics\Import\obj\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Import.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Project1.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.pdb

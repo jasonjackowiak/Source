@@ -14,7 +14,6 @@ namespace Build
     public class BuildSQLRelationships
     {
         #region vars
-        private ConsoleLog log = new ConsoleLog();
         private List<Entity> _entities = new List<Entity>();
         public List<EntityRelationship> _entityRelations = new List<EntityRelationship>();
         public List<Link> _links = new List<Link>();
@@ -54,17 +53,17 @@ namespace Build
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetProcedureEntityCalls(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input);
+            GetProcedureEntityCalls(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
 
             CreateMasterList();
-            ConvertEntityCallsToInt();
-            PopulateEntityRelationships();
+            ConvertEntityCallsToInt(log);
+            PopulateEntityRelationships(log);
 
             log.Log("************ BUILD END ****************");
             log.EndLog();
         }
 
-        private void GetProcedureEntityCalls(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input)
+        private void GetProcedureEntityCalls(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
     {
 
         string[] words = input;
@@ -106,13 +105,13 @@ namespace Build
         //}
         if (tables)
         {
-            var calledTables = f.StartNew(() => BuildCalledTables(_procedures, uniqueTables));
+            var calledTables = f.StartNew(() => BuildCalledTables(_procedures, uniqueTables, log));
             _tasks.Add(calledTables);
         }
         if (procedures)
         {
-            var calledRules = f.StartNew(() => BuildCalledProcedures(_procedures, uniqueProcedures));
-            _tasks.Add(calledRules);
+            var calledProcedures = f.StartNew(() => BuildCalledProcedures(_procedures, uniqueProcedures, log));
+            _tasks.Add(calledProcedures);
         }
 
         //for the method (primary thread) to wait for all worker threads before finishing
@@ -143,7 +142,7 @@ namespace Build
     //    log.Log("Finding trigger references - start");
     //}
 
-        private void BuildCalledTables(List<ProcedureDefinition> _procedures, List<string> uniqueTables)
+        private void BuildCalledTables(List<ProcedureDefinition> _procedures, List<string> uniqueTables, ConsoleLog log)
     {
         log.Log("Finding table references in procedures - start");
         foreach (ProcedureDefinition procedure in _procedures)
@@ -182,7 +181,7 @@ namespace Build
         //}
     }
 
-        private void BuildCalledProcedures(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures)
+        private void BuildCalledProcedures(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, ConsoleLog log)
     {
 
         bool addNotApplicable = true;
@@ -408,7 +407,7 @@ namespace Build
         }
     }
 
-    private void ConvertEntityCallsToInt()
+    private void ConvertEntityCallsToInt(ConsoleLog log)
         {
 
             try
@@ -438,7 +437,7 @@ namespace Build
             }
         }
 
-    private void PopulateEntityRelationships()
+    private void PopulateEntityRelationships(ConsoleLog log)
     {
         FAASModel _context = new FAASModel();
         log.Log("Persist Entity Relationship to DB - start");

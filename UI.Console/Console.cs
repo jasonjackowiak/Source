@@ -21,10 +21,11 @@ namespace UI.Console
         {
             _log.BeginLog();
 
-            _log.Log("Welcome to the Fujitsu/Housing SA Mainframe Application Analysis System (MAAS)");
+            _log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
             _log.Log("Please select your language:");
             _log.Log("ObjectStar (O)");
             _log.Log("SQL (S)");
+            _log.Log("To quit, type 'Exit'");
             //User Inputs here
             string line = System.Console.ReadLine();
             line = line.Trim().ToUpper();
@@ -37,6 +38,8 @@ namespace UI.Console
                 case "S":
                     ImportInput("SQL");
                     break;
+                case "Exit":
+                    return;
                 default:
                     StartConsole();
                     break;
@@ -51,6 +54,7 @@ namespace UI.Console
             _log.Log("Analyse (A)");
             _log.Log("Modularise (M)");
             _log.Log("Visualization (V)");
+            _log.Log("To quit, type 'Exit'");
 
             //User Inputs here
             string line = System.Console.ReadLine();
@@ -62,25 +66,32 @@ namespace UI.Console
                     //ProcessOSBInputs import = new ProcessOSBInputs();
                     ProcessSQLInputs import = new ProcessSQLInputs();
                     import.ProcessInputs(_log);
+                    ImportInput(language);
                     break;
                 case "B":
                     string[] bInput = SQLBuildInput();
                     BuildSQLRelationships build = new BuildSQLRelationships();
                     build.BuildRelations(_log, bInput);
+                    ImportInput(language);
                     break;
                 case "A":
                     AnalyseAll analyse = new AnalyseAll();
                     analyse.StartAnalysis(_log);
+                    ImportInput(language);
                     break;
                 case "M":
                     Modules modularise = new Modules();
                     modularise.ModulariseEntities(_log);
+                    ImportInput(language);
                     break;
                 case "V":
                     string[] vInput = VisualizationInput();
                     BuildGraph buildGraphs = new BuildGraph();
                     buildGraphs.StartGraph(_log, vInput);
+                    ImportInput(language);
                     break;
+                case "Exit":
+                    return;
                 default:
                     _log.Log("Please enter a valid phase.");
                     ImportInput(language);

@@ -62,17 +62,16 @@ namespace Common
     public void BeginLog()
     {
             //string logFileName = GetFromConfig("LogFilePath");
-            string logFileName = "C:\\Users\\J\\Documents\\GitHub\\HSA\\Log.txt";
+        string logFileName = "C:\\Users\\J\\Documents\\GitHub\\HSA\\Log"  + ".txt";
             if (!File.Exists(logFileName))
             {
                 FileStream fs = System.IO.File.Create(logFileName);
                 fs.Close();
             }
-            _logFile = File.AppendText(logFileName);
 
-            _logFile.Write("\r\nHousing Extract : ");
+            _logFile = File.AppendText(logFileName);
             _logFile.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                DateTime.Now.ToLongDateString());
+            DateTime.Now.ToLongDateString());
             startTime = DateTime.Now;
     }
 
@@ -102,8 +101,7 @@ namespace Common
          _context.AuditLogs.Add(item);
       }
       _context.SaveChanges();
-    }
-      
+    }    
     #endregion
 
   }

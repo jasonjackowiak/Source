@@ -8,4 +8,16 @@ D:\Code\HSA\HousingStatistics\Analyse\bin\Debug\Modularise.pdb
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\ResolveAssemblyReference.cache
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\Analyse.exe
 D:\Code\HSA\HousingStatistics\Analyse\obj\Debug\Analyse.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Analyse.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Analyse.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Modularise.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Project1.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Modularise.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.dll
+C:\Users\J\Documents\GitHub\HSA\Source\Analyse\obj\Debug\Analyse.pdb
