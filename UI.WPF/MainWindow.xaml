@@ -1,0 +1,12 @@
+﻿<Window x:Class="UI.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button Content="SQL" HorizontalAlignment="Left" Margin="77,98,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="ObjectStar" HorizontalAlignment="Left" Margin="77,150,0,0" VerticalAlignment="Top" Width="75"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="238" Margin="36,56,0,0" VerticalAlignment="Top" Width="448"/>
+        <Label Content="Fujitsu Application Analysis System (FAAS)" HorizontalAlignment="Left" Margin="36,10,0,0" VerticalAlignment="Top" Width="448" Height="41"/>
+
+    </Grid>
+</Window>
