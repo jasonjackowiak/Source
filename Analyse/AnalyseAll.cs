@@ -333,7 +333,7 @@ namespace Analyse
         {
             Utility bla = new Utility();
 
-            bla.ClearTable("Admin.InternalInterface");
+            bla.ClearTable("Admin.InternalInterfaces");
             bla.ClearTable("Admin.EntityResidence");
             bla.ClearTable("Admin.InterfaceReporting");
             bla.ClearTable("Admin.BucketReporting");

@@ -14,17 +14,21 @@ namespace Build
     public class BuildSQLRelationships
     {
         #region vars
+        // Generic lists and lists of links
         private List<Entity> _entities = new List<Entity>();
         public List<EntityRelationship> _entityRelations = new List<EntityRelationship>();
         public List<Link> _links = new List<Link>();
         public List<Link> _procedureLinks = new List<Link>();
         public List<Link> _tableLinks = new List<Link>();
         public List<Link> _triggerLinks = new List<Link>();
+        public List<Link> _tableForeignConstraintLinks = new List<Link>();
 
+        // specific entity lists
         public List<Entity> ents = new List<Entity>();
         public List<ProcedureDefinition> _procedureDefinitions = new List<ProcedureDefinition>();
         public List<TableDefinition> _tableDefinitions = new List<TableDefinition>();
         public List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
+        public List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
         #endregion
 
         #region build relations
@@ -41,19 +45,24 @@ namespace Build
 
             //write processing output to same line
             Console.Write("Preparing global data...");
+
+            //Prepare data lists from DB
             FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
             _procedureDefinitions = _context.ProcedureDefinitions.ToList();
             _tableDefinitions = _context.TableDefinitions.ToList();
             _triggers = _context.TriggerDefinitions.ToList();
+            _tableForeignConstraints = _context.TableForeignConstraints.ToList();
 
+            //Create unique lists for each entity type
             var uniqueProcedures = ListOfNames("PROCEDURE");
             var uniqueTables = ListOfNames("TABLE");
             var uniqueTriggers = ListOfNames("TRIGGER");
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetProcedureEntityCalls(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
+            GetProcedureBasedReferences(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
+            GetTableBasedReferences(input, log);
 
             CreateMasterList();
             ConvertEntityCallsToInt(log);
@@ -63,7 +72,46 @@ namespace Build
             log.EndLog();
         }
 
-        private void GetProcedureEntityCalls(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
+        private void GetTableBasedReferences(string[] input, ConsoleLog log)
+        {
+            string[] words = input;
+            List<Task> _tasks = new List<Task>();
+            bool tables = false;
+            bool triggers = false;
+
+            foreach (string s in words)
+            {
+                if (s.Trim().Equals("TABLES"))
+                {
+                    tables = true;
+                }
+                if (s.Trim().Equals("TRIGGERS"))
+                {
+                    triggers = true;
+                }
+                if (s.Trim().Equals("ALL"))
+                {
+                    tables = true;
+                    triggers = true;
+                }
+            }
+
+            var f = Task.Factory;
+
+            if (tables)
+            {
+                var calledTables = f.StartNew(() => BuildTableForeignConstraints(_tableForeignConstraints, log));
+                _tasks.Add(calledTables);
+            }
+
+            //for the method (primary thread) to wait for all worker threads before finishing
+            foreach (Task task in _tasks)
+            {
+                Task.WaitAll(task);
+            }
+        }
+
+        private void GetProcedureBasedReferences(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
     {
 
         string[] words = input;
@@ -71,7 +119,6 @@ namespace Build
         bool procedures = false;
         bool tables = false;
         bool triggers = false;
-
 
         foreach (string s in words)
         {
@@ -93,7 +140,6 @@ namespace Build
                 tables = true;
                 triggers = true;
             }
-
         }
 
         var f = Task.Factory;
@@ -160,25 +206,7 @@ namespace Build
             {
                 log.Log(string.Format("Error reading procedure definitions for table references: {0}", e.Message));
             }
-
         }
-        //log.Log("Finding table references in procedures - start");
-        //foreach (TableDefinitions1 in _tables)
-        //{
-        //    try
-        //    {
-        //        foreach (String tableName in uniqueTables)
-        //        {
-        //            TableInProcedureMatch(tableName, procedure, _tableLinks);
-        //            //write processing output to same line
-        //            Console.Write("Searching for {0} in {1}            \r", tableName, procedure.Name);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        log.Log(string.Format("Error reading procedure definitions for table references: {0}", e.Message));
-        //    }
-        //}
     }
 
         private void BuildCalledProcedures(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, ConsoleLog log)
@@ -188,10 +216,8 @@ namespace Build
         log.Log("Finding rule references - start");
         foreach (ProcedureDefinition procedure in _procedures)
         {
-            
             try
             {
-
                 foreach (String procedureName in uniqueProcedures)
                 {
                     if (!procedure.Name.Equals(procedureName))
@@ -208,6 +234,33 @@ namespace Build
         log.Log("Finding rule references - complete");
     }
 
+        private void BuildTableForeignConstraints(List<TableForeignConstraint> _tableForeignConstraints, ConsoleLog log)
+        {
+            log.Log("Finding table references in procedures - start");
+
+                try
+                {
+                    foreach (TableForeignConstraint tfc in _tableForeignConstraints)
+                    {
+                    Link record = new Link(tfc.Name, tfc.ConastraintName);
+
+                    bool exists = CheckLinkExists(_links, record);
+
+                    if (!exists)
+                    {
+                        _links.Add(record);
+                        //addNotApplicable = false;
+                    }
+                    
+                }
+                    }
+                
+                catch (Exception e)
+                {
+                    log.Log(string.Format("Error reading procedure definitions for table references: {0}", e.Message));
+                }
+            log.Log("Finding table references in procedures - complete");
+        }
         #endregion
 
         #region token recognition
@@ -302,7 +355,6 @@ namespace Build
                 }
             }
             return addNotApplicable;
-
       }
 
     //public void TriggerInRuleMatch(TriggerDefinition trigger, RuleDefinition rule, List<Link> _links)
@@ -417,12 +469,18 @@ namespace Build
                 //Parallel.ForEach(_links, link =>
                 foreach (Link link in _links)
                 {
-                    int a = (from qq in _entities
-                             where qq.Name.Equals(link.CallingEnt)
-                             select qq.Id).FirstOrDefault();
-                    int b = (from qq in _entities
-                             where qq.Name.Equals(link.CalledEnt)
-                             select qq.Id).FirstOrDefault();
+                    string test = (from x in _entities
+                                   where x.Name == link.CallingEnt
+                                   select x.Name).FirstOrDefault();
+
+                    int a = (from x in _entities
+                             where x.Name.Equals(link.CallingEnt)
+                             select x.Id).FirstOrDefault();
+                    int b = (from x in _entities
+                             where x.Name.Equals(link.CalledEnt)
+                             select x.Id).FirstOrDefault();
+
+                    //Create a relationship between the two id's and add to list
                     EntityRelationship rel = new EntityRelationship();
                     rel.CallingEntityId = a;
                     rel.CalledEntityId = b;
@@ -461,13 +519,13 @@ namespace Build
     {
         Utility bla = new Utility();
 
-        bla.ClearTable("EntityRelationship");
-        bla.ClearTable("Bucket");
-        bla.ClearTable("Interface");
-        bla.ClearTable("InternalInterface");
-        bla.ClearTable("EntityResidence");
-        bla.ClearTable("InterfaceReporting");
-        bla.ClearTable("BucketReporting");
+        bla.ClearTable("Admin.EntityRelationships");
+        bla.ClearTable("Admin.Buckets");
+        bla.ClearTable("Admin.Interfaces");
+        bla.ClearTable("Admin.InternalInterfaces");
+        bla.ClearTable("Admin.EntityResidence");
+        bla.ClearTable("Admin.InterfaceReporting");
+        bla.ClearTable("Admin.BucketReporting");
     }
     #endregion 
 

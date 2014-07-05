@@ -38,8 +38,8 @@ namespace UI.Console
                 case "S":
                     ImportInput("SQL");
                     break;
-                case "Exit":
-                    return;
+                case "EXIT":
+                    break;
                 default:
                     StartConsole();
                     break;
@@ -90,8 +90,8 @@ namespace UI.Console
                     buildGraphs.StartGraph(_log, vInput);
                     ImportInput(language);
                     break;
-                case "Exit":
-                    return;
+                case "EXIT":
+                    break;
                 default:
                     _log.Log("Please enter a valid phase.");
                     ImportInput(language);

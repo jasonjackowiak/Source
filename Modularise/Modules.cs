@@ -41,9 +41,9 @@ namespace Modularise
         {
             Utility bla = new Utility();
 
-            bla.ClearTable("Admin.Bucket");
-            bla.ClearTable("Admin.Interface");
-            bla.ClearTable("Admin.InternalInterface");
+            bla.ClearTable("Admin.Buckets");
+            bla.ClearTable("Admin.Interfaces");
+            bla.ClearTable("Admin.InternalInterfaces");
             bla.ClearTable("Admin.EntityResidence");
             bla.ClearTable("Admin.InterfaceReporting");
             bla.ClearTable("Admin.BucketReporting");
@@ -76,7 +76,7 @@ namespace Modularise
 
         private void ReadExcelRulesBuckets()
 {
-    string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("RuleBucketMapFilePath"));
+    string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("BucketMapFilePath"));
             
             log.Log(string.Format("Opening {0} Excel file", file));
     try
@@ -131,9 +131,9 @@ namespace Modularise
             for (int i = 2; i != rowCount + 1; i++)
             {
                 int count = 1;
-                string name = bucketSheet.Cells[i, count].Value2.ToString();
+                string name = bucketSheet.Cells[i, count].Value2.ToString().Trim();
                 count++;
-                string unit = bucketSheet.Cells[i, count].Value2.ToString();
+                string unit = bucketSheet.Cells[i, count].Value2.ToString().Trim();
                 //write processing output to same line
                 Console.Write("Building bucket {0}             \r", name);
 
@@ -346,6 +346,7 @@ namespace Modularise
 
             foreach (var a in f)
             {
+                try { 
                 if (a.SourceUnit.NormalisedUnit != a.TargetUnit.NormalisedUnit)
                 {
                     bool exists = CheckInterface(a.TargetEntityId, a.TargetUnit.NormalisedUnit, a.SourceEntityId);
@@ -360,6 +361,11 @@ namespace Modularise
                         Console.Write("Creating interface for {0}          \r", newInterface.TargetUnit);
                         _interfaces.Add(newInterface);
                     }
+                }
+                    }
+                catch (Exception e)
+                {
+                    log.Log(String.Format("Error: {0}", e));
                 }
             }
             log.Log("Build bucket to bucket Interfaces - complete");
