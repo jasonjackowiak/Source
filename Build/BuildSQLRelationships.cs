@@ -469,10 +469,6 @@ namespace Build
                 //Parallel.ForEach(_links, link =>
                 foreach (Link link in _links)
                 {
-                    string test = (from x in _entities
-                                   where x.Name == link.CallingEnt
-                                   select x.Name).FirstOrDefault();
-
                     int a = (from x in _entities
                              where x.Name.Equals(link.CallingEnt)
                              select x.Id).FirstOrDefault();
@@ -480,11 +476,14 @@ namespace Build
                              where x.Name.Equals(link.CalledEnt)
                              select x.Id).FirstOrDefault();
 
-                    //Create a relationship between the two id's and add to list
-                    EntityRelationship rel = new EntityRelationship();
-                    rel.CallingEntityId = a;
-                    rel.CalledEntityId = b;
-                    _entityRelations.Add(rel);
+                        //Create a relationship between the two id's and add to list
+                        EntityRelationship rel = new EntityRelationship();
+                        rel.CallingEntityId = a;
+                        rel.CalledEntityId = b;
+
+                    // Only add if we have retreieved all of the id's
+                    if ((!a.Equals(0)) && (!b.Equals(0)))
+                        _entityRelations.Add(rel);
                 }
                 log.Log("Converting entity link names into ID's & populating table - complete");
             }

@@ -320,8 +320,8 @@ namespace Import
                       tableCount++;
 
                       TableForeignConstraint tableForeignConstraint = new TableForeignConstraint();
-                      tableForeignConstraint.Name = tables[0].TrimEnd('-');
-                      tableForeignConstraint.ConastraintName = tables[1].TrimEnd(';');
+                      tableForeignConstraint.Name = tables[0].TrimEnd('-').Trim();
+                      tableForeignConstraint.ConastraintName = tables[1].TrimEnd(';').Trim();
                       tableForeignConstraint.Id = tableCount;
 
                       //write processing output to same line

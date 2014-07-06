@@ -14,6 +14,7 @@ namespace Analyse
         #region vars
         //global
         //private ConsoleLog log = new ConsoleLog();
+
         private List<Entity> _entities = new List<Entity>();
 
         //internal interfaces
@@ -74,39 +75,44 @@ namespace Analyse
             FAASModel _context = new FAASModel();
             log.Log("Build internal bucket Interfaces - start");
 
-            //get target id & unit for each relationship
-            var f = (from r in _context.EntityRelationships
-                     select new
-                     {
-                         RelationshipId = r.Id,
-                         TargetEntityId = r.CalledEntityId,
-                         SourceEntityId = r.CallingEntityId,
-                         TargetUnit = (from t in _context.Entities
-                                where t.Id == r.CalledEntityId
-                                select new 
-                                { t.NormalisedUnit }).FirstOrDefault(),
-                        SourceUnit = (from t in _context.Entities
-                                where t.Id == r.CallingEntityId
-                                select new 
-                                { t.NormalisedUnit }).FirstOrDefault()
-                    });
-
-            foreach (var a in f)
+            try
             {
-                if (a.SourceUnit.NormalisedUnit.Equals(a.TargetUnit.NormalisedUnit))
+                //get target id & unit for each relationship
+                var f = (from r in _context.EntityRelationships
+                         select new
+                         {
+                             RelationshipId = r.Id,
+                             TargetEntityId = r.CalledEntityId,
+                             SourceEntityId = r.CallingEntityId,
+                             TargetUnit = (from t in _context.Entities
+                                           where t.Id == r.CalledEntityId
+                                           select new { t.NormalisedUnit }).FirstOrDefault(),
+                             SourceUnit = (from t in _context.Entities
+                                           where t.Id == r.CallingEntityId
+                                           select new { t.NormalisedUnit }).FirstOrDefault()
+                         });
+
+                foreach (var a in f)
                 {
-                    bool exists = CheckInterface(a.RelationshipId, a.TargetEntityId, a.TargetUnit.NormalisedUnit, a.SourceEntityId, a.SourceUnit.NormalisedUnit);
-                    if (!exists)
+                    if (a.SourceUnit.NormalisedUnit.Equals(a.TargetUnit.NormalisedUnit))
                     {
-                        Console.Write("Creating Interface for {0}            \r", a.TargetUnit.NormalisedUnit);
-                        //create new interface
-                        InternalInterface newInterface = new InternalInterface();
-                        newInterface.TargetEntityId = a.TargetEntityId;
-                        newInterface.TargetUnit = a.TargetUnit.NormalisedUnit.ToString();
-                        newInterface.EntityRelationshipIds = a.RelationshipId.ToString();
-                        _internalInterfaces.Add(newInterface);
+                        bool exists = CheckInterface(a.RelationshipId, a.TargetEntityId, a.TargetUnit.NormalisedUnit, a.SourceEntityId, a.SourceUnit.NormalisedUnit);
+                        if (!exists)
+                        {
+                            log.Log(String.Format("Creating Interface for {0}            \r", a.TargetUnit.NormalisedUnit));
+                            //create new interface
+                            InternalInterface newInterface = new InternalInterface();
+                            newInterface.TargetEntityId = a.TargetEntityId;
+                            newInterface.TargetUnit = a.TargetUnit.NormalisedUnit.ToString();
+                            newInterface.EntityRelationshipIds = a.RelationshipId.ToString();
+                            _internalInterfaces.Add(newInterface);
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                log.Log(String.Format("Error creating interface: {0}", e));
             }
             log.Log("Build internal bucket Interfaces - complete");
         }
