@@ -202,9 +202,9 @@
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TriggeringEvent" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TableName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BaseObjectType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="WhenClause" Type="nvarchar" MaxLength="400" />
-          <Property Name="CodeLine" Type="int" Nullable="false" />
-          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityContainer Name="HousingSADBStoreContainer">
@@ -366,9 +366,9 @@
           <Property Name="TriggeringEvent" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TableName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="WhenClause" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="CodeLine" Type="Int32" Nullable="false" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="BaseObjectType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RuleDefinition">
           <Key>
@@ -577,9 +577,9 @@
           <EntitySetMapping Name="TriggerDefinitions1">
             <EntityTypeMapping TypeName="FAASDB.TriggerDefinitions1">
               <MappingFragment StoreEntitySet="TriggerDefinitions1">
+                <ScalarProperty Name="BaseObjectType" ColumnName="BaseObjectType" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
                 <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
                 <ScalarProperty Name="TableName" ColumnName="TableName" />
                 <ScalarProperty Name="TriggeringEvent" ColumnName="TriggeringEvent" />
@@ -714,7 +714,7 @@
         <EntityTypeShape EntityType="FAASDB.ProcedureDefinition" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="FAASDB.TableDefinitions1" Width="1.5" PointX="9.375" PointY="3.75" />
         <EntityTypeShape EntityType="FAASDB.TransactionDefinition" Width="1.5" PointX="9.375" PointY="6.75" />
-        <EntityTypeShape EntityType="FAASDB.TriggerDefinitions1" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="FAASDB.TriggerDefinitions1" Width="1.875" PointX="6.375" PointY="9.875" />
         <EntityTypeShape EntityType="FAASDB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="FAASDB.TriggerDefinition" Width="1.5" PointX="0.75" PointY="10.75" />
         <EntityTypeShape EntityType="FAASDB.TableForeignConstraint" Width="1.5" PointX="3.375" PointY="10.75" />
