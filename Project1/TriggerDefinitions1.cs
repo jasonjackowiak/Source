@@ -19,9 +19,9 @@ namespace Project1
         public string Type { get; set; }
         public string TriggeringEvent { get; set; }
         public string TableName { get; set; }
+        public string BaseObjectType { get; set; }
         public string WhenClause { get; set; }
         public string Body { get; set; }
         public string Unit { get; set; }
-        public string BaseObjectType { get; set; }
     }
 }

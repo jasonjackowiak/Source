@@ -35,7 +35,6 @@ namespace Project1
         public DbSet<ProcedureDefinition> ProcedureDefinitions { get; set; }
         public DbSet<TableDefinitions1> TableDefinitions1 { get; set; }
         public DbSet<TransactionDefinition> TransactionDefinitions { get; set; }
-        public DbSet<TriggerDefinitions1> TriggerDefinitions1 { get; set; }
         public DbSet<RuleDefinition> RuleDefinitions { get; set; }
         public DbSet<TriggerDefinition> TriggerDefinitions { get; set; }
         public DbSet<TableForeignConstraint> TableForeignConstraints { get; set; }
@@ -44,5 +43,6 @@ namespace Project1
         public DbSet<EntityResidence> EntityResidences { get; set; }
         public DbSet<Bucket> Buckets { get; set; }
         public DbSet<InterfaceReporting> InterfaceReportings { get; set; }
+        public DbSet<TriggerDefinitions1> TriggerDefinitions1 { get; set; }
     }
 }

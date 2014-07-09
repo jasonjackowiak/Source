@@ -481,7 +481,8 @@ namespace Build
                         rel.CallingEntityId = a;
                         rel.CalledEntityId = b;
 
-                    // Only add if we have retreieved all of the id's
+                    //Do not add a 0-0 relationship (this is likely a failure)
+                    //Currently not adding any 0 relationships (these are unreferenced tables, will need to figure out what to do for these)
                     if ((!a.Equals(0)) && (!b.Equals(0)))
                         _entityRelations.Add(rel);
                 }

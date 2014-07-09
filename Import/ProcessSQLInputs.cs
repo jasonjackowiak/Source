@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using Project1;
 using Common;
 
@@ -43,9 +45,10 @@ namespace Import
       ClearTables(log);
 
         var f = Task.Factory;
-        //var extractTables = f.StartNew(() => ReadTables());
-        //var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
+        var extractTables = f.StartNew(() => ReadTables());
+        var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
 
+        //Use this one to debug
         ReadTriggers();
         //var extractTriggers = f.StartNew(() => ReadTriggers());
 
@@ -53,10 +56,12 @@ namespace Import
         //var extractProcedures = f.StartNew(() => ExtractProcedures());
 
         //Task.WaitAll(extractTableForeignConstraints);
-        //PopulateTables();
-        //PopulateTableForeignConstraints();
 
-        //Task.WaitAll(extractRules);
+
+        Task.WaitAll(extractTables);
+
+        PopulateTables();
+        PopulateTableForeignConstraints();
         //PopulateRules();
         PopulateTriggers();
         CreateEntities();
@@ -64,7 +69,6 @@ namespace Import
 
         log.Log("************ IMPORT END ***************");
         log.EndLog();
-
             }
       #endregion
 
@@ -164,20 +168,29 @@ namespace Import
 	     FAASModel _context = new FAASModel();
 
 	    log.Log("Persist Triggers to DB - start");
-        //try
-        //{
+        try
+        {
 	        foreach (TriggerDefinitions1 item in _triggers)
 	    {
 	        _context.TriggerDefinitions1.Add(item);
 	        _context.SaveChanges();
 	    }
 	    log.Log("Persist Triggers to DB - complete");
-        //}
-        //catch (Exception e)
-        //{
-        //    log.Log(string.Format("Error persisting Triggers Definitions to DB: {0}: ", e));
-        //}
-	}
+        }
+        catch (DbEntityValidationException e)
+        {
+            log.Log(string.Format("Error persisting Triggers Definitions to DB: {0}: ", e));
+
+    foreach (var validationErrors in e.EntityValidationErrors)
+    {
+        foreach (var validationError in validationErrors.ValidationErrors)
+        {
+            Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+        }
+    }
+}
+        }
+	
  
 	#endregion
 
