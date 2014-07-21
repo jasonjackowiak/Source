@@ -166,17 +166,28 @@
           <Property Name="Access" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
         </EntityType>
-        <EntityType Name="ProcedureDefinitions">
+        <EntityType Name="FunctionDefinitions">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PackageName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PackageId" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CodeLine" Type="int" Nullable="false" />
           <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="SubSystem" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="PackageDefinitions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CodeLine" Type="int" Nullable="false" />
+          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityType Name="TableDefinitions1">
           <Key>
@@ -223,7 +234,8 @@
           <EntitySet Name="TableDefinitions" EntityType="Self.TableDefinitions" Schema="OSB" store:Type="Tables" />
           <EntitySet Name="TransactionDefinitions" EntityType="Self.TransactionDefinitions" Schema="OSB" store:Type="Tables" />
           <EntitySet Name="TriggerDefinitions" EntityType="Self.TriggerDefinitions" Schema="OSB" store:Type="Tables" />
-          <EntitySet Name="ProcedureDefinitions" EntityType="Self.ProcedureDefinitions" Schema="SQL" store:Type="Tables" />
+          <EntitySet Name="FunctionDefinitions" EntityType="Self.FunctionDefinitions" Schema="SQL" store:Type="Tables" />
+          <EntitySet Name="PackageDefinitions" EntityType="Self.PackageDefinitions" Schema="SQL" store:Type="Tables" />
           <EntitySet Name="TableDefinitions1" EntityType="Self.TableDefinitions1" Schema="SQL" Table="TableDefinitions" store:Type="Tables" />
           <EntitySet Name="TableForeignConstraints" EntityType="Self.TableForeignConstraints" Schema="SQL" store:Type="Tables" />
           <EntitySet Name="TriggerDefinitions1" EntityType="Self.TriggerDefinitions1" Schema="SQL" Table="TriggerDefinitions" store:Type="Tables" />
@@ -240,7 +252,6 @@
           <EntitySet Name="Interfaces" EntityType="FAASDB.Interface" />
           <EntitySet Name="InternalInterfaces" EntityType="FAASDB.InternalInterface" />
           <EntitySet Name="TableDefinitions" EntityType="FAASDB.TableDefinition" />
-          <EntitySet Name="ProcedureDefinitions" EntityType="FAASDB.ProcedureDefinition" />
           <EntitySet Name="TableDefinitions1" EntityType="FAASDB.TableDefinitions1" />
           <EntitySet Name="TransactionDefinitions" EntityType="FAASDB.TransactionDefinition" />
           <EntitySet Name="RuleDefinitions" EntityType="FAASDB.RuleDefinition" />
@@ -252,6 +263,8 @@
           <EntitySet Name="Buckets" EntityType="FAASDB.Bucket" />
           <EntitySet Name="InterfaceReportings" EntityType="FAASDB.InterfaceReporting" />
           <EntitySet Name="TriggerDefinitions1" EntityType="FAASDB.TriggerDefinitions1" />
+          <EntitySet Name="FunctionDefinitions" EntityType="FAASDB.FunctionDefinition" />
+          <EntitySet Name="PackageDefinitions" EntityType="FAASDB.PackageDefinition" />
         </EntityContainer>
         <EntityType Name="AuditLog">
           <Key>
@@ -324,18 +337,6 @@
           <Property Name="KeyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="TableType" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="ProcedureDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PackageName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodeLine" Type="Int32" Nullable="false" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="SubSystem" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="TableDefinitions1">
           <Key>
@@ -455,6 +456,29 @@
           <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="FunctionDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PackageDefinition">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -536,19 +560,6 @@
                 <ScalarProperty Name="FieldType" ColumnName="FieldType" />
                 <ScalarProperty Name="FieldName" ColumnName="FieldName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProcedureDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.ProcedureDefinition">
-              <MappingFragment StoreEntitySet="ProcedureDefinitions">
-                <ScalarProperty Name="SubSystem" ColumnName="SubSystem" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -682,6 +693,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="FunctionDefinitions">
+            <EntityTypeMapping TypeName="FAASDB.FunctionDefinition">
+              <MappingFragment StoreEntitySet="FunctionDefinitions">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageDefinitions">
+            <EntityTypeMapping TypeName="FAASDB.PackageDefinition">
+              <MappingFragment StoreEntitySet="PackageDefinitions">
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -711,7 +747,6 @@
         <EntityTypeShape EntityType="FAASDB.Interface" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="FAASDB.InternalInterface" Width="1.5" PointX="4.75" PointY="3.75" />
         <EntityTypeShape EntityType="FAASDB.TableDefinition" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="FAASDB.ProcedureDefinition" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="FAASDB.TableDefinitions1" Width="1.5" PointX="9.375" PointY="3.75" />
         <EntityTypeShape EntityType="FAASDB.TransactionDefinition" Width="1.5" PointX="9.375" PointY="6.75" />
         <EntityTypeShape EntityType="FAASDB.RuleDefinition" Width="1.5" PointX="9.75" PointY="0.75" />
@@ -723,6 +758,8 @@
         <EntityTypeShape EntityType="FAASDB.Bucket" Width="1.5" PointX="5.375" PointY="6.75" />
         <EntityTypeShape EntityType="FAASDB.InterfaceReporting" Width="1.5" PointX="11.375" PointY="10.75" />
         <EntityTypeShape EntityType="FAASDB.TriggerDefinitions1" Width="2.25" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="FAASDB.FunctionDefinition" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FAASDB.PackageDefinition" Width="1.5" PointX="3.375" PointY="13.75" />
       </Diagram>
       <Diagram DiagramId="34e71bec20b44a87a54fb393f3f69158" Name="Diagram1" >
       </Diagram>

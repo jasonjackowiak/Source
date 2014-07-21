@@ -76,8 +76,13 @@ namespace Import
 
 	#endregion
 
-	#region Exceptions
-	// List of runtime exceptions defined in ObjectStar
+    #region C# List for Oracle packages
+    public const int posFunctionName = 9; // position of the function name from the package List
+    public const int posProcedureName = 10; // position of the procedure name from the package List
+    #endregion
+
+    #region Exceptions
+    // List of runtime exceptions defined in ObjectStar
     public static string[] runtimeExceptions = 
     {
       "DELETEFAIL",

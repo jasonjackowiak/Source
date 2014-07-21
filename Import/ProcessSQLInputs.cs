@@ -26,10 +26,12 @@ namespace Import
 
       private List<TableDefinitions1> _tables = new List<TableDefinitions1>();
       private List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
-	  private List<ProcedureDefinition> _procedures = new List<ProcedureDefinition>();
+	  private List<PackageDefinition> _packages = new List<PackageDefinition>();
       private List<TriggerDefinitions1> _triggers = new List<TriggerDefinitions1>();
+      private List<FunctionDefinition> _functions = new List<FunctionDefinition>();
       private List<Entity> _entity = new List<Entity>();
       
+      //MAY NEED TO ATER THIS TO INCLUDE FUNCTIONS/SPs
       private Dictionary<string, int> ruleNames = new Dictionary<string, int>(); //Unique list of rules
       private int entityCount = 0;
       private List<Task> _tasks = new List<Task>();
@@ -45,25 +47,25 @@ namespace Import
       ClearTables(log);
 
         var f = Task.Factory;
-        var extractTables = f.StartNew(() => ReadTables());
-        var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
-
-        //Use this one to debug
-        ReadTriggers();
+        //var extractTables = f.StartNew(() => ReadTables());
+        //var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
         //var extractTriggers = f.StartNew(() => ReadTriggers());
+        var extractProcedures = f.StartNew(() => ReadPackages());
 
-        //TODO
-        //var extractProcedures = f.StartNew(() => ExtractProcedures());
-
-        //Task.WaitAll(extractTableForeignConstraints);
-
-
-        Task.WaitAll(extractTables);
+        Task.WaitAll(extractProcedures);
 
         PopulateTables();
         PopulateTableForeignConstraints();
-        //PopulateRules();
+        PopulatePackages();
         PopulateTriggers();
+
+        //This must be run after Packages have been persisted to model
+        // to ensure Id (link) is taken from model
+        RePopulatePackageList();
+        ExtractPackageFunctions();
+        PopulateFunctions();
+
+        //Create list of eneities and persist to model
         CreateEntities();
         PopulateEntities();
 
@@ -73,7 +75,6 @@ namespace Import
       #endregion
 
 	#region Triggers
-
       private void ReadTriggers()
       {
           string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("Triggers"));
@@ -101,18 +102,14 @@ namespace Import
           }
       }
 
-
-	  private bool ExtractExcelTriggers (Workbook xlWorkbook)
+	private bool ExtractExcelTriggers (Workbook xlWorkbook)
 	{
-	  string line;
-	  int lineNo = 0;
-	  int triggerCount = 0;
       
 	  log.Log("Extract Triggers to local variables - start");
 
 	      //THIS IS NEW PROCESSING TO USE XLS INSTEAD OF TXT FORMAT
-	        _Worksheet bucketSheet = xlWorkbook.Sheets[1];
-	        Range xlRange = bucketSheet.UsedRange;
+      _Worksheet sheet = xlWorkbook.Sheets[1];
+      Range xlRange = sheet.UsedRange;
 
 	        int rowCount = xlRange.Rows.Count;
 	        int colCount = xlRange.Columns.Count;
@@ -126,25 +123,25 @@ namespace Import
 	        {
                 TriggerDefinitions1 trigger = new TriggerDefinitions1();
 	            int count = 3;
-	            trigger.Name= bucketSheet.Cells[i, count].Value2.ToString();
+                trigger.Name = sheet.Cells[i, count].Value2.ToString();
 	            count++;
-	            trigger.Type = bucketSheet.Cells[i, count].Value2.ToString();
+                trigger.Type = sheet.Cells[i, count].Value2.ToString();
                 count++;
-                trigger.TriggeringEvent = bucketSheet.Cells[i, count].Value2.ToString();
-                count++;
-                count++;
-                trigger.BaseObjectType = bucketSheet.Cells[i, count].Value2.ToString();
-                count++;
-                trigger.TableName = bucketSheet.Cells[i, count].Value2.ToString();
+                trigger.TriggeringEvent = sheet.Cells[i, count].Value2.ToString();
                 count++;
                 count++;
+                trigger.BaseObjectType = sheet.Cells[i, count].Value2.ToString();
                 count++;
-                trigger.WhenClause = bucketSheet.Cells[i, count].Value2.ToString();
+                trigger.TableName = sheet.Cells[i, count].Value2.ToString();
                 count++;
                 count++;
                 count++;
+                trigger.WhenClause = sheet.Cells[i, count].Value2.ToString();
                 count++;
-                trigger.Body = bucketSheet.Cells[i, count].Value2.ToString();
+                count++;
+                count++;
+                count++;
+                trigger.Body = sheet.Cells[i, count].Value2.ToString();
                 //trigger.Unit = bucketSheet.Cells[i, count].Value2.ToString();
 
 	            //write processing output to same line
@@ -190,12 +187,9 @@ namespace Import
     }
 }
         }
-	
- 
 	#endregion
 
     #region Tables
-
       private void ReadTables()
       {
           string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("Tables"));
@@ -405,146 +399,245 @@ namespace Import
 
     #endregion
 
-    #region Procedures
+    #region Packages
 
-    private bool ExtractRules()
+    private void ReadPackages()
     {
-        string line;
-        string ruleSeparator = GetRuleSeparator();
-
-        bool newRule = false; // indicates the start of processing new rule
-        int posRule = 0; // position of the extracted rule
-        string ruleName = String.Empty; // extracted rule name
-        int lineNo = 0;
-        int ruleCount = 0;
-        string ruleFile = GetFromConfig("Rules");
-        string unit = "";
-        int unitpos = 0;
-        int lineCount = 0;
-
-        log.Log("Extract Rule Definitions to local variables - start");
-
-        if (File.Exists(ruleFile))
-        {
-            StreamReader rulesFile = new StreamReader(ruleFile);
-            try
-            {
-                while ((line = rulesFile.ReadLine()) != null) // loop through all rules extract lines
-                {
-                    lineNo++;
-                    if (lineNo > Constants.rulesLinesToSkip)
-                    {
-                        line = line.Substring(Constants.charsToSkip);
-                        
-                            if (newRule)
-                            {
-                                if (line.Contains("("))
-                                {
-                                    posRule = line.IndexOf("(");
-                                    int x = line.LastIndexOf(';');
-                                    unitpos = x + 2;
-                                }
-                                else if (line.Contains(";"))
-                                {
-                                    posRule = line.LastIndexOf(';');
-                                    unitpos = posRule + 2;
-                                    //unit = line.Substring(unitpos, Constants.lenRuleUnit).Trim();
-                                }
-                                ruleName = line.Substring(0, posRule);
-                                //write processing output to same line
-                                Console.Write("Reading rule {0}             \r", ruleName);
-                                ruleNames.Add(ruleName, ruleCount);
-                                ruleCount++;
-                                newRule = false;
-                                //unit = line.Substring(unitpos, Constants.lenRuleUnit).Trim();
-                            }
-                            
-                            if (line.Substring(0, Constants.lenRuleSeperator).Trim().Equals(ruleSeparator))
-                            {
-                                newRule = true;
-                                unit = line.Substring(Constants.posRuleUnit).Trim();
-                            }
-                            else
-                            {
-                                lineCount++;
-                                ProcedureDefinition procedureDefinition = new ProcedureDefinition();
-                                procedureDefinition.Name = ruleName;
-                                procedureDefinition.CodeLine = lineNo;
-                                procedureDefinition.Body = line;
-                                //procedureDefinition.Unit = unit;
-                                procedureDefinition.Id = lineCount;
-                                _procedures.Add(procedureDefinition);
-                            }
-                    }
-
-                }
-
-                rulesFile.Close();
-                log.Log("Extract Rule Definitions to local variables - complete");
-            }
-            catch (Exception ex)
-            {
-                rulesFile.Close();
-                log.Log(string.Format("Incorrect format of the Rule file. Error:{0}", ex.Message));
-                return false;
-            }
-        }
-        else
-        {
-            log.Log("Rule file is missing");
-            return false;
-        }
-        return true;
+        string file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, GetFromConfig("Procedures"));
+        ReadExcelPackages(file);
     }
 
-    private string GetRuleSeparator ()
+    private void ReadExcelPackages(string filePath)
     {
-      // this is a separator between rules - note, can change!
-      string ruleSeparator = GetFromConfig("RuleSeparator");
-      if (string.IsNullOrEmpty(ruleSeparator))
-        ruleSeparator = "###";
-      return ruleSeparator;
-    }
-      
-    private void PopulateRules()
-    {
-        FAASModel _context = new FAASModel();
-        log.Log("Persist Rule Definitions to DB - start");
+
+        log.Log(string.Format("Opening {0} Excel file", filePath));
         try
         {
-            foreach (ProcedureDefinition item in _procedures)
+            if (File.Exists(filePath))
             {
-                _context.ProcedureDefinitions.Add(item);
+                Application xlApp = new Application();
+                Workbook xlWorkbook = xlApp.Workbooks.Open(filePath);
+                ExtractExcelPackages(xlWorkbook);
+                xlWorkbook.Close();
+                xlApp.Quit();
             }
-            _context.SaveChanges();
-            log.Log("Persist Rule Definitions to DB - complete");
         }
         catch (Exception e)
         {
-            log.Log(string.Format("Error persisting Rule Definitions to DB: {0}", e.Message)); 
+            log.Log(string.Format("Error processing {0} Excel file: {1}", filePath, e.Message));
         }
     }
-       
+
+    private bool ExtractExcelPackages(Workbook xlWorkbook)
+    {
+
+        log.Log("Extract Packages to local variables - start");
+
+        //THIS IS NEW PROCESSING TO USE XLS INSTEAD OF TXT FORMAT
+        _Worksheet sheet = xlWorkbook.Sheets[1];
+        Range xlRange = sheet.UsedRange;
+
+        int rowCount = xlRange.Rows.Count;
+        int colCount = xlRange.Columns.Count;
+        string oldName = "";
+
+        log.Log("Importing Packages - start");
+
+        try
+        {
+            //iterate through all columns/rows in xls
+            for (int i = 2; i != rowCount + 1; i++)
+            {
+                PackageDefinition package = new PackageDefinition();
+                int count = 3;
+                package.Name = sheet.Cells[i, count].Value2.ToString();
+                count++;
+                package.Type = sheet.Cells[i, count].Value2.ToString();
+                count++;
+                package.CodeLine = Convert.ToInt32(sheet.Cells[i, count].Value2);
+                count++;
+                package.Body = sheet.Cells[i, count].Value2.ToString();
+
+                //write processing output to same line
+                if (!oldName.Equals(package.Name))
+                {
+                    log.Log(String.Format("Reading Package {0} \r", package.Name));
+                    oldName = package.Name;
+                }
+
+                _packages.Add(package);
+            }
+
+            log.Log("Extract Packages to local variables - complete");
+        }
+        catch (Exception e)
+        {
+            log.Log(string.Format("Error reading Package file: {0}", e));
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool RePopulatePackageList()
+    {
+        log.Log(String.Format("Repopulating Package Definitions from Database."));
+        FAASModel _repopulateContext = new FAASModel();
+        _packages.Clear();
+        _packages = _repopulateContext.PackageDefinitions.ToList();
+        log.Log(string.Format("Repopulation of Package Definitions from Database complete."));
+        return true;
+    }
+
+    private bool ExtractPackageFunctions()
+    {
+        log.Log("Extract Stored Procedures and Functions to local variables from parsed packages - start");
+
+        //Extract the SQL functions from the Oracle packages that have already been entered into a List
+        //This will mostly comprise of syntax methods to recognise the start and end of functions and put them into their own list
+        //Maybe also create a list of function names (here or somewhere else)
+        string functionName = "";
+        string type = "";
+        bool newFunction = false;
+
+        foreach (PackageDefinition package in _packages) // loop through all package lines
+        {
+            FunctionDefinition function = new FunctionDefinition();
+
+            //Need to grab each line somewhere and ensure each is iterated through, has the same checks applied
+            //Assignment of function name
+            if (((functionName.Equals("")) | (newFunction)) && (package.Type.Equals("PACKAGE BODY"))) {
+                functionName = FindFunctionOrProcedureName(package.Body, functionName);
+                newFunction = false;
+            }
+
+            if ((!newFunction) && (package.Type.Equals("PACKAGE BODY")) && (!functionName.Equals("")))
+            {
+                function.PackageId = package.Id;
+                function.Name = functionName;
+                //TO DO - use a method to determine the type
+                function.Type = "Function";
+                function.CodeLine = package.CodeLine;
+                function.Body = package.Body;
+
+                _functions.Add(function);
+            }
+
+            if (package.Body.Contains("END "))
+            {
+                newFunction = true;
+                //Probably need to create a function to determine this
+                //Should be able to deconstruct the name using the supplied list of applications
+                function.Unit = "N/A";
+            }
+
+            }
+
+        return true;
+    }
+
+    private string FindFunctionOrProcedureName(string line, string name)
+    {
+
+        int nameStart = 0;
+        int nameEnd = 0;
+
+        if (line.StartsWith("FUNCTION "))
+        {
+            if (line.Contains("("))
+            {
+                nameEnd = line.IndexOf("(");
+            }
+            else
+            {
+                nameEnd = line.Length;
+            }
+
+            nameStart = Constants.posFunctionName;
+            int length = nameEnd - nameStart;
+            name = line.Substring(nameStart, length);
+        }
+        else if (line.StartsWith("PROCEDURE "))
+        {
+            if (line.Contains("("))
+            {
+                nameEnd = line.IndexOf("(");
+            }
+            else
+            {
+                nameEnd = line.Length;
+            }
+
+            nameStart = Constants.posProcedureName;
+            int length = nameEnd - nameStart;
+            name = line.Substring(nameStart, length);
+        }
+
+        return name;
+    }
+      
+    private void PopulatePackages()
+    {
+        FAASModel _context = new FAASModel();
+        log.Log("Persist Package Definitions to DB - start");
+        try
+        {
+            foreach (PackageDefinition item in _packages)
+            {
+                _context.PackageDefinitions.Add(item);
+            }
+            _context.SaveChanges();
+            log.Log("Persist Package Definitions to DB - complete");
+        }
+        catch (Exception e)
+        {
+            log.Log(string.Format("Error persisting Package Definitions to DB: {0}", e.Message)); 
+        }
+    }
+
+    private void PopulateFunctions()
+    {
+        FAASModel _context = new FAASModel();
+        log.Log("Persist Function Definitions to DB - start");
+        try
+        {
+            foreach (FunctionDefinition item in _functions)
+            {
+                _context.FunctionDefinitions.Add(item);
+            }
+            _context.SaveChanges();
+            log.Log("Persist Function Definitions to DB - complete");
+        }
+        catch (DbEntityValidationException e)
+        {
+            log.Log(string.Format("Error persisting Function Definitions to DB: {0}", e.Message));
+            foreach (var eve in e.EntityValidationErrors)
+            {
+                log.Log(string.Format("Entity of type \"{0}\" in state \"{1}\" has the following validations errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                foreach (var xxx in eve.ValidationErrors){
+                    log.Log(string.Format(" - Property: \"{0}\", Error: \"{1}\"", xxx.PropertyName, xxx.ErrorMessage));
+                }
+            }
+            
+        }
+    }
     #endregion
 
-	//#region Entities
-
+	#region Entities
     private bool CreateEntities()
     {
         string oldName = "";
         int count = 0;
         log.Log("Assign Entities - start");
 
-        if (CreateTableEntities(oldName, count))
+        if (CreateTableEntities(oldName, count) && CreateTriggerEntities(oldName, count) && CreateProcedureEntities(oldName, count) && CreateFunctionEntities(oldName,count))
         {
             log.Log("Assign Entities - complete");
             log.Log(string.Format("{0} Entities found", entityCount));
             return true;
         }
         else
-        {
-            return false;
-        }
+        return false;
     }
 
 	private bool CreateTableEntities(string oldName, int count)
@@ -573,33 +666,83 @@ namespace Import
 		return true;
 	}
 
-	//private bool CreateTriggerEntities(string oldName, int count)
-	//{
-	//    int triggerCount = 0;
-	//    foreach (TriggerDefinition item in _triggers)
-	//    {
-	//        //triggers consist of a table that fires the rule, and so are made up of the combination of the two - hence the appended name below
-	//        string Name = item.TableName + ", " + item.RuleName + ", " + item.Access;
-	//        count++;
-	//        if (Name != oldName)
-	//        {
-	//            triggerCount++;
-	//            entityCount++;
-	//            Entity trigger = new Entity();
-	//            trigger.Name = Name;
-	//            oldName = Name;
-	//            trigger.Type = "TRIGGER";
-	//            trigger.SourceUnit = item.Unit;
-	//            trigger.SourceId = item.Id;
-	//            trigger.NormalisedUnit = "N/A";
-	//            trigger.Id = entityCount;
+    private bool CreateProcedureEntities(string oldName, int count)
+    {
+        int procedureCount = 0;
+        foreach (PackageDefinition item in _packages)
+        {
+            count++;
+            if (item.Name != oldName)
+            {
+                procedureCount++;
+                entityCount++;
+                Entity procedure = new Entity();
+                procedure.Name = item.Name;
+                oldName = item.Name;
+                procedure.Type = "PACKAGE";
+                //table.SourceUnit = item.Unit;
+                procedure.SourceId = item.Id;
+                procedure.NormalisedUnit = "N/A";
+                procedure.Id = entityCount;
 
-	//            _entity.Add(trigger);
-	//        }
-	//    }
-	//    log.Log(string.Format("{0} Trigger Definitions added", triggerCount));
-	//    return true;
-	//}
+                _entity.Add(procedure);
+            }
+        }
+        log.Log(string.Format("{0} Package Definitions added", procedureCount));
+        return true;
+    }
+
+    private bool CreateFunctionEntities(string oldName, int count)
+    {
+        int functionCount = 0;
+        foreach (FunctionDefinition item in _functions)
+        {
+            count++;
+            if (item.Name != oldName)
+            {
+                functionCount++;
+                entityCount++;
+                Entity function = new Entity();
+                function.Name = item.Name;
+                oldName = item.Name;
+                function.Type = "FUNCTION";
+                //table.SourceUnit = item.Unit;
+                function.SourceId = item.Id;
+                function.NormalisedUnit = "N/A";
+                function.Id = entityCount;
+
+                _entity.Add(function);
+            }
+        }
+        log.Log(string.Format("{0} Function Definitions added", functionCount));
+        return true;
+    }
+
+
+    private bool CreateTriggerEntities(string oldName, int count)
+    {
+        int triggerCount = 0;
+        foreach (TriggerDefinitions1 item in _triggers)
+        {
+            count++;
+            if (item.Name != oldName)
+            {
+                triggerCount++;
+                entityCount++;
+                Entity trigger = new Entity();
+                trigger.Name = item.Name;
+                trigger.Type = "TRIGGER";
+                //trigger.SourceUnit = item.Unit;
+                trigger.SourceId = item.Id;
+                trigger.NormalisedUnit = "N/A";
+                trigger.Id = entityCount;
+
+                _entity.Add(trigger);
+            }
+        }
+        log.Log(string.Format("{0} Trigger Definitions added", triggerCount));
+        return true;
+    }
 
     private void PopulateEntities()
     {
@@ -621,8 +764,7 @@ namespace Import
         }
 
     }
-
-	//#endregion
+	#endregion
 
     #region utilities
       /// <summary>
@@ -632,9 +774,10 @@ namespace Import
     {
         Utility bla = new Utility();
 
-        bla.ClearTable("SQL.ProcedureDefinitions");
+        bla.ClearTable("SQL.PackageDefinitions");
         bla.ClearTable("SQL.TableDefinitions");
         bla.ClearTable("SQL.TableForeignConstraints");
+        bla.ClearTable("SQL.FunctionDefinitions");
         bla.ClearTable("Admin.Buckets");
         bla.ClearTable("Admin.Entities");
         bla.ClearTable("Admin.EntityRelationships");

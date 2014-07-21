@@ -12,14 +12,14 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class ProcedureDefinition
+    public partial class FunctionDefinition
     {
         public int Id { get; set; }
-        public string PackageName { get; set; }
-        public string Type { get; set; }
+        public int PackageId { get; set; }
         public string Name { get; set; }
+        public string Type { get; set; }
         public int CodeLine { get; set; }
         public string Body { get; set; }
-        public string SubSystem { get; set; }
+        public string Unit { get; set; }
     }
 }

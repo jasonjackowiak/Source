@@ -78,6 +78,9 @@
     <Compile Include="EntityResidence.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="FunctionDefinition.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Interface.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -102,7 +105,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ProcedureDefinition.cs">
+    <Compile Include="PackageDefinition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="RuleDefinition.cs">

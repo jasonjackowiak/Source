@@ -32,7 +32,6 @@ namespace Project1
         public DbSet<Interface> Interfaces { get; set; }
         public DbSet<InternalInterface> InternalInterfaces { get; set; }
         public DbSet<TableDefinition> TableDefinitions { get; set; }
-        public DbSet<ProcedureDefinition> ProcedureDefinitions { get; set; }
         public DbSet<TableDefinitions1> TableDefinitions1 { get; set; }
         public DbSet<TransactionDefinition> TransactionDefinitions { get; set; }
         public DbSet<RuleDefinition> RuleDefinitions { get; set; }
@@ -44,5 +43,7 @@ namespace Project1
         public DbSet<Bucket> Buckets { get; set; }
         public DbSet<InterfaceReporting> InterfaceReportings { get; set; }
         public DbSet<TriggerDefinitions1> TriggerDefinitions1 { get; set; }
+        public DbSet<FunctionDefinition> FunctionDefinitions { get; set; }
+        public DbSet<PackageDefinition> PackageDefinitions { get; set; }
     }
 }

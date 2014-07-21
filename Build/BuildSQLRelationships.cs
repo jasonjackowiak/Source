@@ -25,7 +25,7 @@ namespace Build
 
         // specific entity lists
         public List<Entity> ents = new List<Entity>();
-        public List<ProcedureDefinition> _procedureDefinitions = new List<ProcedureDefinition>();
+        public List<PackageDefinition> _packageDefinitions = new List<PackageDefinition>();
         public List<TableDefinition> _tableDefinitions = new List<TableDefinition>();
         public List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
         public List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
@@ -49,7 +49,7 @@ namespace Build
             //Prepare data lists from DB
             FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
-            _procedureDefinitions = _context.ProcedureDefinitions.ToList();
+            _packageDefinitions = _context.PackageDefinitions.ToList();
             _tableDefinitions = _context.TableDefinitions.ToList();
             _triggers = _context.TriggerDefinitions.ToList();
             _tableForeignConstraints = _context.TableForeignConstraints.ToList();
@@ -61,7 +61,7 @@ namespace Build
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetProcedureBasedReferences(_procedureDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
+            GetPackageBasedReferences(_packageDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
             GetTableBasedReferences(input, log);
 
             CreateMasterList();
@@ -111,7 +111,7 @@ namespace Build
             }
         }
 
-        private void GetProcedureBasedReferences(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
+        private void GetPackageBasedReferences(List<PackageDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
     {
 
         string[] words = input;
@@ -168,10 +168,10 @@ namespace Build
 
     }
 
-    //    private void BuildCalledTriggers(List<ProcedureDefinition> _procedures)
+    //    private void BuildCalledTriggers(List<PackageDefinition> _procedures)
     //{
     //    log.Log("Finding trigger references - start");
-    //    foreach (ProcedureDefinition procedures in _procedures)
+    //    foreach (PackageDefinition procedures in _procedures)
     //    {
     //        try
     //        {
@@ -188,10 +188,10 @@ namespace Build
     //    log.Log("Finding trigger references - start");
     //}
 
-        private void BuildCalledTables(List<ProcedureDefinition> _procedures, List<string> uniqueTables, ConsoleLog log)
+        private void BuildCalledTables(List<PackageDefinition> _procedures, List<string> uniqueTables, ConsoleLog log)
     {
         log.Log("Finding table references in procedures - start");
-        foreach (ProcedureDefinition procedure in _procedures)
+        foreach (PackageDefinition procedure in _procedures)
         {
             try
             {
@@ -209,12 +209,12 @@ namespace Build
         }
     }
 
-        private void BuildCalledProcedures(List<ProcedureDefinition> _procedures, List<string> uniqueProcedures, ConsoleLog log)
+        private void BuildCalledProcedures(List<PackageDefinition> _procedures, List<string> uniqueProcedures, ConsoleLog log)
     {
 
         bool addNotApplicable = true;
         log.Log("Finding rule references - start");
-        foreach (ProcedureDefinition procedure in _procedures)
+        foreach (PackageDefinition procedure in _procedures)
         {
             try
             {
@@ -265,7 +265,7 @@ namespace Build
 
         #region token recognition
 
-    public bool TableInProcedureMatch(string calledTable, ProcedureDefinition procedure, List<Link> _links)
+    public bool TableInProcedureMatch(string calledTable, PackageDefinition procedure, List<Link> _links)
     {
         string match1 = " " + calledTable + ";";
         string match2 = " " + calledTable + "(";
@@ -294,7 +294,7 @@ namespace Build
         }
     }
 
-    public bool ProcedureInProcedureMatch(string calledProcedure, ProcedureDefinition procedure, List<Link> _links, bool addNotApplicable)
+    public bool ProcedureInProcedureMatch(string calledProcedure, PackageDefinition procedure, List<Link> _links, bool addNotApplicable)
     {
         //line contains
         string match1 = " " + calledProcedure + ";";
