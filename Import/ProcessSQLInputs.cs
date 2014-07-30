@@ -47,12 +47,12 @@ namespace Import
       ClearTables(log);
 
         var f = Task.Factory;
-        //var extractTables = f.StartNew(() => ReadTables());
-        //var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
-        //var extractTriggers = f.StartNew(() => ReadTriggers());
-        var extractProcedures = f.StartNew(() => ReadPackages());
+        var extractTables = f.StartNew(() => ReadTables());
+        var extractTableForeignConstraints = f.StartNew(() => ExtractTableForeignConstraints());
+        var extractTriggers = f.StartNew(() => ReadTriggers());
+        var extractPackages = f.StartNew(() => ReadPackages());
 
-        Task.WaitAll(extractProcedures);
+        Task.WaitAll(extractPackages);
 
         PopulateTables();
         PopulateTableForeignConstraints();
@@ -430,7 +430,6 @@ namespace Import
 
     private bool ExtractExcelPackages(Workbook xlWorkbook)
     {
-
         log.Log("Extract Packages to local variables - start");
 
         //THIS IS NEW PROCESSING TO USE XLS INSTEAD OF TXT FORMAT
@@ -496,8 +495,9 @@ namespace Import
         //Extract the SQL functions from the Oracle packages that have already been entered into a List
         //This will mostly comprise of syntax methods to recognise the start and end of functions and put them into their own list
         //Maybe also create a list of function names (here or somewhere else)
-        string functionName = "";
+        string name = "";
         string type = "";
+        string unit = "";
         bool newFunction = false;
 
         foreach (PackageDefinition package in _packages) // loop through all package lines
@@ -506,29 +506,32 @@ namespace Import
 
             //Need to grab each line somewhere and ensure each is iterated through, has the same checks applied
             //Assignment of function name
-            if (((functionName.Equals("")) | (newFunction)) && (package.Type.Equals("PACKAGE BODY"))) {
-                functionName = FindFunctionOrProcedureName(package.Body, functionName);
-                newFunction = false;
+            if (((name.Equals("")) | (newFunction)) && (package.Type.Equals("PACKAGE BODY"))) {
+                name = FindFunctionOrProcedureName(package.Body, name, type)[0];
+                type = FindFunctionOrProcedureName(package.Body, name, type)[1];
+                if ((!name.Equals(null)) && (!type.Equals(null)))
+                {
+                    newFunction = false;
+                }
             }
 
-            if ((!newFunction) && (package.Type.Equals("PACKAGE BODY")) && (!functionName.Equals("")))
+            if ((!newFunction) && (package.Type.Equals("PACKAGE BODY")) && (!name.Equals("")))
             {
                 function.PackageId = package.Id;
-                function.Name = functionName;
+                function.Name = name;
                 //TO DO - use a method to determine the type
-                function.Type = "Function";
+                function.Type = type;
                 function.CodeLine = package.CodeLine;
                 function.Body = package.Body;
-
                 _functions.Add(function);
             }
 
             if (package.Body.Contains("END "))
             {
                 newFunction = true;
-                //Probably need to create a function to determine this
+                //Probably need to create a function to determine the unit
                 //Should be able to deconstruct the name using the supplied list of applications
-                function.Unit = "N/A";
+                //function.Unit = unit;
             }
 
             }
@@ -536,11 +539,14 @@ namespace Import
         return true;
     }
 
-    private string FindFunctionOrProcedureName(string line, string name)
+    private string[] FindFunctionOrProcedureName(string line, string name, string type)
     {
-
         int nameStart = 0;
         int nameEnd = 0;
+
+        //Reset strings
+        name = "";
+        type = "";
 
         if (line.StartsWith("FUNCTION "))
         {
@@ -556,6 +562,7 @@ namespace Import
             nameStart = Constants.posFunctionName;
             int length = nameEnd - nameStart;
             name = line.Substring(nameStart, length);
+            type = "Function";
         }
         else if (line.StartsWith("PROCEDURE "))
         {
@@ -571,9 +578,12 @@ namespace Import
             nameStart = Constants.posProcedureName;
             int length = nameEnd - nameStart;
             name = line.Substring(nameStart, length);
+            type = "Procedure";
         }
 
-        return name;
+        string[] strings = {name, type};
+
+        return strings;
     }
       
     private void PopulatePackages()
