@@ -8,6 +8,7 @@ using System.IO;
 using System.Configuration;
 using System.Collections.Specialized;
 using Project1;
+using NLog;
 
 namespace Common
 {
@@ -20,78 +21,26 @@ namespace Common
         private FAASModel _context = new FAASModel();
         public string line = "";
         private DateTime startTime;
+        
+        //Nlog
+        private static Logger logger = LogManager.GetCurrentClassLogger();
       #endregion
 
     public ConsoleLog ()
     {
     }
 
-    #region AppConfig
-    //public string GetFromConfig (string section)
-    //{
-    //  return appSettings.Get(section);
-    //}
-    #endregion
-
     #region Logging
-    public void EndLog ()
-    {
-        DateTime endTime = DateTime.Now;
-        TimeSpan runTime = endTime - startTime;
-        AuditLog auditLog = new AuditLog();
-        auditLog.LogTime = DateTime.Now;
-        auditLog.Line = string.Format("Running time - {0}", runTime);
-        _auditLog.Add(auditLog);
-
-        try
-        {
-            if (line.Equals("Y"))
-            {
-                _logFile.WriteLine("Running time - {0}", runTime);
-                _logFile.Close();
-            }
-        }
-        catch (Exception e)
-        {
-            _logFile.WriteLine(e);
-            _logFile.Close();
-        }
-
-    }
-
-    public void BeginLog()
-    {
-            //string logFileName = GetFromConfig("LogFilePath");
-        string logFileName = "C:\\Users\\J\\Documents\\GitHub\\HSA\\Log"  + ".txt";
-            if (!File.Exists(logFileName))
-            {
-                FileStream fs = System.IO.File.Create(logFileName);
-                fs.Close();
-            }
-
-            _logFile = File.AppendText(logFileName);
-            _logFile.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-            DateTime.Now.ToLongDateString());
-            startTime = DateTime.Now;
-    }
-
     public void Log (string logMessage)
     {
-      DateTime logTime = DateTime.Now;
-
-        //Write to Console
-      System.Console.WriteLine("{0}: {1}", logTime, logMessage);
-
-        //Write to AuditLog table
+      //Write to AuditLog table
       AuditLog auditLog = new AuditLog();
-      auditLog.LogTime = logTime;
+      auditLog.LogTime = DateTime.Now;
       auditLog.Line = logMessage;
       _auditLog.Add(auditLog);
 
-        //Write to log file
-    _logFile.WriteLine("{0}: {1}", logTime, logMessage);
-    // Update the underlying file.
-    _logFile.Flush();
+    //Write to log file
+    logger.Info("{0}:", logMessage);
     }
 
     public void PopulateLog ()

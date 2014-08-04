@@ -63,7 +63,6 @@ namespace Build
             PopulateEntityRelationships();
 
             log.Log("************ BUILD END ****************");
-            log.EndLog();
         }
 
         private void GetRuleEntityCalls(List<RuleDefinition> _rules, List<string> uniqueRules, List<string> uniqueTables, List<string> uniqueTriggers, string[] input)

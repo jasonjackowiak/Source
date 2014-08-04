@@ -70,7 +70,6 @@ namespace Import
         PopulateEntities();
 
         log.Log("************ IMPORT END ***************");
-        log.EndLog();
             }
       #endregion
 

@@ -25,7 +25,6 @@ namespace Visualisation
             log.Log("************ VISUALISATION *************");
             RunGraphs(log, input);
             log.Log("******* VISUALISATION COMPLETE *********");
-            log.EndLog();
         }
 
         private void RunGraphs(ConsoleLog log, string[] input)

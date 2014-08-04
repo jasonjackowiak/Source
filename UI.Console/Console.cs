@@ -19,7 +19,7 @@ namespace UI.Console
 
         public void StartConsole()
         {
-            _log.BeginLog();
+            //_log.BeginLog();
 
             _log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
             _log.Log("Please select your language:");

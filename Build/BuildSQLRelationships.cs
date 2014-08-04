@@ -18,7 +18,7 @@ namespace Build
         private List<Entity> _entities = new List<Entity>();
         public List<EntityRelationship> _entityRelations = new List<EntityRelationship>();
         public List<Link> _links = new List<Link>();
-        public List<Link> _procedureLinks = new List<Link>();
+        public List<Link> __functionLinks = new List<Link>();
         public List<Link> _tableLinks = new List<Link>();
         public List<Link> _triggerLinks = new List<Link>();
         public List<Link> _tableForeignConstraintLinks = new List<Link>();
@@ -29,6 +29,7 @@ namespace Build
         public List<TableDefinition> _tableDefinitions = new List<TableDefinition>();
         public List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
         public List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
+        public List<FunctionDefinition> _functionDefinitions = new List<FunctionDefinition>();
         #endregion
 
         #region build relations
@@ -49,19 +50,19 @@ namespace Build
             //Prepare data lists from DB
             FAASModel _context = new FAASModel();
             _entities = _context.Entities.ToList();
-            _packageDefinitions = _context.PackageDefinitions.ToList();
+            _functionDefinitions = _context.FunctionDefinitions.ToList();
             _tableDefinitions = _context.TableDefinitions.ToList();
             _triggers = _context.TriggerDefinitions.ToList();
             _tableForeignConstraints = _context.TableForeignConstraints.ToList();
 
             //Create unique lists for each entity type
-            var uniqueProcedures = ListOfNames("PROCEDURE");
+            var uniqueFunctions = ListOfNames("FUNCTION");
             var uniqueTables = ListOfNames("TABLE");
             var uniqueTriggers = ListOfNames("TRIGGER");
             Console.WriteLine("done");
 
             //Get calls in rules to rules, screens, tables, reports, job cards, NEED TO ADD TRIGGERS
-            GetPackageBasedReferences(_packageDefinitions, uniqueProcedures, uniqueTables, uniqueTriggers, input, log);
+            GetPackageBasedReferences(_functionDefinitions, uniqueFunctions, uniqueTables, uniqueTriggers, input, log);
             GetTableBasedReferences(input, log);
 
             CreateMasterList();
@@ -69,7 +70,6 @@ namespace Build
             PopulateEntityRelationships(log);
 
             log.Log("************ BUILD END ****************");
-            log.EndLog();
         }
 
         private void GetTableBasedReferences(string[] input, ConsoleLog log)
@@ -111,12 +111,12 @@ namespace Build
             }
         }
 
-        private void GetPackageBasedReferences(List<PackageDefinition> _procedures, List<string> uniqueProcedures, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
+        private void GetPackageBasedReferences(List<FunctionDefinition> _procedures, List<string> uniqueFunctions, List<string> uniqueTables, List<string> uniqueTriggers, string[] input, ConsoleLog log)
     {
 
         string[] words = input;
         List<Task> _tasks = new List<Task>();
-        bool procedures = false;
+        bool functions = false;
         bool tables = false;
         bool triggers = false;
 
@@ -124,7 +124,7 @@ namespace Build
         {
             if (s.Trim().Equals("PROCEDURES"))
             {
-                procedures = true;
+                functions = true;
             }
             if (s.Trim().Equals("TABLES"))
             {
@@ -136,7 +136,7 @@ namespace Build
             }
             if (s.Trim().Equals("ALL"))
             {
-                procedures = true;
+                functions = true;
                 tables = true;
                 triggers = true;
             }
@@ -151,12 +151,12 @@ namespace Build
         //}
         if (tables)
         {
-            var calledTables = f.StartNew(() => BuildCalledTables(_procedures, uniqueTables, log));
+            var calledTables = f.StartNew(() => BuildCalledTables(_functionDefinitions, uniqueTables, log));
             _tasks.Add(calledTables);
         }
-        if (procedures)
+        if (functions)
         {
-            var calledProcedures = f.StartNew(() => BuildCalledProcedures(_procedures, uniqueProcedures, log));
+            var calledProcedures = f.StartNew(() => BuildCalledProcedures(_functionDefinitions, uniqueFunctions, log));
             _tasks.Add(calledProcedures);
         }
 
@@ -188,18 +188,18 @@ namespace Build
     //    log.Log("Finding trigger references - start");
     //}
 
-        private void BuildCalledTables(List<PackageDefinition> _procedures, List<string> uniqueTables, ConsoleLog log)
+        private void BuildCalledTables(List<FunctionDefinition> _functionDefinitions, List<string> uniqueTables, ConsoleLog log)
     {
         log.Log("Finding table references in procedures - start");
-        foreach (PackageDefinition procedure in _procedures)
+        foreach (FunctionDefinition function in _functionDefinitions)
         {
             try
             {
                 foreach (String tableName in uniqueTables)
                 {
-                    TableInProcedureMatch(tableName, procedure, _tableLinks);
+                    TableInProcedureMatch(tableName, function, _tableLinks);
                     //write processing output to same line
-                    Console.Write("Searching for {0} in {1}            \r", tableName, procedure.Name);
+                    Console.Write("Searching for {0} in {1}            \r", tableName, function.Name);
                 }
             }
             catch (Exception e)
@@ -209,20 +209,20 @@ namespace Build
         }
     }
 
-        private void BuildCalledProcedures(List<PackageDefinition> _procedures, List<string> uniqueProcedures, ConsoleLog log)
+        private void BuildCalledProcedures(List<FunctionDefinition> _functions, List<string> uniqueFunctions, ConsoleLog log)
     {
 
         bool addNotApplicable = true;
         log.Log("Finding rule references - start");
-        foreach (PackageDefinition procedure in _procedures)
+        foreach (FunctionDefinition function in _functions)
         {
             try
             {
-                foreach (String procedureName in uniqueProcedures)
+                foreach (String functionName in uniqueFunctions)
                 {
-                    if (!procedure.Name.Equals(procedureName))
+                    if (!function.Name.Equals(functionName))
                     {
-                        ProcedureInProcedureMatch(procedureName, procedure, _procedureLinks, addNotApplicable);
+                        ProcedureInProcedureMatch(functionName, function, __functionLinks, addNotApplicable);
                     }
                 }
             }
@@ -265,7 +265,7 @@ namespace Build
 
         #region token recognition
 
-    public bool TableInProcedureMatch(string calledTable, PackageDefinition procedure, List<Link> _links)
+        public bool TableInProcedureMatch(string calledTable, FunctionDefinition function, List<Link> _links)
     {
         string match1 = " " + calledTable + ";";
         string match2 = " " + calledTable + "(";
@@ -273,9 +273,9 @@ namespace Build
         string match4 = calledTable + ".";
         string match5 = "'" + calledTable + "'";
 
-        if (procedure.Body.Contains(match1) || procedure.Body.Contains(match2) || procedure.Body.Contains(match3) || procedure.Body.Contains(match4) || procedure.Body.Contains(match5))
+        if (function.Body.Contains(match1) || function.Body.Contains(match2) || function.Body.Contains(match3) || function.Body.Contains(match4) || function.Body.Contains(match5))
         {
-            Link record = new Link(procedure.Name.ToString(), calledTable);
+            Link record = new Link(function.Name.ToString(), calledTable);
 
             bool exists = CheckLinkExists(_links, record);
             if (!exists)
@@ -294,55 +294,55 @@ namespace Build
         }
     }
 
-    public bool ProcedureInProcedureMatch(string calledProcedure, PackageDefinition procedure, List<Link> _links, bool addNotApplicable)
+    public bool ProcedureInProcedureMatch(string calledFunction, FunctionDefinition function, List<Link> _links, bool addNotApplicable)
     {
         //line contains
-        string match1 = " " + calledProcedure + ";";
-        string match2 = " " + calledProcedure + "(";
-        string match3 = "(" + calledProcedure + ";";
-        string match4 = "(" + calledProcedure + "(";
-        string match7 = "(" + calledProcedure + ")";
-        string match10 = "= " + calledProcedure + "(";
-        string match24 = "= " + calledProcedure + ";";
-        string match11 = "^= " + calledProcedure + "(";
-        string match25 = "^= " + calledProcedure + ";";
-        string match15 = "> " + calledProcedure + "(";
-        string match27 = "> " + calledProcedure + ";";
-        string match16 = "=> " + calledProcedure + "(";
-        string match28 = "=> " + calledProcedure + ";";
-        string match19 = "< " + calledProcedure + "(";
-        string match29 = "< " + calledProcedure + ";";
-        string match20 = "<= " + calledProcedure + "(";
-        string match30 = "<= " + calledProcedure + ";";
-        string match21 = "(" + calledProcedure + ",";
-        string match22 = ", " + calledProcedure + ", ";
-        string match23 = ", " + calledProcedure + ")";
+        string match1 = " " + calledFunction + ";";
+        string match2 = " " + calledFunction + "(";
+        string match3 = "(" + calledFunction + ";";
+        string match4 = "(" + calledFunction + "(";
+        string match7 = "(" + calledFunction + ")";
+        string match10 = "= " + calledFunction + "(";
+        string match24 = "= " + calledFunction + ";";
+        string match11 = "^= " + calledFunction + "(";
+        string match25 = "^= " + calledFunction + ";";
+        string match15 = "> " + calledFunction + "(";
+        string match27 = "> " + calledFunction + ";";
+        string match16 = "=> " + calledFunction + "(";
+        string match28 = "=> " + calledFunction + ";";
+        string match19 = "< " + calledFunction + "(";
+        string match29 = "< " + calledFunction + ";";
+        string match20 = "<= " + calledFunction + "(";
+        string match30 = "<= " + calledFunction + ";";
+        string match21 = "(" + calledFunction + ",";
+        string match22 = ", " + calledFunction + ", ";
+        string match23 = ", " + calledFunction + ")";
 
         //line starts with
-        string match5 = calledProcedure + "(";
-        string match6 = calledProcedure + ";";
-        string match8 = calledProcedure + " =";
-        string match9 = calledProcedure + " ^=";
-        string match13 = calledProcedure + " >";
-        string match14 = calledProcedure + " =>";
-        string match17 = calledProcedure + " <";
-        string match18 = calledProcedure + " <=";
-        string match12 = "^" + calledProcedure + "(";
-        string match26 = "^" + calledProcedure + ";";
+        string match5 = calledFunction + "(";
+        string match6 = calledFunction + ";";
+        string match8 = calledFunction + " =";
+        string match9 = calledFunction + " ^=";
+        string match13 = calledFunction + " >";
+        string match14 = calledFunction + " =>";
+        string match17 = calledFunction + " <";
+        string match18 = calledFunction + " <=";
+        string match12 = "^" + calledFunction + "(";
+        string match26 = "^" + calledFunction + ";";
 
 
             //donot add a rule if it matches the following string patterns, as they are signals.
-            string signal1 = "SIGNAL " + calledProcedure + ";";
-            string signal2 = "ON " + calledProcedure + ";";
-            string signal3 = "UNTIL " + calledProcedure + ";";
+            string signal1 = "SIGNAL " + calledFunction + ";";
+            string signal2 = "ON " + calledFunction + ";";
+            string signal3 = "UNTIL " + calledFunction + ";";
 
-            string line = procedure.Body;
+            string line = function.Body;
 
             if (!line.Contains(signal1) && !line.Contains(signal2) && !line.Contains(signal3))
             {
                 if (line.Contains(match1) || line.Contains(match2) || line.Contains(match3) || line.Contains(match4) || line.Contains(match7) || line.Contains(match10) || line.Contains(match11) || line.Contains(match15) || line.Contains(match16) || line.Contains(match19) || line.Contains(match20) || line.Contains(match21) || line.Contains(match22) || line.Contains(match23) || line.Contains(match24) || line.Contains(match25) || line.Contains(match27) || line.Contains(match28) || line.Contains(match29) || line.Contains(match30) || line.StartsWith(match13) || line.StartsWith(match14) || line.StartsWith(match5) || line.StartsWith(match6) || line.StartsWith(match8) || line.StartsWith(match9) || line.StartsWith(match12) || line.StartsWith(match17) || line.StartsWith(match18) || line.StartsWith(match26))
                 {
-                    Link record = new Link(procedure.Name.ToString(), calledProcedure);
+                    Link record = new Link(function.Name.ToString(), calledFunction);
 
                     bool exists = CheckLinkExists(_links, record);
 
@@ -445,7 +445,7 @@ namespace Build
 
     private void CreateMasterList()
     {
-        foreach (Link l in _procedureLinks)
+        foreach (Link l in __functionLinks)
         {
             _links.Add(l);
         }

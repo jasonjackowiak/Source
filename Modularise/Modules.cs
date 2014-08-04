@@ -319,7 +319,6 @@ namespace Modularise
             PopulateInterfaces();
 
             log.Log("Building Interfaces - complete");
-            log.EndLog();
         }
 
         private void BuildAllInterfaces()
