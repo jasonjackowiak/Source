@@ -113,10 +113,10 @@ namespace Import
                   triggersFile.Close();
                   log.Log("Extract Triggers to local variables - complete");
               }
-              catch (Exception ex)
+              catch (Exception e)
               {
                   triggersFile.Close();
-                  log.Log(string.Format("Incorrect format of the Triggers file. Error:{0}", ex.Message));
+                  log.Log(string.Format("Incorrect format of the Triggers file. Error:{0}", e.Message));
                   return false;
               }
           }
@@ -186,16 +186,16 @@ namespace Import
                             tableDefinition.FieldDecimal = Convert.ToInt32(line.Substring(Constants.posFieldDecimal, Constants.lenFieldDecimal).Trim());
                             tableDefinition.FieldNumber = Convert.ToInt32(line.Substring(Constants.posFieldNumber, Constants.lenFieldNumber).Trim());
                           }
-                          catch (FormatException fex)
+                          catch (FormatException fe)
                           {
                             log.Log("Input string is not a sequence of digits.");
-                            log.Log(fex.Message);
+                            log.Log(fe.Message);
                             return false;
                           }
-                          catch (OverflowException oxe)
+                          catch (OverflowException oe)
                           {
                             log.Log("The number cannot fit in an Int32.");
-                            log.Log(oxe.Message);
+                            log.Log(oe.Message);
                             return false;
                           }
 
@@ -211,10 +211,10 @@ namespace Import
                   tablesFile.Close();
                   log.Log("Extract Table Definitions to local variables - complete");
               }
-              catch (Exception ex)
+              catch (Exception e)
               {
                   tablesFile.Close();
-                  log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", ex.Message));
+                  log.Log(string.Format("Incorrect format of the Table Definitions file. Error:{0}", e.Message));
                   return false;
               }
           }
@@ -334,10 +334,10 @@ namespace Import
                 rulesFile.Close();
                 log.Log("Extract Rule Definitions to local variables - complete");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
                 rulesFile.Close();
-                log.Log(string.Format("Incorrect format of the Rule file. Error:{0}", ex.Message));
+                log.Log(string.Format("Incorrect format of the Rule file. Error:{0}", e.Message));
                 return false;
             }
         }

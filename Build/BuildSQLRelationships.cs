@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using Project1;
 using Common;
 
@@ -122,7 +124,7 @@ namespace Build
 
         foreach (string s in words)
         {
-            if (s.Trim().Equals("PROCEDURES"))
+            if (s.Trim().Equals("FUNCTIONS"))
             {
                 functions = true;
             }
@@ -156,7 +158,7 @@ namespace Build
         }
         if (functions)
         {
-            var calledProcedures = f.StartNew(() => BuildCalledProcedures(_functionDefinitions, uniqueFunctions, log));
+            var calledProcedures = f.StartNew(() => BuildCalledFunctions(_functionDefinitions, uniqueFunctions, log));
             _tasks.Add(calledProcedures);
         }
 
@@ -197,7 +199,7 @@ namespace Build
             {
                 foreach (String tableName in uniqueTables)
                 {
-                    TableInProcedureMatch(tableName, function, _tableLinks);
+                    TableInFunctionMatch(tableName, function, _tableLinks);
                     //write processing output to same line
                     Console.Write("Searching for {0} in {1}            \r", tableName, function.Name);
                 }
@@ -209,11 +211,11 @@ namespace Build
         }
     }
 
-        private void BuildCalledProcedures(List<FunctionDefinition> _functions, List<string> uniqueFunctions, ConsoleLog log)
+        private void BuildCalledFunctions(List<FunctionDefinition> _functions, List<string> uniqueFunctions, ConsoleLog log)
     {
 
         bool addNotApplicable = true;
-        log.Log("Finding rule references - start");
+        log.Log("Finding function and procedure references - start");
         foreach (FunctionDefinition function in _functions)
         {
             try
@@ -228,10 +230,10 @@ namespace Build
             }
             catch (Exception e)
             {
-                log.Log(string.Format("Error reading rule definitions for rule references: {0}", e.Message));
+                log.Log(string.Format("Error reading function and procedure definitions for function and prrocedure references: {0}", e.Message));
             }
         }
-        log.Log("Finding rule references - complete");
+        log.Log("Finding function and procedure references - complete");
     }
 
         private void BuildTableForeignConstraints(List<TableForeignConstraint> _tableForeignConstraints, ConsoleLog log)
@@ -265,7 +267,7 @@ namespace Build
 
         #region token recognition
 
-        public bool TableInProcedureMatch(string calledTable, FunctionDefinition function, List<Link> _links)
+        public bool TableInFunctionMatch(string calledTable, FunctionDefinition function, List<Link> _links)
     {
         string match1 = " " + calledTable + ";";
         string match2 = " " + calledTable + "(";
@@ -491,7 +493,6 @@ namespace Build
             catch (Exception e)
             {
                 log.Log(string.Format("Error converting link names to link ID's: {0}", e.Message));
-                log.Log(string.Format("ERROR: {0}", e.Message));
             }
         }
 
@@ -509,9 +510,16 @@ namespace Build
             log.Log("Persist Entity Relationship to DB - complete");
             log.Log(string.Format("{0} entity relationships created", _entityRelations.Count()));
         }
-        catch (Exception e)
+        catch (DbEntityValidationException e)
         {
             log.Log(string.Format("Error persisting Entity Relationship to DB: {0}", e.Message));
+            foreach (var validationErrors in e.EntityValidationErrors)
+            {
+                foreach (var validationError in validationErrors.ValidationErrors)
+                {
+                    Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                }
+            }
         }
     }
 

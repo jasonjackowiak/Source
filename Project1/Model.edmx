@@ -184,9 +184,10 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LineType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="CodeLine" Type="int" Nullable="false" />
           <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="PackageType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityType Name="TableDefinitions1">
@@ -474,10 +475,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CodeLine" Type="Int32" Nullable="false" />
           <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="LineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PackageType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -709,10 +711,11 @@
           <EntitySetMapping Name="PackageDefinitions">
             <EntityTypeMapping TypeName="FAASDB.PackageDefinition">
               <MappingFragment StoreEntitySet="PackageDefinitions">
+                <ScalarProperty Name="PackageType" ColumnName="PackageType" />
+                <ScalarProperty Name="LineType" ColumnName="LineType" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

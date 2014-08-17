@@ -34,10 +34,10 @@ namespace Common
     public void Log (string logMessage)
     {
       //Write to AuditLog table
-      AuditLog auditLog = new AuditLog();
-      auditLog.LogTime = DateTime.Now;
-      auditLog.Line = logMessage;
-      _auditLog.Add(auditLog);
+      //AuditLog auditLog = new AuditLog();
+      //auditLog.LogTime = DateTime.Now;
+      //auditLog.Line = logMessage;
+      //_auditLog.Add(auditLog);
 
     //Write to log file
     logger.Info("{0}:", logMessage);

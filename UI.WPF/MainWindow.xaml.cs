@@ -24,5 +24,30 @@ namespace UI.WPF
         {
             InitializeComponent();
         }
+
+        private void SQL_button_Click(System.Object sender,
+            System.Windows.RoutedEventArgs e)
+        {
+            MainWindow modalWindow = new MainWindow();
+            modalWindow.ShowDialog();
+            //this.Close();
+        }
+
+        private void ObjectStar_button_Click(System.Object sender,
+            System.Windows.RoutedEventArgs e)
+        {
+            MainWindow modalWindow = new MainWindow();
+            modalWindow.Show();
+            this.Close();
+        }
+
+        private void MainWindow_Loaded(System.Object sender,
+            System.Windows.RoutedEventArgs e)
+        {
+            double height = SystemParameters.WorkArea.Height;
+            double width = SystemParameters.WorkArea.Width;
+            this.Top = ((height - this.Height) / 2);
+            this.Left = ((width - this.Width) / 2);
+        }
     }
 }
