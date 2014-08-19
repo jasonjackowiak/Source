@@ -513,8 +513,7 @@ namespace Import
             string name = "";
             string type = "";
             string unit = "";
-            bool newFunction = false;
-            bool functionEnd = false;
+            bool functionEnd = true;
 
             foreach (PackageDefinition package in _packages) // loop through all package lines
             {
@@ -522,33 +521,36 @@ namespace Import
 
                 //Need to grab each line somewhere and ensure each is iterated through, has the same checks applied
                 //Assignment of function name
-                if (((name.Equals("")) | (functionEnd)) && (package.LineType.Equals("PACKAGE BODY")))
+                if (package.LineType.Equals("PACKAGE BODY") && !package.Body.StartsWith("--"))
                 {
-                    name = FindFunctionOrProcedureName(package.Body, name, type)[0];
-                    type = FindFunctionOrProcedureName(package.Body, name, type)[1];
-                    if ((!name.Equals(null)) && (!type.Equals(null)))
+                    if (((name.Equals("")) | (functionEnd)))
                     {
-                        newFunction = false;
+                        name = FindFunctionOrProcedureName(package.Body, name, type)[0];
+                        type = FindFunctionOrProcedureName(package.Body, name, type)[1];
+                        if ((!name.Equals("")) && (!type.Equals("")))
+                        {
+                            functionEnd = false;
+                        }
                     }
-                }
 
-                if ((!newFunction) && (package.LineType.Equals("PACKAGE BODY")) && (!name.Equals("")))
-                {
-                    function.PackageId = package.Id;
-                    function.Name = name;
-                    //TO DO - use a method to determine the type
-                    function.Type = type;
-                    function.CodeLine = package.CodeLine;
-                    function.Body = package.Body;
-                    _functions.Add(function);
-                }
+                    if ((!name.Equals("")) && (!functionEnd))
+                    {
+                        function.PackageId = package.Id;
+                        function.Name = name;
+                        //TO DO - use a method to determine the type
+                        function.Type = type;
+                        function.CodeLine = package.CodeLine;
+                        function.Body = package.Body;
+                        _functions.Add(function);
+                    }
 
-                if ((package.Body.Contains("END ")) && (package.Body.Contains(name + ";")))
-                {
-                    functionEnd = true;
-                    //Probably need to create a function to determine the unit
-                    //Should be able to deconstruct the name using the supplied list of applications
-                    //function.Unit = unit;
+                    if ((package.Body.ToUpper().Contains("END ")) && (package.Body.ToUpper().Contains(name + ";")))
+                    {
+                        functionEnd = true;
+                        //Probably need to create a function to determine the unit
+                        //Should be able to deconstruct the name using the supplied list of applications
+                        //function.Unit = unit;
+                    }
                 }
 
             }
@@ -565,7 +567,7 @@ namespace Import
             name = "";
             type = "";
 
-            if (line.StartsWith("FUNCTION "))
+            if (line.ToUpper().StartsWith("FUNCTION "))
             {
                 if (line.Contains("("))
                 {
@@ -578,10 +580,10 @@ namespace Import
 
                 nameStart = Constants.posFunctionName;
                 int length = nameEnd - nameStart;
-                name = line.Substring(nameStart, length);
-                type = "Function";
+                name = line.Substring(nameStart, length).ToUpper();
+                type = "FUNCTION";
             }
-            else if (line.StartsWith("PROCEDURE "))
+            else if (line.ToUpper().StartsWith("PROCEDURE "))
             {
                 if (line.Contains("("))
                 {
@@ -594,8 +596,8 @@ namespace Import
 
                 nameStart = Constants.posProcedureName;
                 int length = nameEnd - nameStart;
-                name = line.Substring(nameStart, length);
-                type = "Procedure";
+                name = line.Substring(nameStart, length).ToUpper();
+                type = "PROCEDURE";
             }
 
             string[] strings = { name, type };
