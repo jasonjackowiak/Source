@@ -87,7 +87,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules.cs" />
+    <Compile Include="SQLModules.cs" />
+    <Compile Include="OSBModules.cs" />
     <Compile Include="UnitMap.cs" />
     <Compile Include="EntityMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

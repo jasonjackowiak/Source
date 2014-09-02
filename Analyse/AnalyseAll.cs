@@ -65,7 +65,6 @@ namespace Analyse
             PopulateBucketConnections(log);
 
             log.Log("************* ANALYSE END ****************");
-            log.EndLog();
         }
         #endregion
 

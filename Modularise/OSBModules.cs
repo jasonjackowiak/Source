@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace Modularise
 {
-    public class Modules
+    public class OSBModules
     {
         #region vars
         private ConsoleLog log;
@@ -25,7 +25,7 @@ namespace Modularise
         private List<string> _types = new List<string>();
         #endregion
 
-        public Modules()
+        public OSBModules()
         {
         }
 

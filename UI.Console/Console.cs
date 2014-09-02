@@ -80,7 +80,7 @@ namespace UI.Console
                     ImportInput(language);
                     break;
                 case "M":
-                    Modules modularise = new Modules();
+                    SQLModules modularise = new SQLModules();
                     modularise.ModulariseEntities(_log);
                     ImportInput(language);
                     break;
