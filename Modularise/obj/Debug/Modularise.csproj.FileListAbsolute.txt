@@ -17,3 +17,16 @@ C:\Users\J\Documents\GitHub\HSA\Source\Modularise\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.csprojResolveAssemblyReference.cache
 C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.dll
 C:\Users\J\Documents\GitHub\HSA\Source\Modularise\obj\Debug\Modularise.pdb
+D:\JCode\GitHub\FAAS\Modularise\obj\Debug\Modularise.csprojResolveAssemblyReference.cache
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Modularise.dll
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Modularise.pdb
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Common.dll
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\EntityFramework.dll
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Project1.dll
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\NLog.dll
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Common.pdb
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\Project1.pdb
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\EntityFramework.xml
+D:\JCode\GitHub\FAAS\Modularise\bin\Debug\NLog.xml
+D:\JCode\GitHub\FAAS\Modularise\obj\Debug\Modularise.dll
+D:\JCode\GitHub\FAAS\Modularise\obj\Debug\Modularise.pdb

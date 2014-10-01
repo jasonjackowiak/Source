@@ -108,6 +108,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\ProcessInputs.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ProcessOSBInputs.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
