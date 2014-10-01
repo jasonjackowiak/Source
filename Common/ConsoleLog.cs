@@ -15,12 +15,9 @@ namespace Common
   public class ConsoleLog
   {
      #region vars
-        //NameValueCollection appSettings = ConfigurationManager.AppSettings;
-        StreamWriter _logFile;
         List<AuditLog> _auditLog = new List<AuditLog>();
         private FAASModel _context = new FAASModel();
         public string line = "";
-        private DateTime startTime;
         
         //Nlog
         private static Logger logger = LogManager.GetCurrentClassLogger();

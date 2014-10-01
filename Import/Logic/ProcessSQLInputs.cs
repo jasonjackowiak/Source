@@ -244,7 +244,7 @@ namespace Import
                 string name = bucketSheet.Cells[i, count].Value2.ToString();
                 count++;
                 //write processing output to same line
-                Console.Write("Reading table {0}             \r", name);
+                log.Log(string.Format("Reading table {0}             \r", name));
 
                 table.Name = name;
                 table.Id = tableCount;
@@ -578,7 +578,7 @@ namespace Import
                     nameEnd = line.Length;
                 }
 
-                nameStart = Constants.posFunctionName;
+                nameStart = Common.Constants.posFunctionName;
                 int length = nameEnd - nameStart;
                 name = line.Substring(nameStart, length).ToUpper();
                 type = "FUNCTION";
@@ -594,7 +594,7 @@ namespace Import
                     nameEnd = line.Length;
                 }
 
-                nameStart = Constants.posProcedureName;
+                nameStart = Common.Constants.posProcedureName;
                 int length = nameEnd - nameStart;
                 name = line.Substring(nameStart, length).ToUpper();
                 type = "PROCEDURE";
