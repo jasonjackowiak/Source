@@ -36,3 +36,17 @@ D:\JCode\GitHub\FAAS\Analyse\bin\Debug\NLog.xml
 D:\JCode\GitHub\FAAS\Analyse\obj\Debug\Analyse.csprojResolveAssemblyReference.cache
 D:\JCode\GitHub\FAAS\Analyse\obj\Debug\Analyse.dll
 D:\JCode\GitHub\FAAS\Analyse\obj\Debug\Analyse.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Analyse.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Analyse.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Modularise.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Project1.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\NLog.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Modularise.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\obj\Debug\Analyse.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\obj\Debug\Analyse.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Analyse\obj\Debug\Analyse.pdb

@@ -61,7 +61,7 @@ namespace Import
         #region Triggers
         private bool ExtractTriggers()
         {
-            string triggerFile = Properties.Settings.Default.TriggerInputFile;
+            string triggerFile = "";
             string line;
             int lineNo = 0;
             int triggerCount = 0;

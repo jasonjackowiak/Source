@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common;
+using System.Configuration;
 
 
 namespace Import
@@ -16,6 +17,9 @@ namespace Import
         public void StartConsole()
         {
             //_log.BeginLog();
+            Utility utility = new Utility();
+            string test = utility.ReadSetting("Tables");
+            
 
             _log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
             _log.Log(string.Format("Import Phase for {0}", "CLIENT PARAM"));

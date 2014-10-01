@@ -30,3 +30,15 @@ D:\JCode\GitHub\FAAS\Build\bin\Debug\EntityFramework.xml
 D:\JCode\GitHub\FAAS\Build\bin\Debug\NLog.xml
 D:\JCode\GitHub\FAAS\Build\obj\Debug\Build.dll
 D:\JCode\GitHub\FAAS\Build\obj\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\obj\Debug\Build.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Build.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Project1.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\NLog.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\obj\Debug\Build.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\obj\Debug\Build.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Build\bin\Debug\EntityFramework.dll

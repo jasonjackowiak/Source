@@ -44,3 +44,4 @@ D:\JCode\GitHub\FAAS\UI.Console\bin\Debug\EntityFramework.xml
 D:\JCode\GitHub\FAAS\UI.Console\bin\Debug\NLog.xml
 D:\JCode\GitHub\FAAS\UI.Console\obj\Debug\UI.Console.exe
 D:\JCode\GitHub\FAAS\UI.Console\obj\Debug\UI.Console.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\UI.Console\obj\Debug\UI.Console.csprojResolveAssemblyReference.cache

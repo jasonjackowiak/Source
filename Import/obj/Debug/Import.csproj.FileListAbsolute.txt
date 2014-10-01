@@ -15,3 +15,16 @@ C:\Users\J\Documents\GitHub\HSA\Source\Import\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.csprojResolveAssemblyReference.cache
 C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.dll
 C:\Users\J\Documents\GitHub\HSA\Source\Import\obj\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\obj\Debug\Import.csprojResolveAssemblyReference.cache
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Import.exe.config
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Import.exe
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Import.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Common.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\EntityFramework.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Project1.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\NLog.dll
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Common.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Project1.pdb
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\EntityFramework.xml
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\obj\Debug\Import.exe
+C:\Users\J\Documents\GitHub\FAAS\Source\Import\obj\Debug\Import.pdb
