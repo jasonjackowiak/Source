@@ -214,10 +214,5 @@ pip-log.txt
 *.mo
 
 #Mr Developer
-.mr.developer.cfg
 *.pdb
-Analyse/bin/Debug/Analyse.pdb
-Analyse/bin/Debug/Analyse.pdb
-*.cache
-*.cache
 *.cache
