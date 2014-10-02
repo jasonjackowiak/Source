@@ -16,10 +16,10 @@ namespace Project1
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string LineType { get; set; }
         public int CodeLine { get; set; }
         public string Body { get; set; }
-        public string Unit { get; set; }
-        public string LineType { get; set; }
         public string PackageType { get; set; }
+        public string Unit { get; set; }
     }
 }

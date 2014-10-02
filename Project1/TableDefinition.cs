@@ -23,7 +23,7 @@ namespace Project1
         public Nullable<int> FieldDecimal { get; set; }
         public Nullable<int> FieldNumber { get; set; }
         public string KeyType { get; set; }
-        public string Unit { get; set; }
         public string TableType { get; set; }
+        public string Unit { get; set; }
     }
 }

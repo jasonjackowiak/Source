@@ -15,11 +15,16 @@ namespace Project1
     public partial class TriggerDefinition
     {
         public int Id { get; set; }
-        public int TableSourceId { get; set; }
+        public Nullable<int> TableSourceId { get; set; }
         public string TableName { get; set; }
-        public int RuleSourceId { get; set; }
+        public Nullable<int> RuleSourceId { get; set; }
         public string RuleName { get; set; }
         public string Access { get; set; }
+        public string Type { get; set; }
+        public string TriggeringEvent { get; set; }
+        public string BaseObjectType { get; set; }
+        public string WhenClause { get; set; }
+        public string Body { get; set; }
         public string Unit { get; set; }
     }
 }

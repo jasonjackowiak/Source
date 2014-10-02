@@ -116,9 +116,6 @@
     <Compile Include="TableDefinition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="TableDefinitions1.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="TableForeignConstraint.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -128,10 +125,6 @@
     <Compile Include="TriggerDefinition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="TriggerDefinitions1.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Model.edmx.sql" />

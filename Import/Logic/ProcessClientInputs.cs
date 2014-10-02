@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Import.Logic
 {
-    class ProcessClientInputs
+    class ProcessClientInputs : ProcessInputs
     {
         private ConsoleLog log = new ConsoleLog();
 

@@ -20,33 +20,19 @@ namespace Import
 {
     public class ProcessInputs
     {
-        #region vars
         private ConsoleLog log;
         NameValueCollection appSettings = ConfigurationManager.AppSettings;
-
         private List<Entity> _entity = new List<Entity>();
-
-        private int entityCount = 0;
         private List<Task> _tasks = new List<Task>();
-        #endregion
 
-        #region run extract
         public void BeginProcessInputs(ConsoleLog importLog)
         {
             log = importLog;
-
-            log.Log("************** IMPORT *****************");
-
             ClearTables(log);
 
             //Create list of eneities and persist to model
             PopulateEntities();
-
-            log.Log("************ IMPORT END ***************");
         }
-        #endregion
-
-        #region Entities
 
         private void PopulateEntities()
         {
@@ -68,9 +54,8 @@ namespace Import
             }
 
         }
-        #endregion
 
-        #region utilities
+
         /// <summary>
         /// Clear all database tables except audit log.
         /// </summary>
@@ -89,7 +74,7 @@ namespace Import
             bla.ClearTable("Admin.InternalInterfaces");
         }
     }
-        #endregion
+
 
 }
 
