@@ -15,6 +15,7 @@
     <StartWorkingDirectory>D:\Code\HSA\HousingStatistics\HousingStatistics\Import\bin\Debug\</StartWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartWorkingDirectory>D:\Code\HSA\HousingStatistics\HousingStatistics\Import\bin\Debug\</StartWorkingDirectory>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
   </PropertyGroup>
 </Project>

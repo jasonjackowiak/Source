@@ -16,7 +16,7 @@ using Common;
 
 namespace Import
 {
-    public class ProcessOSBInputs
+    public class ProcessObjectServiceBrokerInputs
     {
         #region vars
         private ConsoleLog log = new ConsoleLog();

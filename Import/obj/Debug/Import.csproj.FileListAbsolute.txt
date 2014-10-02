@@ -28,3 +28,17 @@ C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\Project1.pdb
 C:\Users\J\Documents\GitHub\FAAS\Source\Import\bin\Debug\EntityFramework.xml
 C:\Users\J\Documents\GitHub\FAAS\Source\Import\obj\Debug\Import.exe
 C:\Users\J\Documents\GitHub\FAAS\Source\Import\obj\Debug\Import.pdb
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Import.exe.config
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Import.exe
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Import.pdb
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Common.dll
+D:\JCode\GitHub\FAAS\Import\bin\Debug\EntityFramework.dll
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Project1.dll
+D:\JCode\GitHub\FAAS\Import\bin\Debug\NLog.dll
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Common.pdb
+D:\JCode\GitHub\FAAS\Import\bin\Debug\Project1.pdb
+D:\JCode\GitHub\FAAS\Import\bin\Debug\EntityFramework.xml
+D:\JCode\GitHub\FAAS\Import\bin\Debug\NLog.xml
+D:\JCode\GitHub\FAAS\Import\obj\Debug\Import.csprojResolveAssemblyReference.cache
+D:\JCode\GitHub\FAAS\Import\obj\Debug\Import.exe
+D:\JCode\GitHub\FAAS\Import\obj\Debug\Import.pdb
