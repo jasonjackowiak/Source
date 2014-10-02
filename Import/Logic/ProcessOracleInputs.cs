@@ -24,10 +24,10 @@ namespace Import
         private ConsoleLog log;
         NameValueCollection appSettings = ConfigurationManager.AppSettings;
 
-        private List<TableDefinitions1> _tables = new List<TableDefinitions1>();
+        private List<TableDefinition> _tables = new List<TableDefinition>();
         private List<TableForeignConstraint> _tableForeignConstraints = new List<TableForeignConstraint>();
         private List<PackageDefinition> _packages = new List<PackageDefinition>();
-        private List<TriggerDefinitions1> _triggers = new List<TriggerDefinitions1>();
+        private List<TriggerDefinition> _triggers = new List<TriggerDefinition>();
         private List<FunctionDefinition> _functions = new List<FunctionDefinition>();
         private List<Entity> _entity = new List<Entity>();
 
@@ -121,7 +121,7 @@ namespace Import
                 //iterate through all columns/rows in xls
                 for (int i = 2; i != rowCount + 1; i++)
                 {
-                    TriggerDefinitions1 trigger = new TriggerDefinitions1();
+                    TriggerDefinition trigger = new TriggerDefinition();
                     int count = 3;
                     trigger.Name = sheet.Cells[i, count].Value2.ToString();
                     count++;
@@ -167,9 +167,9 @@ namespace Import
             log.Log("Persist Triggers to DB - start");
             try
             {
-                foreach (TriggerDefinitions1 item in _triggers)
+                foreach (TriggerDefinition item in _triggers)
                 {
-                    _context.TriggerDefinitions1.Add(item);
+                    _context.TriggerDefinitions.Add(item);
                     _context.SaveChanges();
                 }
                 log.Log("Persist Triggers to DB - complete");
@@ -232,7 +232,7 @@ namespace Import
 
             int rowCount = xlRange.Rows.Count;
             int colCount = xlRange.Columns.Count;
-            TableDefinitions1 table = new TableDefinitions1();
+            TableDefinition table = new TableDefinition();
 
             log.Log("Importing Tables - start");
 
@@ -274,7 +274,7 @@ namespace Import
                         lineNo++;
 
                         tableCount++;
-                        TableDefinitions1 tableDefinition = new TableDefinitions1();
+                        TableDefinition tableDefinition = new TableDefinition();
                         tableDefinition.Name = line.Trim();
                         tableDefinition.Id = tableCount;
 
@@ -364,9 +364,9 @@ namespace Import
             log.Log("Persist Table Definitions to DB - start");
             try
             {
-                foreach (TableDefinitions1 item in _tables)
+                foreach (TableDefinition item in _tables)
                 {
-                    _context.TableDefinitions1.Add(item);
+                    _context.TableDefinitions.Add(item);
                 }
                 _context.SaveChanges();
                 log.Log("Persist Table Definitions to DB - complete");
@@ -680,7 +680,7 @@ namespace Import
         private bool CreateTableEntities(string oldName, int count)
         {
             int tableCount = 0;
-            foreach (TableDefinitions1 item in _tables)
+            foreach (TableDefinition item in _tables)
             {
                 count++;
                 if (item.Name != oldName)
@@ -759,7 +759,7 @@ namespace Import
         private bool CreateTriggerEntities(string oldName, int count)
         {
             int triggerCount = 0;
-            foreach (TriggerDefinitions1 item in _triggers)
+            foreach (TriggerDefinition item in _triggers)
             {
                 count++;
                 if (item.Name != oldName)

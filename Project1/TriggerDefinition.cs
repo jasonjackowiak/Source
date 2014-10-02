@@ -26,5 +26,6 @@ namespace Project1
         public string WhenClause { get; set; }
         public string Body { get; set; }
         public string Unit { get; set; }
+        public string Name { get; set; }
     }
 }

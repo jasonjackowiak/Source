@@ -197,6 +197,7 @@
           <Property Name="RuleName" Type="nvarchar" MaxLength="50" />
           <Property Name="Access" Type="nvarchar" MaxLength="10" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="TriggeringEvent" Type="nvarchar" MaxLength="50" />
           <Property Name="BaseObjectType" Type="nvarchar" MaxLength="50" />
           <Property Name="WhenClause" Type="nvarchar(max)" />
@@ -444,6 +445,7 @@
           <Property Name="WhenClause" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -652,6 +654,7 @@
           <EntitySetMapping Name="TriggerDefinitions">
             <EntityTypeMapping TypeName="FAASDB.TriggerDefinition">
               <MappingFragment StoreEntitySet="TriggerDefinitions">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
