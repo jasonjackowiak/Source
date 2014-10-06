@@ -18,5 +18,7 @@ namespace Project1
         public int InternalWeight { get; set; }
         public int ExternalWeight { get; set; }
         public int ExternalSources { get; set; }
+    
+        public virtual Entity Entity { get; set; }
     }
 }

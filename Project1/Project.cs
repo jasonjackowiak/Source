@@ -12,20 +12,21 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class TriggerDefinition
+    public partial class Project
     {
+        public Project()
+        {
+            this.Snapshots = new HashSet<Snapshot>();
+        }
+    
         public int Id { get; set; }
-        public Nullable<int> TableSourceId { get; set; }
-        public string TableName { get; set; }
-        public Nullable<int> RuleSourceId { get; set; }
-        public string RuleName { get; set; }
-        public string Access { get; set; }
-        public string Type { get; set; }
+        public int CustomerId { get; set; }
         public string Name { get; set; }
-        public string TriggeringEvent { get; set; }
-        public string BaseObjectType { get; set; }
-        public string WhenClause { get; set; }
-        public string Body { get; set; }
-        public string Unit { get; set; }
+        public string Status { get; set; }
+        public System.DateTime StartDateTime { get; set; }
+        public Nullable<System.DateTime> EndDateTime { get; set; }
+    
+        public virtual Customer Customer { get; set; }
+        public virtual ICollection<Snapshot> Snapshots { get; set; }
     }
 }

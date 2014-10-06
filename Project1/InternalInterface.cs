@@ -18,5 +18,7 @@ namespace Project1
         public int TargetEntityId { get; set; }
         public string TargetUnit { get; set; }
         public string EntityRelationshipIds { get; set; }
+    
+        public virtual Entity Entity { get; set; }
     }
 }

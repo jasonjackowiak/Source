@@ -12,19 +12,12 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class Interface
+    public partial class sysdiagram
     {
-        public Interface()
-        {
-            this.InterfaceReportings = new HashSet<InterfaceReporting>();
-        }
-    
-        public int Id { get; set; }
-        public string TargetUnit { get; set; }
-        public string EntityRelationshipIds { get; set; }
-        public int TargetEntityId { get; set; }
-    
-        public virtual Entity Entity { get; set; }
-        public virtual ICollection<InterfaceReporting> InterfaceReportings { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

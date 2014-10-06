@@ -12,20 +12,18 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class TriggerDefinition
+    public partial class LanguageReference
     {
+        public LanguageReference()
+        {
+            this.Records = new HashSet<Record>();
+        }
+    
         public int Id { get; set; }
-        public Nullable<int> TableSourceId { get; set; }
-        public string TableName { get; set; }
-        public Nullable<int> RuleSourceId { get; set; }
-        public string RuleName { get; set; }
-        public string Access { get; set; }
-        public string Type { get; set; }
         public string Name { get; set; }
-        public string TriggeringEvent { get; set; }
-        public string BaseObjectType { get; set; }
-        public string WhenClause { get; set; }
-        public string Body { get; set; }
-        public string Unit { get; set; }
+        public string Variant { get; set; }
+        public Nullable<decimal> Version { get; set; }
+    
+        public virtual ICollection<Record> Records { get; set; }
     }
 }

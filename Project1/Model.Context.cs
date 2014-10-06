@@ -25,17 +25,24 @@ namespace Project1
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<LanguageReference> LanguageReferences { get; set; }
+        public DbSet<PhaseReference> PhaseReferences { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Record> Records { get; set; }
+        public DbSet<Snapshot> Snapshots { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<Bucket> Buckets { get; set; }
+        public DbSet<BucketConnection> BucketConnections { get; set; }
+        public DbSet<BucketReporting> BucketReportings { get; set; }
         public DbSet<Entity> Entities { get; set; }
         public DbSet<EntityOwnershipStrength> EntityOwnershipStrengths { get; set; }
         public DbSet<EntityRelationship> EntityRelationships { get; set; }
-        public DbSet<Interface> Interfaces { get; set; }
-        public DbSet<InternalInterface> InternalInterfaces { get; set; }
-        public DbSet<BucketConnection> BucketConnections { get; set; }
-        public DbSet<BucketReporting> BucketReportings { get; set; }
         public DbSet<EntityResidence> EntityResidences { get; set; }
-        public DbSet<Bucket> Buckets { get; set; }
+        public DbSet<Interface> Interfaces { get; set; }
         public DbSet<InterfaceReporting> InterfaceReportings { get; set; }
+        public DbSet<InternalInterface> InternalInterfaces { get; set; }
         public DbSet<FunctionDefinition> FunctionDefinitions { get; set; }
         public DbSet<PackageDefinition> PackageDefinitions { get; set; }
         public DbSet<RuleDefinition> RuleDefinitions { get; set; }

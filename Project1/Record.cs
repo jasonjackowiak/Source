@@ -12,19 +12,14 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class Interface
+    public partial class Record
     {
-        public Interface()
-        {
-            this.InterfaceReportings = new HashSet<InterfaceReporting>();
-        }
-    
         public int Id { get; set; }
-        public string TargetUnit { get; set; }
-        public string EntityRelationshipIds { get; set; }
-        public int TargetEntityId { get; set; }
+        public int SnapshotId { get; set; }
+        public int LanguageId { get; set; }
+        public System.DateTime DateTimeStamp { get; set; }
     
-        public virtual Entity Entity { get; set; }
-        public virtual ICollection<InterfaceReporting> InterfaceReportings { get; set; }
+        public virtual LanguageReference LanguageReference { get; set; }
+        public virtual Snapshot Snapshot { get; set; }
     }
 }

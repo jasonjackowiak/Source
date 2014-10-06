@@ -22,5 +22,8 @@ namespace Project1
         public int TotalEntitySources { get; set; }
         public int TotalBucketsSources { get; set; }
         public string SourceBuckets { get; set; }
+    
+        public virtual Entity Entity { get; set; }
+        public virtual Interface Interface { get; set; }
     }
 }

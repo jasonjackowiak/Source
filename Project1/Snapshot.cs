@@ -12,19 +12,21 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class Interface
+    public partial class Snapshot
     {
-        public Interface()
+        public Snapshot()
         {
-            this.InterfaceReportings = new HashSet<InterfaceReporting>();
+            this.Records = new HashSet<Record>();
         }
     
         public int Id { get; set; }
-        public string TargetUnit { get; set; }
-        public string EntityRelationshipIds { get; set; }
-        public int TargetEntityId { get; set; }
+        public int ProjectId { get; set; }
+        public int PhaseId { get; set; }
+        public string Status { get; set; }
+        public System.DateTime DateTimeStamp { get; set; }
     
-        public virtual Entity Entity { get; set; }
-        public virtual ICollection<InterfaceReporting> InterfaceReportings { get; set; }
+        public virtual PhaseReference PhaseReference { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual ICollection<Record> Records { get; set; }
     }
 }

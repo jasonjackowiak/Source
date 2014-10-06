@@ -14,11 +14,23 @@ namespace Project1
     
     public partial class Entity
     {
+        public Entity()
+        {
+            this.Interfaces = new HashSet<Interface>();
+            this.InterfaceReportings = new HashSet<InterfaceReporting>();
+            this.InternalInterfaces = new HashSet<InternalInterface>();
+        }
+    
         public int Id { get; set; }
         public int SourceId { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string SourceUnit { get; set; }
         public string NormalisedUnit { get; set; }
+    
+        public virtual EntityResidence EntityResidence { get; set; }
+        public virtual ICollection<Interface> Interfaces { get; set; }
+        public virtual ICollection<InterfaceReporting> InterfaceReportings { get; set; }
+        public virtual ICollection<InternalInterface> InternalInterfaces { get; set; }
     }
 }
