@@ -18,14 +18,14 @@ using Common;
 
 namespace Import
 {
-    public class ProcessInputs
+    public class ProcessInput
     {
         private ConsoleLog log;
         NameValueCollection appSettings = ConfigurationManager.AppSettings;
         private List<Entity> _entity = new List<Entity>();
         private List<Task> _tasks = new List<Task>();
 
-        public void BeginProcessInputs(ConsoleLog importLog)
+        public virtual void BeginProcessInput(ConsoleLog importLog)
         {
             log = importLog;
             ClearTables(log);
@@ -34,7 +34,7 @@ namespace Import
             PopulateEntities();
         }
 
-        private void PopulateEntities()
+        public virtual void PopulateEntities()
         {
             FAASModel _context = new FAASModel();
 
@@ -59,7 +59,7 @@ namespace Import
         /// <summary>
         /// Clear all database tables except audit log.
         /// </summary>
-        private void ClearTables(ConsoleLog log)
+        public virtual void ClearTables(ConsoleLog log)
         {
             Utility bla = new Utility();
 

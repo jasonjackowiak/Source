@@ -64,7 +64,7 @@ namespace UI.Console
             {
                 case "I":
                     //ProcessOSBInputs import = new ProcessOSBInputs();
-                    ProcessSQLInputs import = new ProcessSQLInputs();
+                    ProcessSQLInput import = new ProcessSQLInput();
                     import.ProcessInputs(_log);
                     ImportInput(language);
                     break;

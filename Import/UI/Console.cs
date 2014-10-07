@@ -12,7 +12,7 @@ namespace Import
     public class Console
     {
         private ConfigurationHandler config = ConfigurationHandler.GetConfigurationHandlerInstance;
-        public ConsoleLog _log = new ConsoleLog();
+        public ConsoleLog log = new ConsoleLog();
 
         public void StartConsole()
         {
@@ -22,19 +22,43 @@ namespace Import
             string clientLanguage = config.ClientLanguage1;
             string clientDatabase = config.ClientDatabase1;
 
-            _log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
-            _log.Log(string.Format("Import Phase for {0}", clientName));
-            _log.Log(string.Format("The following languages are being imported: {0}", clientLanguage));
-            _log.Log(string.Format("The following databases are being imported: {0}", clientDatabase));
+            log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
+
+            string line = CustomerInput();
+
+
+            log.Log(string.Format("Import Phase for {0}", clientName));
+            log.Log(string.Format("The following languages are being imported: {0}", clientLanguage));
+            log.Log(string.Format("The following databases are being imported: {0}", clientDatabase));
             
             //User Inputs here
-            string line = System.Console.ReadLine();
-            _log.Log("Press any key to continue...");
+            //string line = System.Console.ReadLine();
+            log.Log("Press any key to continue...");
 
             ImportLanguageInput(clientLanguage);
             //ImportDatabaseInput(clientDatabase);
 
-            _log.Log("Import Phase complete");
+            log.Log("Import Phase complete");
+        }
+
+        private string CustomerInput()
+        {
+            log.Log("Do you want to (A)dd a new Customer or select an (E)xisting?");
+            string line = System.Console.ReadLine();
+            line = line.Trim().ToUpper();
+            switch (line)
+            {
+                case "A":
+                    //ProcessRegistrationInput = new ProcessRegistrationInput(log);
+                    break;
+                case "E":
+                    break;
+                default:
+                    log.Log("Invalid selection, try again.");
+                    CustomerInput();
+                    break;
+            }
+            return line;
         }
 
         private void ImportLanguageInput(string language)
@@ -44,11 +68,11 @@ namespace Import
             {
                 case "ObjectServiceBroker":
                     //Make this ProcessObjectServiceBrokerLanguageInputs
-                    ProcessObjectServiceBrokerInputs importLanguage = new ProcessObjectServiceBrokerInputs();
-                    importLanguage.ProcessInputs(_log);
+                    ProcessObjectServiceBrokerInput importLanguage = new ProcessObjectServiceBrokerInput();
+                    importLanguage.ProcessInputs(log);
                     break;
                 default:
-                    _log.Log("No Language specified");
+                    log.Log("No Language specified");
                     break;
             }
 
@@ -60,11 +84,11 @@ namespace Import
             {
                 case "ObjectServiceBroker":
                     //Make this ProcessObjectServiceBrokerDatabaseInputs
-                    ProcessObjectServiceBrokerInputs importLanguage = new ProcessObjectServiceBrokerInputs();
-                    importLanguage.ProcessInputs(_log);
+                    ProcessObjectServiceBrokerInput importLanguage = new ProcessObjectServiceBrokerInput();
+                    importLanguage.ProcessInputs(log);
                     break;
                 default:
-                    _log.Log("No Language specified");
+                    log.Log("No Language specified");
                     break;
             }
         }

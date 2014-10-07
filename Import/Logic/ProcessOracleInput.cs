@@ -18,7 +18,7 @@ using Common;
 
 namespace Import
 {
-    public class ProcessSQLInputs
+    public class ProcessSQLInput : ProcessInput
     {
         #region vars
         private ConsoleLog log;

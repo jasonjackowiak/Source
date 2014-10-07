@@ -115,16 +115,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\Input.cs" />
-    <Compile Include="Logic\Base\ProcessInputs.cs" />
-    <Compile Include="Logic\ProcessClientInputs.cs" />
-    <Compile Include="Logic\ProcessObjectServiceBrokerInputs.cs" />
+    <Compile Include="Logic\Base\ProcessInput.cs" />
+    <Compile Include="Logic\ProcessObjectServiceBrokerInput.cs" />
+    <Compile Include="Logic\ProcessRegistrationInput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Logic\ProcessOracleInputs.cs" />
+    <Compile Include="Logic\ProcessOracleInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Console.cs" />
     <Compile Include="ConfigurationHandler.cs" />
