@@ -216,3 +216,5 @@ pip-log.txt
 #Mr Developer
 *.pdb
 *.cache
+*.mdf
+*.ldf
