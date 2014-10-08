@@ -24,7 +24,7 @@ namespace Import
 
             log.Log("Welcome to the Fujitsu Application Analysis System (FAAS)");
 
-            string line = CustomerInput();
+            //string line = CustomerInput();
 
 
             log.Log(string.Format("Import Phase for {0}", clientName));
@@ -32,13 +32,14 @@ namespace Import
             log.Log(string.Format("The following databases are being imported: {0}", clientDatabase));
             
             //User Inputs here
-            //string line = System.Console.ReadLine();
+            string line = System.Console.ReadLine();
             log.Log("Press any key to continue...");
 
             ImportLanguageInput(clientLanguage);
             //ImportDatabaseInput(clientDatabase);
 
             log.Log("Import Phase complete");
+            log.Log("Press any key to continue...");
         }
 
         private string CustomerInput()
@@ -66,7 +67,7 @@ namespace Import
 
             switch (language)
             {
-                case "ObjectServiceBroker":
+                case "Object Service Broker":
                     //Make this ProcessObjectServiceBrokerLanguageInputs
                     ProcessObjectServiceBrokerInput importLanguage = new ProcessObjectServiceBrokerInput();
                     importLanguage.ProcessInputs(log);

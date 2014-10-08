@@ -20,7 +20,7 @@ namespace Import
     {
         #region vars
         private ConsoleLog log = new ConsoleLog();
-        NameValueCollection appSettings = ConfigurationManager.AppSettings;
+        private ConfigurationHandler config = ConfigurationHandler.GetConfigurationHandlerInstance;
 
         private List<TableDefinition> _tables = new List<TableDefinition>();
         private List<RuleDefinition> _rules = new List<RuleDefinition>();
@@ -153,7 +153,7 @@ namespace Import
 
         private bool ExtractTables()
         {
-            string tableFile = GetFromConfig("Tables");
+            string tableFile = config.TableFile;
             string line;
             int lineNo = 0;
             int tableCount = 0;
@@ -226,11 +226,6 @@ namespace Import
             return true;
         }
 
-        private string GetFromConfig(string p)
-        {
-            return appSettings.Get(p);
-        }
-
         private void PopulateTables()
         {
             FAASModel _context = new FAASModel();
@@ -269,7 +264,7 @@ namespace Import
             string ruleName = String.Empty; // extracted rule name
             int lineNo = 0;
             int ruleCount = 0;
-            string ruleFile = GetFromConfig("Rules");
+            string ruleFile = config.RuleFile;
             string unit = "";
             int unitpos = 0;
             int lineCount = 0;
@@ -352,7 +347,7 @@ namespace Import
         private string GetRuleSeparator()
         {
             // this is a separator between rules - note, can change!
-            string ruleSeparator = GetFromConfig("RuleSeparator");
+            string ruleSeparator = null;
             if (string.IsNullOrEmpty(ruleSeparator))
                 ruleSeparator = "###";
             return ruleSeparator;
