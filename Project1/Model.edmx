@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FAASDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FAASDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -200,13 +200,6 @@
           <Property Name="PackageType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
-        <EntityType Name="PhaseReferences">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
-        </EntityType>
         <EntityType Name="Projects">
           <Key>
             <PropertyRef Name="Id" />
@@ -225,6 +218,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SnapshotId" Type="int" Nullable="false" />
           <Property Name="LanguageId" Type="int" Nullable="false" />
+          <Property Name="InputFileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateTimeStamp" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="RuleDefinitions">
@@ -243,7 +237,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProjectId" Type="int" Nullable="false" />
-          <Property Name="PhaseId" Type="int" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="DateTimeStamp" Type="datetime" Nullable="false" />
         </EntityType>
@@ -463,18 +456,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Snapshot_PhaseReference">
-          <End Role="PhaseReferences" Type="Self.PhaseReferences" Multiplicity="1" />
-          <End Role="Snapshots" Type="Self.Snapshots" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PhaseReferences">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Snapshots">
-              <PropertyRef Name="PhaseId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Snapshot_Project">
           <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
           <End Role="Snapshots" Type="Self.Snapshots" Multiplicity="*" />
@@ -539,7 +520,6 @@
           <EntitySet Name="InternalInterfaces" EntityType="Self.InternalInterfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguageReferences" EntityType="Self.LanguageReferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PackageDefinitions" EntityType="Self.PackageDefinitions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PhaseReferences" EntityType="Self.PhaseReferences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RuleDefinitions" EntityType="Self.RuleDefinitions" Schema="dbo" store:Type="Tables" />
@@ -597,10 +577,6 @@
             <End Role="Snapshots" EntitySet="Snapshots" />
             <End Role="Records" EntitySet="Records" />
           </AssociationSet>
-          <AssociationSet Name="FK_Snapshot_PhaseReference" Association="Self.FK_Snapshot_PhaseReference">
-            <End Role="PhaseReferences" EntitySet="PhaseReferences" />
-            <End Role="Snapshots" EntitySet="Snapshots" />
-          </AssociationSet>
           <AssociationSet Name="FK_Snapshot_Project" Association="Self.FK_Snapshot_Project">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="Snapshots" EntitySet="Snapshots" />
@@ -630,7 +606,6 @@
           <EntitySet Name="InternalInterfaces" EntityType="FAASDB.InternalInterface" />
           <EntitySet Name="LanguageReferences" EntityType="FAASDB.LanguageReference" />
           <EntitySet Name="PackageDefinitions" EntityType="FAASDB.PackageDefinition" />
-          <EntitySet Name="PhaseReferences" EntityType="FAASDB.PhaseReference" />
           <EntitySet Name="Projects" EntityType="FAASDB.Project" />
           <EntitySet Name="Records" EntityType="FAASDB.Record" />
           <EntitySet Name="RuleDefinitions" EntityType="FAASDB.RuleDefinition" />
@@ -675,10 +650,6 @@
           <AssociationSet Name="FK_Record_LanguageReference" Association="FAASDB.FK_Record_LanguageReference">
             <End Role="LanguageReference" EntitySet="LanguageReferences" />
             <End Role="Record" EntitySet="Records" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Snapshot_PhaseReference" Association="FAASDB.FK_Snapshot_PhaseReference">
-            <End Role="PhaseReference" EntitySet="PhaseReferences" />
-            <End Role="Snapshot" EntitySet="Snapshots" />
           </AssociationSet>
           <AssociationSet Name="FK_Snapshot_Project" Association="FAASDB.FK_Snapshot_Project">
             <End Role="Project" EntitySet="Projects" />
@@ -928,14 +899,6 @@
           <Property Name="PackageType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="PhaseReference">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Snapshots" Relationship="FAASDB.FK_Snapshot_PhaseReference" FromRole="PhaseReference" ToRole="Snapshot" />
-        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="Id" />
@@ -959,6 +922,7 @@
           <Property Name="DateTimeStamp" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="LanguageReference" Relationship="FAASDB.FK_Record_LanguageReference" FromRole="Record" ToRole="LanguageReference" />
           <NavigationProperty Name="Snapshot" Relationship="FAASDB.FK_Record_Snapshot" FromRole="Record" ToRole="Snapshot" />
+          <Property Name="InputFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="RuleDefinition">
           <Key>
@@ -976,10 +940,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <Property Name="PhaseId" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
           <Property Name="DateTimeStamp" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PhaseReference" Relationship="FAASDB.FK_Snapshot_PhaseReference" FromRole="Snapshot" ToRole="PhaseReference" />
           <NavigationProperty Name="Project" Relationship="FAASDB.FK_Snapshot_Project" FromRole="Snapshot" ToRole="Project" />
           <NavigationProperty Name="Records" Relationship="FAASDB.FK_Record_Snapshot" FromRole="Snapshot" ToRole="Record" />
         </EntityType>
@@ -1156,18 +1118,6 @@
             </Principal>
             <Dependent Role="Record">
               <PropertyRef Name="LanguageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Snapshot_PhaseReference">
-          <End Type="FAASDB.PhaseReference" Role="PhaseReference" Multiplicity="1" />
-          <End Type="FAASDB.Snapshot" Role="Snapshot" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PhaseReference">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Snapshot">
-              <PropertyRef Name="PhaseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1420,14 +1370,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PhaseReferences">
-            <EntityTypeMapping TypeName="FAASDB.PhaseReference">
-              <MappingFragment StoreEntitySet="PhaseReferences">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="FAASDB.Project">
               <MappingFragment StoreEntitySet="Projects">
@@ -1443,6 +1385,7 @@
           <EntitySetMapping Name="Records">
             <EntityTypeMapping TypeName="FAASDB.Record">
               <MappingFragment StoreEntitySet="Records">
+                <ScalarProperty Name="InputFileName" ColumnName="InputFileName" />
                 <ScalarProperty Name="DateTimeStamp" ColumnName="DateTimeStamp" />
                 <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="SnapshotId" ColumnName="SnapshotId" />
@@ -1466,7 +1409,6 @@
               <MappingFragment StoreEntitySet="Snapshots">
                 <ScalarProperty Name="DateTimeStamp" ColumnName="DateTimeStamp" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PhaseId" ColumnName="PhaseId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -1588,13 +1530,13 @@
         <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
         <edmx:DesignerProperty Name="EnablePluralization" Value="True" />
         <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
-        <edmx:DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="False" />
         <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </edmx:DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <edmx:Diagram Name="Model1" ZoomLevel="20">
+      <edmx:Diagram Name="Model1" ZoomLevel="82">
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetRole" Width="1.5" PointX="0.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetUser" Width="1.5" PointX="3.375" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetUserClaim" Width="1.5" PointX="6" PointY="13.75" />
@@ -1614,7 +1556,6 @@
         <edmx:EntityTypeShape EntityType="FAASDB.InternalInterface" Width="1.5" PointX="3" PointY="8.375" />
         <edmx:EntityTypeShape EntityType="FAASDB.LanguageReference" Width="1.5" PointX="10.25" PointY="5.25" />
         <edmx:EntityTypeShape EntityType="FAASDB.PackageDefinition" Width="1.5" PointX="13.75" PointY="7.75" />
-        <edmx:EntityTypeShape EntityType="FAASDB.PhaseReference" Width="1.5" PointX="8" PointY="5.375" />
         <edmx:EntityTypeShape EntityType="FAASDB.Project" Width="1.5" PointX="8" PointY="1" />
         <edmx:EntityTypeShape EntityType="FAASDB.Record" Width="1.5" PointX="12.5" PointY="1.125" />
         <edmx:EntityTypeShape EntityType="FAASDB.RuleDefinition" Width="1.5" PointX="14.75" PointY="0.75" />
@@ -1633,7 +1574,6 @@
         <edmx:AssociationConnector Association="FAASDB.FK_InternalInterface_Entity" />
         <edmx:AssociationConnector Association="FAASDB.FK_InterfaceReporting_Interface" />
         <edmx:AssociationConnector Association="FAASDB.FK_Record_LanguageReference" />
-        <edmx:AssociationConnector Association="FAASDB.FK_Snapshot_PhaseReference" />
         <edmx:AssociationConnector Association="FAASDB.FK_Snapshot_Project" />
         <edmx:AssociationConnector Association="FAASDB.FK_Record_Snapshot" />
         <edmx:AssociationConnector Association="FAASDB.AspNetUserRoles" />

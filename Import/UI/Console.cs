@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Common;
 using System.Configuration;
+using NLog;
 
 
 namespace Import
@@ -13,6 +14,7 @@ namespace Import
     {
         private ConfigurationHandler config = ConfigurationHandler.GetConfigurationHandlerInstance;
         public ConsoleLog log = new ConsoleLog();
+
 
         public void StartConsole()
         {
@@ -94,5 +96,7 @@ namespace Import
             }
         }
 
+
     }
+
 }

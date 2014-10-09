@@ -21,11 +21,9 @@ namespace Project1
     
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public int PhaseId { get; set; }
         public string Status { get; set; }
         public System.DateTime DateTimeStamp { get; set; }
     
-        public virtual PhaseReference PhaseReference { get; set; }
         public virtual Project Project { get; set; }
         public virtual ICollection<Record> Records { get; set; }
     }

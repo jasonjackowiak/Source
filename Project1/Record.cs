@@ -18,6 +18,7 @@ namespace Project1
         public int SnapshotId { get; set; }
         public int LanguageId { get; set; }
         public System.DateTime DateTimeStamp { get; set; }
+        public string InputFileName { get; set; }
     
         public virtual LanguageReference LanguageReference { get; set; }
         public virtual Snapshot Snapshot { get; set; }

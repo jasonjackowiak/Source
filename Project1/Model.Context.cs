@@ -46,7 +46,6 @@ namespace Project1
         public virtual DbSet<InternalInterface> InternalInterfaces { get; set; }
         public virtual DbSet<LanguageReference> LanguageReferences { get; set; }
         public virtual DbSet<PackageDefinition> PackageDefinitions { get; set; }
-        public virtual DbSet<PhaseReference> PhaseReferences { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Record> Records { get; set; }
         public virtual DbSet<RuleDefinition> RuleDefinitions { get; set; }

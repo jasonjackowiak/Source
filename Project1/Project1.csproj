@@ -128,9 +128,6 @@
     <Compile Include="PackageDefinition.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="PhaseReference.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

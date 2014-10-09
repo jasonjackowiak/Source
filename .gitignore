@@ -218,3 +218,5 @@ pip-log.txt
 *.cache
 *.mdf
 *.ldf
+*.cache
+Analyse/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
