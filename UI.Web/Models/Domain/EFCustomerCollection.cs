@@ -34,7 +34,7 @@ namespace UI.Web.Models.Domain
             context.SaveChanges();
         }
 
-        public Customer DeleteAbout(int id)
+        public Customer DeleteCustomer(int id)
         {
             Customer dbEntry = context.Customers.Find(id);
             if (dbEntry != null)

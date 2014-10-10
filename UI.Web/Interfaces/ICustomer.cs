@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI.Web.Models.Domain.Entity;
+using Project1;
 
 namespace UI.Web
 {
 
         public interface ICustomer
         {
-            IQueryable<CustomerModel> Abouts { get; }
+            IQueryable<Customer> Customers { get; }
 
-            void SaveAbout(CustomerModel customer);
+            void SaveCustomer(Customer customer);
 
-            CustomerModel DeleteAbout(int id);
+            Customer DeleteCustomer(int id);
         }
 
 }

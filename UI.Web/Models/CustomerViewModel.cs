@@ -10,17 +10,14 @@ namespace UI.Web.Models
 
     public class CustomerViewModel
     {
-
-        public class CustomerProfileViewModel
-        {
-            [Required]
+            //[Required]
             [Display(Name = "User name")]
             public string UserName { get; set; }
 
-            [Required]
+            //[Required]
             [Display(Name = "Organisation Title")]
             public string Name { get; set; }
-        }
 
-    }
+            public List<CustomerViewModel> customerViewModel { get; set; }
+        }
 }
