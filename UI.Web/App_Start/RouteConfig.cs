@@ -19,11 +19,11 @@ namespace UI.Web
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-            routes.MapRoute(
-    name: "Test",
-    url: "{controller}/{action}/{id}",
-    defaults: new { controller = "Test", action = "CreateCustomer", id = UrlParameter.Optional }
-);
+//            routes.MapRoute(
+//    name: "Test",
+//    url: "{controller}/{action}/{id}",
+//    defaults: new { controller = "Test", action = "CreateCustomer", id = UrlParameter.Optional }
+//);
         }
     }
 }

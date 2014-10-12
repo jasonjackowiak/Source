@@ -3,50 +3,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 using UI.Web.Models.Domain;
-using Project1;
 using System.Threading.Tasks;
 
 namespace UI.Web.Controllers
 {
     
     [Authorize]
-    public class TestController : Controller
+    public class CustomerController : Controller
     {
 
-        //Test connecting to model
-        EFCustomerCollection efCustomerCollection = new EFCustomerCollection();
-        Customer customer = new Customer();
+        private ICustomer customers;
 
+        //public CustomerController() { }
+
+        //Test connecting to model
+        //EFCustomerCollection efCustomerCollection = new EFCustomerCollection();
+        //Customer customer = new Customer();
+
+        public CustomerController(ICustomer customer)
+        {
+            this.customers = customer;
+        }
 
         public ActionResult CreateCustomer()
         {
-            return View();
+            return View(customers.Customers);
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateCustomer(Customer model)
-        {
-            //if (ModelState.IsValid)
-            //{
-                var c = new Customer() { Name = model.Name };
-                //if (!c.Name.Equals(null))
-                //{
-                    //Link to Customer table
-                    return RedirectToAction("ViewCustomer", "Test");
-                //}
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult CreateCustomer(Customer model)
+        //{
+        //    //if (ModelState.IsValid)
+        //    //{
+        //        var c = new Customer() { Name = model.Name };
+        //        //if (!c.Name.Equals(null))
+        //        //{
+        //            //Link to Customer table
+        //            return RedirectToAction("ViewCustomer", "Test");
+        //        //}
 
-            //}
-        }
-
-
+        //    //}
+        //}
 
 
-
-
+        //Generated template code
 
         //
         // GET: /Test/
