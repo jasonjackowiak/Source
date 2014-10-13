@@ -14,6 +14,8 @@ namespace UI.Web.Controllers
     {
         private FAASEntities db = new FAASEntities();
 
+
+
         // GET: /Customer/
         public ActionResult Index()
         {
@@ -46,12 +48,28 @@ namespace UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,Name")] Customer customer)
+        public ActionResult Create([Bind(Include = "Id,Name")] Customer customer)
         {
             if (ModelState.IsValid)
             {
                 db.Customers.Add(customer);
                 db.SaveChanges();
+
+                //Also add this id to the loginuser table
+                AspNetUser record = db.AspNetUsers
+                    .FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+                if (record == null)
+                {
+                    foreach (AspNetUser user in db.AspNetUsers) {
+                        if (user.UserName == User.Identity.Name)
+                            record = user;
+                    }
+                }
+
+                record.CustomerId = customer.Id;
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -78,7 +96,7 @@ namespace UI.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,Name")] Customer customer)
+        public ActionResult Edit([Bind(Include = "Id,Name")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -122,6 +140,36 @@ namespace UI.Web.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //Manually added
+        public ActionResult ViewPartial()
+        {
+            //string id;
+
+            var id1 = db.AspNetUsers
+                      .Where(x => x.UserName == User.Identity.Name)
+                      .FirstOrDefault();
+
+            //foreach (AspNetUser user in db.AspNetUsers)
+            //{
+            //    if (User.Identity.Name.Equals(user.UserName))
+            //    {
+            //        id = user.Id;
+            //    }
+            //}
+
+
+            if (id1 == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id1);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
         }
     }
 }

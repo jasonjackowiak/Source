@@ -1,0 +1,12 @@
+﻿@model UI.Web.Models.Customer
+@using Microsoft.AspNet.Identity
+
+text
+
+@if (Request.IsAuthenticated)
+{
+<div>
+            Hello, User.Identity.GetUserName()
+            @Html.DisplayFor(model => model.Name)
+</div>
+}

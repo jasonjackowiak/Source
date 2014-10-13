@@ -271,6 +271,7 @@
     </Compile>
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\Domain\Entity\IdentityModels.cs" />
+    <Compile Include="Models\ViewModel\CustomerProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -345,6 +346,7 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Customer\ViewPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

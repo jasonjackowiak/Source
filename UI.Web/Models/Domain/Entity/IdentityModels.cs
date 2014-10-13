@@ -10,7 +10,7 @@ namespace UI.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("FAASModel")
+            : base("FAASModelefau")
         {
         }
 

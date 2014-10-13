@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+
+@{
     ViewBag.Title = "Profile";
 }
 <h2>@ViewBag.Title.</h2>
@@ -7,14 +9,8 @@
 <p>This page will only be visible if you are logged in.</p>
 
 <p>
-    This will consist of:
-    <ul>
-        <li>Create customer Name (automatically links to your profile - this may change to a request)</li>
-        <li>Edit customer name</li>
-        <li>View customer name</li>
-    </ul>
-</p>
-<p>
+    Hello @User.Identity.GetUserName();
+    @{ Html.RenderAction("ViewPartial", "Customer"); }
     You do not have a Customer Name.
     @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
     @Html.ActionLink("Click to refresh this page", "Profile", "Home")

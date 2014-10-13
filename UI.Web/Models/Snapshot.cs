@@ -24,7 +24,7 @@ namespace UI.Web.Models
         public string Status { get; set; }
         public System.DateTime DateTimeStamp { get; set; }
     
-        public virtual Project Project { get; set; }
         public virtual ICollection<Record> Records { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

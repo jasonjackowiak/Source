@@ -17,11 +17,13 @@ namespace UI.Web.Models
         public Customer()
         {
             this.Projects = new HashSet<Project>();
+            this.AspNetUsers = new HashSet<AspNetUser>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

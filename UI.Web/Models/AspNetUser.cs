@@ -23,6 +23,7 @@ namespace UI.Web.Models
     
         public string Id { get; set; }
         public string UserName { get; set; }
+        public Nullable<int> CustomerId { get; set; }
         public string PasswordHash { get; set; }
         public string SecurityStamp { get; set; }
         public string Discriminator { get; set; }
@@ -30,5 +31,6 @@ namespace UI.Web.Models
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
