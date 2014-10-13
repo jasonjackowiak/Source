@@ -1,140 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using UI.Web.Models.Domain;
-using System.Threading.Tasks;
+using UI.Web.Models;
 
 namespace UI.Web.Controllers
 {
-    
-    [Authorize]
     public class CustomerController : Controller
     {
+        private FAASEntities db = new FAASEntities();
 
-        private ICustomer customers;
-
-        //public CustomerController() { }
-
-        //Test connecting to model
-        //EFCustomerCollection efCustomerCollection = new EFCustomerCollection();
-        //Customer customer = new Customer();
-
-        public CustomerController(ICustomer customer)
-        {
-            this.customers = customer;
-        }
-
-        public ActionResult CreateCustomer()
-        {
-            return View(customers.Customers);
-        }
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult CreateCustomer(Customer model)
-        //{
-        //    //if (ModelState.IsValid)
-        //    //{
-        //        var c = new Customer() { Name = model.Name };
-        //        //if (!c.Name.Equals(null))
-        //        //{
-        //            //Link to Customer table
-        //            return RedirectToAction("ViewCustomer", "Test");
-        //        //}
-
-        //    //}
-        //}
-
-
-        //Generated template code
-
-        //
-        // GET: /Test/
+        // GET: /Customer/
         public ActionResult Index()
         {
-            return View();
+            return View(db.Customers.ToList());
         }
 
-        //
-        // GET: /Test/Details/5
-        public ActionResult Details(int id)
+        // GET: /Customer/Details/5
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
         }
 
-        //
-        // GET: /Test/Create
+        // GET: /Customer/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Test/Create
+        // POST: /Customer/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include="Id,Name")] Customer customer)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                db.Customers.Add(customer);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
+
+            return View(customer);
+        }
+
+        // GET: /Customer/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
             {
-                return View();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-        }
-
-        //
-        // GET: /Test/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Test/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
             {
-                // TODO: Add update logic here
+                return HttpNotFound();
+            }
+            return View(customer);
+        }
 
+        // POST: /Customer/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include="Id,Name")] Customer customer)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(customer).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(customer);
         }
 
-        //
-        // GET: /Test/Delete/5
-        public ActionResult Delete(int id)
+        // GET: /Customer/Delete/5
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Customer customer = db.Customers.Find(id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            return View(customer);
         }
 
-        //
-        // POST: /Test/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // POST: /Customer/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            Customer customer = db.Customers.Find(id);
+            db.Customers.Remove(customer);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

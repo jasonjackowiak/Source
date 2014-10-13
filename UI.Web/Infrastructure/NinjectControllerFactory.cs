@@ -5,8 +5,6 @@ using System.Web;
 using System.Web.Mvc;
 using Ninject;
 using System.Web.Routing;
-using UI.Web.Models.Domain.Entity;
-using UI.Web.Models.Domain;
 
 namespace UI.Web.Infrastructure
 {
@@ -29,7 +27,6 @@ namespace UI.Web.Infrastructure
 
         private void AddBindings()
         {
-            ninjectKernel.Bind<ICustomer>().To<EFCustomerCollection>();
         }
     }
 }

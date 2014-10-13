@@ -14,6 +14,5 @@ namespace UI.Web.Models
         {
         }
 
-        public System.Data.Entity.DbSet<UI.Web.Models.CustomerViewModel> CustomerViewModels { get; set; }
     }
 }
