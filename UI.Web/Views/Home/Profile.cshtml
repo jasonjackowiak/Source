@@ -9,10 +9,7 @@
 <p>This page will only be visible if you are logged in.</p>
 
 <p>
-    Hello @User.Identity.GetUserName();
-    You do not have a Customer Name.
-    @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
-    @Html.ActionLink("Click to refresh this page", "Profile", "Home")
+    @{ Html.RenderAction("ViewPartial", "Customer"); }
 </p>
 <p>
     <ul>

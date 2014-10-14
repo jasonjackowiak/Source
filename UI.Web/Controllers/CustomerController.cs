@@ -143,7 +143,7 @@ namespace UI.Web.Controllers
         }
 
         //Manually added
-        public ActionResult ViewPartial()
+        public PartialViewResult ViewPartial()
         {
             //string id;
 
@@ -160,16 +160,24 @@ namespace UI.Web.Controllers
             //}
 
 
-            if (id1 == null)
+            //if (id1 == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Customer customer = db.Customers.Find(id1.CustomerId);
+                return PartialView(customer);
             }
-            Customer customer = db.Customers.Find(id1);
-            if (customer == null)
+            catch
             {
-                return HttpNotFound();
+                return PartialView();
             }
-            return View(customer);
+            //if (customer == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            
         }
     }
 }

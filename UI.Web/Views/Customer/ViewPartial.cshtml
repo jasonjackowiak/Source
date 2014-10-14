@@ -1,12 +1,24 @@
 ﻿@model UI.Web.Models.Customer
 @using Microsoft.AspNet.Identity
 
-text
-
 @if (Request.IsAuthenticated)
 {
-<div>
-            Hello, User.Identity.GetUserName()
-            @Html.DisplayFor(model => model.Name)
-</div>
+    <div>
+        Hello, @User.Identity.GetUserName();.
+    </div>
+
+    if (!Model.Equals(null))
+    {
+        <div>
+            Your company is @Html.DisplayFor(model => model.Name);.
+        </div>
+    }
+    else
+    {
+        <div>
+            You do not have a Customer Name.
+            @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
+            Or register with an existing company (TO DO).
+        </div>
+    }
 }
