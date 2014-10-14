@@ -4,10 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c8cec43b5bfe4b61b6bc4f5432b7b28f" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="FAASModel.AspNetRole" Width="1.5" PointX="7.75" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="3.75" IsExpanded="true" />
+      <Diagram DiagramId="c8cec43b5bfe4b61b6bc4f5432b7b28f" Name="Diagram1" ZoomLevel="88">
+        <EntityTypeShape EntityType="FAASModel.AspNetUserClaim" Width="2" PointX="12.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAASModel.AspNetUserLogin" Width="1.875" PointX="12.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.AuditLog" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.BucketConnection" Width="1.5" PointX="2.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.BucketReporting" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
@@ -44,8 +43,9 @@
         <AssociationConnector Association="FAASModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="FAASModel.FK_Project_Customer" />
         <AssociationConnector Association="FAASModel.FK_Snapshot_Project" />
-        <AssociationConnector Association="FAASModel.AspNetUserRoles" />
         <AssociationConnector Association="FAASModel.FK_AspNetUsers_Customer" />
+        <EntityTypeShape EntityType="FAASModel.AspNetRole" Width="1.5" PointX="5.375" PointY="0.875" />
+        <AssociationConnector Association="FAASModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
