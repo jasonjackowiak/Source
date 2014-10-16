@@ -4,13 +4,13 @@
 @if (Request.IsAuthenticated)
 {
     <div>
-        Hello, @User.Identity.GetUserName();.
+        Hello, @User.Identity.GetUserName().
     </div>
 
-    if (!Model.Equals(null))
+    if (Model != null)
     {
         <div>
-            Your company is @Html.DisplayFor(model => model.Name);.
+            Your company is @Html.DisplayFor(model => model.Name).
         </div>
     }
     else
@@ -19,6 +19,7 @@
             You do not have a Customer Name.
             @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
             Or register with an existing company (TO DO).
+            @{ Html.RenderAction("CustomerListPartial", "Customer"); }
         </div>
     }
 }

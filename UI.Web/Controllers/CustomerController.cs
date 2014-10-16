@@ -61,7 +61,8 @@ namespace UI.Web.Controllers
 
                 if (record == null)
                 {
-                    foreach (AspNetUser user in db.AspNetUsers) {
+                    foreach (AspNetUser user in db.AspNetUsers)
+                    {
                         if (user.UserName == User.Identity.Name)
                             record = user;
                     }
@@ -143,27 +144,17 @@ namespace UI.Web.Controllers
         }
 
         //Manually added
-        public PartialViewResult ViewPartial()
-        {
-            //string id;
 
+        /// <summary>
+        /// Display customers for logged in user
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult CustomerNamePartial()
+        {
             var id1 = db.AspNetUsers
                       .Where(x => x.UserName == User.Identity.Name)
                       .FirstOrDefault();
 
-            //foreach (AspNetUser user in db.AspNetUsers)
-            //{
-            //    if (User.Identity.Name.Equals(user.UserName))
-            //    {
-            //        id = user.Id;
-            //    }
-            //}
-
-
-            //if (id1 == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
             try
             {
                 Customer customer = db.Customers.Find(id1.CustomerId);
@@ -173,11 +164,17 @@ namespace UI.Web.Controllers
             {
                 return PartialView();
             }
-            //if (customer == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            
         }
+
+        /// <summary>
+        /// Display all existing customers
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult CustomerListPartial()
+        {
+            SelectList customerList = new SelectList(db.Customers.ToList(), "Name", "Name");
+            return PartialView(customerList);
+        }
+
     }
 }
