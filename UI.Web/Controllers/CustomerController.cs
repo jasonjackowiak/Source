@@ -12,7 +12,7 @@ namespace UI.Web.Controllers
 {
     public class CustomerController : Controller
     {
-        private FAASEntities db = new FAASEntities();
+        private FAASEntities1 db = new FAASEntities1();
 
 
 
@@ -55,9 +55,15 @@ namespace UI.Web.Controllers
                 db.Customers.Add(customer);
                 db.SaveChanges();
 
-                //Also add this id to the loginuser table
+                //Get the logged-in user record
                 AspNetUser record = db.AspNetUsers
                     .FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+                
+
+                //AspNetUserCustomer userCustomer = new AspNetUserCustomer(record.Id, customer.Id);
+
+                //db.AspNetUserCustomers.Add(userCustomer);
 
                 if (record == null)
                 {
@@ -68,7 +74,8 @@ namespace UI.Web.Controllers
                     }
                 }
 
-                record.CustomerId = customer.Id;
+                //record.CustomerId = customer.Id;
+                db.AspNetUsers.Add(record);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -155,9 +162,13 @@ namespace UI.Web.Controllers
                       .Where(x => x.UserName == User.Identity.Name)
                       .FirstOrDefault();
 
+            //var customers = db.Customers
+            //    .AsEnumerable(x => x.AspNetUsers);
+
             try
             {
-                Customer customer = db.Customers.Find(id1.CustomerId);
+                //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
+                Customer customer = db.Customers.Find(id1);
                 return PartialView(customer);
             }
             catch

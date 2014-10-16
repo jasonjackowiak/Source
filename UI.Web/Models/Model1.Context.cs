@@ -15,10 +15,10 @@ namespace UI.Web.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class FAASEntities : DbContext
+    public partial class FAASEntities1 : DbContext
     {
-        public FAASEntities()
-            : base("name=FAASEntities")
+        public FAASEntities1()
+            : base("name=FAASEntities1")
         {
         }
     
@@ -27,12 +27,15 @@ namespace UI.Web.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AuditLog> AuditLogs { get; set; }
         public virtual DbSet<BucketConnection> BucketConnections { get; set; }
         public virtual DbSet<BucketReporting> BucketReportings { get; set; }
         public virtual DbSet<Bucket> Buckets { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Entity> Entities { get; set; }
         public virtual DbSet<EntityOwnershipStrength> EntityOwnershipStrengths { get; set; }
         public virtual DbSet<EntityRelationship> EntityRelationships { get; set; }
@@ -43,6 +46,7 @@ namespace UI.Web.Models
         public virtual DbSet<InternalInterface> InternalInterfaces { get; set; }
         public virtual DbSet<LanguageReference> LanguageReferences { get; set; }
         public virtual DbSet<PackageDefinition> PackageDefinitions { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Record> Records { get; set; }
         public virtual DbSet<RuleDefinition> RuleDefinitions { get; set; }
         public virtual DbSet<Snapshot> Snapshots { get; set; }
@@ -51,10 +55,6 @@ namespace UI.Web.Models
         public virtual DbSet<TableForeignConstraint> TableForeignConstraints { get; set; }
         public virtual DbSet<TransactionDefinition> TransactionDefinitions { get; set; }
         public virtual DbSet<TriggerDefinition> TriggerDefinitions { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
-        public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -111,7 +111,7 @@ namespace UI.Web.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -121,10 +121,10 @@ namespace UI.Web.Models
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -134,7 +134,7 @@ namespace UI.Web.Models
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
