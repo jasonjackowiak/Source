@@ -153,13 +153,14 @@ namespace UI.Web.Controllers
             //
             //Get the logged-in user record
             AspNetUser record = db.AspNetUsers
-                .Where(f => f.UserName == User.Identity.Name);
+                .FirstOrDefault(f => f.UserName == User.Identity.Name);
+                //.Where(f => f.UserName == User.Identity.Name);
 
             //var customers = db.Customers
             //    .AsEnumerable(x => x.AspNetUsers);
 
-            IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
-                .Where(x => x.UserId == record.us)
+            //IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
+            //    .Where(x => x.UserId == record.us)
 
             try
             {
