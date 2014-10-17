@@ -59,23 +59,12 @@ namespace UI.Web.Controllers
                 AspNetUser record = db.AspNetUsers
                     .FirstOrDefault(x => x.UserName == User.Identity.Name);
 
-                
+                //Add record to link customer to user
+                AspNetUserCustomer userCustomer = new AspNetUserCustomer();
+                userCustomer.CustomerId = customer.Id;
+                userCustomer.UserId = record.Id;
 
-                //AspNetUserCustomer userCustomer = new AspNetUserCustomer(record.Id, customer.Id);
-
-                //db.AspNetUserCustomers.Add(userCustomer);
-
-                if (record == null)
-                {
-                    foreach (AspNetUser user in db.AspNetUsers)
-                    {
-                        if (user.UserName == User.Identity.Name)
-                            record = user;
-                    }
-                }
-
-                //record.CustomerId = customer.Id;
-                db.AspNetUsers.Add(record);
+                db.AspNetUserCustomers.Add(userCustomer);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -158,17 +147,24 @@ namespace UI.Web.Controllers
         /// <returns></returns>
         public PartialViewResult CustomerNamePartial()
         {
-            var id1 = db.AspNetUsers
-                      .Where(x => x.UserName == User.Identity.Name)
-                      .FirstOrDefault();
+            //Requires rework.
+            //Need to display list of current customers instead of the one
+
+            //
+            //Get the logged-in user record
+            AspNetUser record = db.AspNetUsers
+                .Where(f => f.UserName == User.Identity.Name);
 
             //var customers = db.Customers
             //    .AsEnumerable(x => x.AspNetUsers);
 
+            IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
+                .Where(x => x.UserId == record.us)
+
             try
             {
                 //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
-                Customer customer = db.Customers.Find(id1);
+                Customer customer = db.Customers.Find(record);
                 return PartialView(customer);
             }
             catch

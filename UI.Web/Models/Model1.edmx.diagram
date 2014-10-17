@@ -6,14 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="554bd1aea5db4104b932021079e0282b" Name="Diagram1" ZoomLevel="59">
         <EntityTypeShape EntityType="FAASModel.AspNetRole" Width="1.5" PointX="7.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.AspNetUserClaim" Width="1.5" PointX="12.25" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.AspNetUserLogin" Width="1.5" PointX="12.25" PointY="4" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.AspNetUser" Width="1.5" PointX="10" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAASModel.AspNetUserClaim" Width="1.5" PointX="12.375" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAASModel.AspNetUserLogin" Width="1.5" PointX="12.5" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.AuditLog" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.BucketConnection" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.BucketReporting" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.Bucket" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FAASModel.Customer" Width="1.5" PointX="12.25" PointY="6.875" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.Entity" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.EntityOwnershipStrength" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.EntityRelationship" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
@@ -33,9 +31,6 @@
         <EntityTypeShape EntityType="FAASModel.TableForeignConstraint" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.TransactionDefinition" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAASModel.TriggerDefinition" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
-        <AssociationConnector Association="FAASModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" ManuallyRouted="false" />
-        <AssociationConnector Association="FAASModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="FAASModel.FK_Project_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="FAASModel.FK_EntityResidence_Entity" ManuallyRouted="false" />
         <AssociationConnector Association="FAASModel.FK_Interface_Entity" ManuallyRouted="false" />
         <AssociationConnector Association="FAASModel.FK_InterfaceReporting_Entity" ManuallyRouted="false" />
@@ -44,8 +39,15 @@
         <AssociationConnector Association="FAASModel.FK_Record_LanguageReference" ManuallyRouted="false" />
         <AssociationConnector Association="FAASModel.FK_Snapshot_Project" ManuallyRouted="false" />
         <AssociationConnector Association="FAASModel.FK_Record_Snapshot" ManuallyRouted="false" />
-        <AssociationConnector Association="FAASModel.AspNetUserCustomers" ManuallyRouted="false" />
-        <AssociationConnector Association="FAASModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FAASModel.AspNetUser" Width="2.125" PointX="10" PointY="3.75" />
+        <EntityTypeShape EntityType="FAASModel.Customer" Width="2.125" PointX="12.25" PointY="6.875" />
+        <AssociationConnector Association="FAASModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
+        <AssociationConnector Association="FAASModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="FAASModel.FK_Project_Customer" />
+        <AssociationConnector Association="FAASModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="FAASModel.AspNetUserCustomer" Width="1.5" PointX="19.125" PointY="3.25" />
+        <AssociationConnector Association="FAASModel.FK_AspNetUserCustomers_AspNetUsers" />
+        <AssociationConnector Association="FAASModel.FK_AspNetUserCustomers_Customers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

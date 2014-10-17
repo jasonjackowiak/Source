@@ -18,8 +18,8 @@ namespace UI.Web.Models
         {
             this.AspNetUserClaims = new HashSet<AspNetUserClaim>();
             this.AspNetUserLogins = new HashSet<AspNetUserLogin>();
-            this.Customers = new HashSet<Customer>();
             this.AspNetRoles = new HashSet<AspNetRole>();
+            this.AspNetUserCustomers = new HashSet<AspNetUserCustomer>();
         }
     
         public string Id { get; set; }
@@ -30,7 +30,7 @@ namespace UI.Web.Models
     
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
-        public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+        public virtual ICollection<AspNetUserCustomer> AspNetUserCustomers { get; set; }
     }
 }

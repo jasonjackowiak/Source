@@ -26,7 +26,7 @@ namespace UI.Web.Models
         public System.DateTime StartDateTime { get; set; }
         public Nullable<System.DateTime> EndDateTime { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual ICollection<Snapshot> Snapshots { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
