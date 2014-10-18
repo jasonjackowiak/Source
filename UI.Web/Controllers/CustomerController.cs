@@ -154,7 +154,26 @@ namespace UI.Web.Controllers
             //Get the logged-in user record
             AspNetUser record = db.AspNetUsers
                 .FirstOrDefault(f => f.UserName == User.Identity.Name);
-                //.Where(f => f.UserName == User.Identity.Name);
+            //.Where(f => f.UserName == User.Identity.Name);
+
+            //Use current userId to grab all related customers
+            //TODO
+            IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
+                .Where(x => x.UserId == record.Id);
+
+            List<int> userCustomerIds = db.AspNetUserCustomers
+    .Where(x => x.UserId == record.Id)
+ .Select(g => g.CustomerId).ToList();
+
+            //Now for each usercustomer record, get the customer record
+            IEnumerable<Customer> customers;
+            foreach (AspNetUserCustomer c in userCustomers)
+            {
+
+            }
+
+            IEnumerable<Customer> test = db.Customers
+            .Where(x => userCustomerIds.Contains(x.Id));
 
             //var customers = db.Customers
             //    .AsEnumerable(x => x.AspNetUsers);
@@ -166,7 +185,7 @@ namespace UI.Web.Controllers
             {
                 //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
                 Customer customer = db.Customers.Find(record);
-                return PartialView(customer);
+                return PartialView(test);
             }
             catch
             {
