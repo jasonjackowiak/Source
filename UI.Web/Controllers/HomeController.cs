@@ -27,11 +27,5 @@ namespace UI.Web.Controllers
             return View();
         }
 
-        public ActionResult Profile()
-        {
-            ViewBag.Message = "Your profile page.";
-
-            return View();
-        }
     }
 }

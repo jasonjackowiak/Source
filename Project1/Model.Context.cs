@@ -27,7 +27,6 @@ namespace Project1
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -55,6 +54,8 @@ namespace Project1
         public virtual DbSet<TableForeignConstraint> TableForeignConstraints { get; set; }
         public virtual DbSet<TransactionDefinition> TransactionDefinitions { get; set; }
         public virtual DbSet<TriggerDefinition> TriggerDefinitions { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserCustomer> AspNetUserCustomers { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

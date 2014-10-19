@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model IEnumerable<UI.Web.Models.Customer>
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Profile";
@@ -9,7 +10,7 @@
 <p>This page will only be visible if you are logged in.</p>
 
 <p>
-    @{ Html.RenderAction("CustomerNamePartial", "Customer"); }
+    @{ Html.RenderPartial("AccountCustomersPartial", Model); }
 </p>
 <p>
     <ul>

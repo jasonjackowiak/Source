@@ -349,13 +349,13 @@
     <Content Include="Views\Account\Manage.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Customer\Profile.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Customer\Delete.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Customer\CustomerNamePartial.cshtml" />
+    <Content Include="Views\Customer\AccountCustomersPartial.cshtml" />
     <Content Include="Views\Customer\CustomerListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>

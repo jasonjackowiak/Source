@@ -14,7 +14,12 @@ namespace UI.Web.Controllers
     {
         private FAASEntities1 db = new FAASEntities1();
 
+        public ActionResult Profile()
+        {
+            ViewBag.Message = "Your profile page.";
 
+            return View();
+        }
 
         // GET: /Customer/
         public ActionResult Index()
@@ -145,7 +150,7 @@ namespace UI.Web.Controllers
         /// Display customers for logged in user
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult CustomerNamePartial()
+        public PartialViewResult AccountCustomersPartial()
         {
             //Requires rework.
             //Need to display list of current customers instead of the one
@@ -158,39 +163,45 @@ namespace UI.Web.Controllers
 
             //Use current userId to grab all related customers
             //TODO
-            IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
-                .Where(x => x.UserId == record.Id);
-
-            List<int> userCustomerIds = db.AspNetUserCustomers
-    .Where(x => x.UserId == record.Id)
- .Select(g => g.CustomerId).ToList();
-
-            //Now for each usercustomer record, get the customer record
-            IEnumerable<Customer> customers;
-            foreach (AspNetUserCustomer c in userCustomers)
+            if (record != null)
             {
+                IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
+                    .Where(x => x.UserId == record.Id);
 
+
+                List<int> userCustomerIds = db.AspNetUserCustomers
+                .Where(x => x.UserId == record.Id)
+                .Select(g => g.CustomerId).ToList();
+
+                //Now for each usercustomer record, get the customer record
+                IEnumerable<Customer> customers;
+                foreach (AspNetUserCustomer c in userCustomers)
+                {
+
+                }
+
+                IEnumerable<Customer> accountCustomers = db.Customers
+                .Where(x => userCustomerIds.Contains(x.Id));
+
+                //var customers = db.Customers
+                //    .AsEnumerable(x => x.AspNetUsers);
+
+                //IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
+                //    .Where(x => x.UserId == record.us)
+
+                try
+                {
+                    //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
+                    Customer customer = db.Customers.Find(record);
+                    return PartialView(accountCustomers);
+                }
+
+                catch
+                {
+                    return PartialView();
+                }
             }
-
-            IEnumerable<Customer> test = db.Customers
-            .Where(x => userCustomerIds.Contains(x.Id));
-
-            //var customers = db.Customers
-            //    .AsEnumerable(x => x.AspNetUsers);
-
-            //IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
-            //    .Where(x => x.UserId == record.us)
-
-            try
-            {
-                //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
-                Customer customer = db.Customers.Find(record);
-                return PartialView(test);
-            }
-            catch
-            {
-                return PartialView();
-            }
+            else return PartialView();
         }
 
         /// <summary>

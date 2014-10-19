@@ -12,18 +12,13 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class AspNetUserCustomer
     {
-        public Customer()
-        {
-            this.Projects = new HashSet<Project>();
-            this.AspNetUserCustomers = new HashSet<AspNetUserCustomer>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string UserId { get; set; }
+        public int CustomerId { get; set; }
     
-        public virtual ICollection<Project> Projects { get; set; }
-        public virtual ICollection<AspNetUserCustomer> AspNetUserCustomers { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

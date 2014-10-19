@@ -65,6 +65,9 @@
     <Compile Include="AspNetUserClaim.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AspNetUserCustomer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="AspNetUserLogin.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

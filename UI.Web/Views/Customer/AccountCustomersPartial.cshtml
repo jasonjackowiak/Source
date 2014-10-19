@@ -1,5 +1,4 @@
-﻿@model UI.Web.Models.Customer
-@using Microsoft.AspNet.Identity
+﻿@using Microsoft.AspNet.Identity
 
 @if (Request.IsAuthenticated)
 {
@@ -10,7 +9,10 @@
     if (Model != null)
     {
         <div>
-            Your company is @Html.DisplayFor(model => model.Name).
+            You are registered to the following companies:
+            @foreach (var item in Model) {
+                @Html.DisplayFor(item.Name).
+            }
         </div>
     }
     else
