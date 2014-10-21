@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@model UI.Web.Models.ViewModel.CustomerProfileViewModel
+@using Microsoft.AspNet.Identity
 
 @if (Request.IsAuthenticated)
 {
@@ -6,21 +7,25 @@
         Hello, @User.Identity.GetUserName().
     </div>
 
-    if (Model != null)
-    {
         <div>
             You are registered to the following companies:
-            @foreach (var item in Model) {
-                @Html.DisplayFor(item.Name).
+            @if (Model != null)
+            {
+            <ul>
+                @foreach (var item in Model.CurrentUserCustomers)
+                {
+                    <li>
+                        @Html.DisplayFor(x => item.Name)
+                    </li>
+                }
+            </ul>
             }
         </div>
-    }
-    else
-    {
+    
         <div>
-            You do not have a Customer Name.
+            Want to add a new customer?
             @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
-            Or register with an existing company (TO DO).
+            Or register with existing companies (TO DO).
             @{ Html.RenderAction("CustomerListPartial", "Customer"); }
         </div>
     }

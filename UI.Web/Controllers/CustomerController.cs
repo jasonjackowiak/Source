@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UI.Web.Models;
+using UI.Web.Models.ViewModel;
 
 namespace UI.Web.Controllers
 {
@@ -152,56 +153,28 @@ namespace UI.Web.Controllers
         /// <returns></returns>
         public PartialViewResult AccountCustomersPartial()
         {
-            //Requires rework.
-            //Need to display list of current customers instead of the one
+            CustomerProfileViewModel model = new CustomerProfileViewModel();
 
-            //
             //Get the logged-in user record
             AspNetUser record = db.AspNetUsers
                 .FirstOrDefault(f => f.UserName == User.Identity.Name);
-            //.Where(f => f.UserName == User.Identity.Name);
 
             //Use current userId to grab all related customers
-            //TODO
-            if (record != null)
+            IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
+                .Where(x => x.UserId == record.Id);
+
+            if (userCustomers != null)
             {
-                IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
-                    .Where(x => x.UserId == record.Id);
-
-
                 List<int> userCustomerIds = db.AspNetUserCustomers
                 .Where(x => x.UserId == record.Id)
                 .Select(g => g.CustomerId).ToList();
 
-                //Now for each usercustomer record, get the customer record
-                IEnumerable<Customer> customers;
-                foreach (AspNetUserCustomer c in userCustomers)
-                {
-
-                }
-
-                IEnumerable<Customer> accountCustomers = db.Customers
-                .Where(x => userCustomerIds.Contains(x.Id));
-
-                //var customers = db.Customers
-                //    .AsEnumerable(x => x.AspNetUsers);
-
-                //IEnumerable<AspNetUserCustomer> userCustLinks = db.AspNetUserCustomers
-                //    .Where(x => x.UserId == record.us)
-
-                try
-                {
-                    //IEnumerable<Customer> customer = db.Customers.Find(id1.Customers);
-                    Customer customer = db.Customers.Find(record);
-                    return PartialView(accountCustomers);
-                }
-
-                catch
-                {
-                    return PartialView();
-                }
+                //construct the model for the view
+                    model.CurrentUserCustomers = db.Customers
+                    .Where(x => userCustomerIds.Contains(x.Id));
             }
-            else return PartialView();
+
+            return PartialView(model);
         }
 
         /// <summary>
@@ -212,6 +185,22 @@ namespace UI.Web.Controllers
         {
             SelectList customerList = new SelectList(db.Customers.ToList(), "Name", "Name");
             return PartialView(customerList);
+        }
+
+        /// <summary>
+        /// Display selected customer's projects
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult CustomerProjectListPartial(int? id)
+        {
+            //user will select a customer from the dropdown
+            //selected customer is passed here
+
+            CustomerProfileViewModel model = new CustomerProfileViewModel();
+
+            SelectList projectList = new SelectList(db.Projects
+                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
+            return PartialView(projectList);
         }
 
     }

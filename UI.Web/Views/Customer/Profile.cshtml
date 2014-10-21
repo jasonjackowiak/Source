@@ -1,4 +1,5 @@
-﻿@model IEnumerable<UI.Web.Models.Customer>
+﻿@model UI.Web.Models.ViewModel.CustomerProfileViewModel
+
 @using Microsoft.AspNet.Identity
 
 @{
@@ -9,9 +10,8 @@
 
 <p>This page will only be visible if you are logged in.</p>
 
-<p>
-    @{ Html.RenderPartial("AccountCustomersPartial", Model); }
-</p>
+@{Html.RenderAction("AccountCustomersPartial");}
+
 <p>
     <ul>
         <li>Create new Projects</li>

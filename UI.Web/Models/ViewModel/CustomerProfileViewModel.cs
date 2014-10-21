@@ -6,25 +6,13 @@ using System.Web;
 
 namespace UI.Web.Models.ViewModel
 {
-    public class CustomerViewModel
-    {
-        [Required]
-        [Display(Name = "Customer Name")]
-        public string Name { get; set; }
-    }
 
-    public class ProjectViewModel
+    public class CustomerProfileViewModel
     {
-        [Required]
-        [Display(Name = "Project Name")]
-        public string Name { get; set; }
-    }
-
-    public class SnapshotViewModel
-    {
-        [Required]
-        [Display(Name = "Snapshot Date")]
-        public DateTime DateTimeStart { get; set; }
+        public IEnumerable<Customer> Customers { get; set; }
+        public IEnumerable<Customer> CurrentUserCustomers { get; set; }
+        public IEnumerable<AspNetUser> CurrentUser { get; set; }
+        public IEnumerable<Project> Projects { get; set; }
     }
 
 }
