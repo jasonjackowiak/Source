@@ -7,12 +7,10 @@ using System.Web;
 namespace UI.Web.Models.ViewModel
 {
 
-    public class CustomerProfileViewModel
+    public class ProjectViewModel
     {
-        public IEnumerable<Customer> Customers { get; set; }
-        public IEnumerable<Customer> CurrentUserCustomers { get; set; }
-        public IEnumerable<AspNetUser> CurrentUser { get; set; }
         public IEnumerable<Project> Projects { get; set; }
+        public IEnumerable<Snapshot> Snapshots { get; set; }
     }
 
 }

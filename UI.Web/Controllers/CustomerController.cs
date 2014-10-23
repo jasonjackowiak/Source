@@ -153,7 +153,7 @@ namespace UI.Web.Controllers
         /// <returns></returns>
         public PartialViewResult AccountCustomersPartial()
         {
-            CustomerProfileViewModel model = new CustomerProfileViewModel();
+            CustomerViewModel model = new CustomerViewModel();
 
             //Get the logged-in user record
             AspNetUser record = db.AspNetUsers
@@ -196,7 +196,7 @@ namespace UI.Web.Controllers
             //user will select a customer from the dropdown
             //selected customer is passed here
 
-            CustomerProfileViewModel model = new CustomerProfileViewModel();
+            CustomerViewModel model = new CustomerViewModel();
 
             SelectList projectList = new SelectList(db.Projects
                 .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
