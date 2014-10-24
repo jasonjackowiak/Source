@@ -187,21 +187,5 @@ namespace UI.Web.Controllers
             return PartialView(customerList);
         }
 
-        /// <summary>
-        /// Display selected customer's projects
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult CustomerProjectListPartial(int? id)
-        {
-            //user will select a customer from the dropdown
-            //selected customer is passed here
-
-            CustomerViewModel model = new CustomerViewModel();
-
-            SelectList projectList = new SelectList(db.Projects
-                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
-            return PartialView(projectList);
-        }
-
     }
 }

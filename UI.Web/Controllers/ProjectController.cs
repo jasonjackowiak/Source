@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using UI.Web.Models;
+using UI.Web.Models.ViewModel;
 
 namespace UI.Web.Controllers
 {
@@ -128,5 +129,24 @@ namespace UI.Web.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Custom methods
+
+        /// <summary>
+        /// Display selected customer's projects
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult CustomerProjectListPartial(int? id)
+        {
+            //user will select a customer from the dropdown
+            //selected customer is passed here
+
+            ProjectViewModel model = new ProjectViewModel();
+
+            SelectList projectList = new SelectList(db.Projects
+                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
+            return PartialView(projectList);
+        }
+
     }
 }
