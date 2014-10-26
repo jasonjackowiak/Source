@@ -38,10 +38,14 @@ namespace UI.Web.Controllers
         }
 
         // GET: Project/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "Name");
-            return View();
+            //Auto-assign properties
+            Project model = new Project();
+            model.CustomerId = Convert.ToInt32(id);
+            model.StartDateTime = DateTime.Now;
+
+            return View(model);
         }
 
         // POST: Project/Create
@@ -51,6 +55,7 @@ namespace UI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,CustomerId,Name,Status,StartDateTime,EndDateTime")] Project project)
         {
+
             if (ModelState.IsValid)
             {
                 db.Projects.Add(project);
@@ -58,7 +63,6 @@ namespace UI.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "Name", project.CustomerId);
             return View(project);
         }
 
@@ -132,21 +136,7 @@ namespace UI.Web.Controllers
 
         //Custom methods
 
-        /// <summary>
-        /// Display selected customer's projects
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult CustomerProjectListPartial(int? id)
-        {
-            //user will select a customer from the dropdown
-            //selected customer is passed here
 
-            ProjectViewModel model = new ProjectViewModel();
-
-            SelectList projectList = new SelectList(db.Projects
-                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
-            return PartialView(projectList);
-        }
 
     }
 }

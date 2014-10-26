@@ -1,4 +1,4 @@
-﻿@model UI.Web.Models.ViewModel.CustomerProfileViewModel
+﻿@model UI.Web.Models.ViewModel.CustomerViewModel
 
 @using Microsoft.AspNet.Identity
 
@@ -14,10 +14,27 @@
 
 <p>
     <ul>
-        <li>Create new Projects</li>
+@*@{Html.RenderAction("CustomerProjectsPartial");}*@
         <li>Select Existing Projects (from dropdown)</li>
     </ul>
 </p>
+
+<div>
+    Want to add a new project?
+    @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
+    Or select an existing project
+    @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
+    {
+        @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
+        <button type="submit">View Snapshots</button>
+    }
+
+
+    @*@{ Html.RenderAction("CustomerProjectsListPartial", "Customer"); }*@
+</div>
+
+
+
 <p>
     Once project is selected, user can:
     <ul>

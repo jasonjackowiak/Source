@@ -85,7 +85,7 @@ namespace UI.Web.Controllers
                     //Link to Customer table
 
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Profile", "Home");
+                    return RedirectToAction("Profile", "Customer");
                 }
                 else
                 {

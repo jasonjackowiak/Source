@@ -1,0 +1,4 @@
+﻿@model UI.Web.Models.ViewModel.CustomerViewModel
+
+@Html.DropDownList("dropdownlist", new SelectList(Model.CurrentUserRegisteredCustomers, "Name", "Name"))
+

@@ -281,8 +281,8 @@
     </Compile>
     <Compile Include="Models\ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\Domain\Entity\IdentityModels.cs" />
-    <Compile Include="Models\ViewModel\ProjectViewModel.cs" />
     <Compile Include="Models\ViewModel\CustomerViewModel.cs" />
+    <Compile Include="Models\ViewModel\ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -358,13 +358,16 @@
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\AccountCustomersPartial.cshtml" />
-    <Content Include="Views\Customer\CustomerListPartial.cshtml" />
+    <Content Include="Views\Customer\UnregisteredCustomerListPartial.cshtml" />
+    <Content Include="Views\Customer\CustomerProjectsListPartial.cshtml" />
+    <Content Include="Views\Customer\CustomerProjectsPartial.cshtml" />
+    <Content Include="Views\Customer\RegisteredCustomerListPartial.cshtml" />
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
-    <Content Include="Views\Project\ProjectListPartial.cshtml" />
+    <Content Include="Views\Customer\ProfileTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

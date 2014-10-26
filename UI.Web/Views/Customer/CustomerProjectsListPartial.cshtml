@@ -1,0 +1,7 @@
+﻿@model UI.Web.Models.ViewModel.CustomerViewModel
+
+@using (Html.BeginForm("ProjectSnapshotsPartial", "Customer"))
+{
+    @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
+    <button type="submit">View Snapshots</button>
+}

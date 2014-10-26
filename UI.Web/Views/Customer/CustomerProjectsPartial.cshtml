@@ -1,0 +1,36 @@
+﻿@model UI.Web.Models.ViewModel.CustomerViewModel
+
+
+        @*<div>
+            You are registered to the following companies:
+            @if (Model != null)
+            {*@
+            @*<ul>
+                @foreach (var item in Model.Projects)
+                {
+                    <li>
+                        @Html.DisplayFor(x => item.Name)
+                    </li>
+                }
+            </ul>*@
+
+
+
+            @*}
+        </div>*@
+    
+        <div>
+            Want to add a new project?
+            @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
+            Or select an existing project
+            @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
+            {
+                @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
+                <button type="submit">View Snapshots</button>
+            }
+
+
+            @*@{ Html.RenderAction("CustomerProjectsListPartial", "Customer"); }*@
+        </div>
+    
+

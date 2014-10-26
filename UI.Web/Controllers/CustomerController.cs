@@ -151,26 +151,22 @@ namespace UI.Web.Controllers
         /// Display customers for logged in user
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult AccountCustomersPartial()
+        public PartialViewResult RegisteredCustomerListPartial()
         {
             CustomerViewModel model = new CustomerViewModel();
 
             //Get the logged-in user record
-            AspNetUser record = db.AspNetUsers
+            AspNetUser user = db.AspNetUsers
                 .FirstOrDefault(f => f.UserName == User.Identity.Name);
 
-            //Use current userId to grab all related customers
-            IEnumerable<AspNetUserCustomer> userCustomers = db.AspNetUserCustomers
-                .Where(x => x.UserId == record.Id);
-
-            if (userCustomers != null)
+            if (user != null)
             {
                 List<int> userCustomerIds = db.AspNetUserCustomers
-                .Where(x => x.UserId == record.Id)
+                .Where(x => x.UserId == user.Id)
                 .Select(g => g.CustomerId).ToList();
 
                 //construct the model for the view
-                    model.CurrentUserCustomers = db.Customers
+                    model.CurrentUserRegisteredCustomers = db.Customers
                     .Where(x => userCustomerIds.Contains(x.Id));
             }
 
@@ -181,11 +177,89 @@ namespace UI.Web.Controllers
         /// Display all existing customers
         /// </summary>
         /// <returns></returns>
-        public PartialViewResult CustomerListPartial()
+        public PartialViewResult UnregisteredCustomerListPartial()
         {
-            SelectList customerList = new SelectList(db.Customers.ToList(), "Name", "Name");
-            return PartialView(customerList);
+            CustomerViewModel model = new CustomerViewModel();
+
+            //Get the logged-in user record
+            AspNetUser user = db.AspNetUsers
+                .FirstOrDefault(f => f.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                List<int> userCustomerIds = db.AspNetUserCustomers
+                .Where(x => x.UserId != user.Id)
+                .Select(g => g.CustomerId).ToList();
+
+                //construct the model for the view
+                model.CurrentUserRegisteredCustomers = db.Customers
+                .Where(x => userCustomerIds.Contains(x.Id));
+            }
+
+            return PartialView(model);
         }
 
+        public PartialViewResult AccountCustomersPartial()
+        {
+            CustomerViewModel model = new CustomerViewModel();
+
+            //Get the logged-in user record
+            AspNetUser user = db.AspNetUsers
+                .FirstOrDefault(f => f.UserName == User.Identity.Name);
+
+            if (user != null)
+            {
+                List<int> userCustomerIds = db.AspNetUserCustomers
+                .Where(x => x.UserId == user.Id)
+                .Select(g => g.CustomerId).ToList();
+
+                //construct the model for the view
+                model.CurrentUserRegisteredCustomers = db.Customers
+                .Where(x => userCustomerIds.Contains(x.Id));
+            }
+
+            return PartialView(model);
+        }
+
+        //SORT THESE TWO OUT!!!
+
+        /// <summary>
+        /// Display selected customer's projects
+        /// </summary>
+        /// <returns></returns>
+        public PartialViewResult CustomerProjectsListPartial(int? id)
+        {
+            //user will select a customer from the dropdown
+            //selected customer is passed here
+
+            SelectList projectList = new SelectList(db.Projects
+                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
+            return PartialView(projectList);
+        }
+
+        /// <summary>
+        /// Display projects for selected customer
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult CustomerProjectsPartial(int? customerId)
+        {
+            CustomerViewModel model = new CustomerViewModel();
+
+            if (customerId != null)
+            {
+                List<int> projectIds = db.Projects
+                .Where(x => x.CustomerId == customerId)
+                .Select(g => g.Id).ToList();
+
+                //construct the model for the view
+                model.CustomerProjects = db.Projects
+                .Where(x => projectIds.Contains(x.Id));
+
+                ViewBag.CustomerId = customerId;
+            }
+
+            return PartialView(model);
+        }
     }
 }
