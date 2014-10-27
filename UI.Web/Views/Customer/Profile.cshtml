@@ -14,25 +14,31 @@
 
 <p>
     <ul>
-@*@{Html.RenderAction("CustomerProjectsPartial");}*@
+        @*@{Html.RenderAction("CustomerProjectsPartial");}*@
         <li>Select Existing Projects (from dropdown)</li>
     </ul>
 </p>
 
-<div>
-    Want to add a new project?
-    @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
-    Or select an existing project
-    @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
+@if (Model != null)
+{
+    if (Model.SelectedCustomer != null)
     {
-        @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
-        <button type="submit">View Snapshots</button>
+
+        <div>
+            Want to add a new project?
+            @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
+            Or select an existing project
+            @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
+            {
+                @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
+                <button type="submit">View Snapshots</button>
+            }
+
+
+            @*@{ Html.RenderAction("CustomerProjectsListPartial", "Customer"); }*@
+        </div>
     }
-
-
-    @*@{ Html.RenderAction("CustomerProjectsListPartial", "Customer"); }*@
-</div>
-
+}
 
 
 <p>

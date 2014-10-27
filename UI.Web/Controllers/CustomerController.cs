@@ -18,9 +18,15 @@ namespace UI.Web.Controllers
         public ActionResult Profile()
         {
             ViewBag.Message = "Your profile page.";
-
             return View();
         }
+
+        //Used to maintain and build state
+        //public ActionResult Profile(CustomerViewModel model)
+        //{
+        //    ViewBag.Message = "Your profile page.";
+        //    return View(model);
+        //}
 
         // GET: /Customer/
         public ActionResult Index()
@@ -261,5 +267,26 @@ namespace UI.Web.Controllers
 
             return PartialView(model);
         }
+
+        //Populate the selected customer to re-use in the view
+        [HttpPost]
+        public ActionResult SelectedCustomer(int? customerId)
+        {
+            CustomerViewModel model = new CustomerViewModel();
+
+            if (customerId != null)
+            {
+
+                //construct the model for the view
+                model.SelectedCustomer = db.Customers
+                .Where(x => x.Id == customerId);
+
+                //ViewBag.CustomerId = customerId;
+            }
+
+            //return View(model);
+            return PartialView(model);
+        }
+
     }
 }
