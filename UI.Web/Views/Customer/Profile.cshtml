@@ -12,40 +12,22 @@
 
 @{Html.RenderAction("AccountCustomersPartial");}
 
-<p>
-    <ul>
-        @*@{Html.RenderAction("CustomerProjectsPartial");}*@
-        <li>Select Existing Projects (from dropdown)</li>
-    </ul>
-</p>
-
 @if (Model != null)
 {
-    if (Model.SelectedCustomer != null)
+    if (Model.CustomerProjects != null)
     {
 
         <div>
+            <br />
+            <br />
             Want to add a new project?
             @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
-            Or select an existing project
+
             @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
             {
                 @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
-                <button type="submit">View Snapshots</button>
+                <button type="submit">View Snapshots TODO</button>
             }
-
-
-            @*@{ Html.RenderAction("CustomerProjectsListPartial", "Customer"); }*@
         </div>
     }
 }
-
-
-<p>
-    Once project is selected, user can:
-    <ul>
-        <li>Select snapshot (dropdown)</li>
-        <li>Create new snapshot (probably by selecting phase to run)</li>
-    </ul>
-
-</p>

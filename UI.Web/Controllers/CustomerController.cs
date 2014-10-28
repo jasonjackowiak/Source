@@ -11,10 +11,12 @@ using UI.Web.Models.ViewModel;
 
 namespace UI.Web.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         private FAASEntities1 db = new FAASEntities1();
 
+        [HttpGet]
         public ActionResult Profile()
         {
             ViewBag.Message = "Your profile page.";
@@ -22,11 +24,12 @@ namespace UI.Web.Controllers
         }
 
         //Used to maintain and build state
-        //public ActionResult Profile(CustomerViewModel model)
-        //{
-        //    ViewBag.Message = "Your profile page.";
-        //    return View(model);
-        //}
+        [HttpPost]
+        public ActionResult Profile(CustomerViewModel model)
+        {
+            ViewBag.Message = "Your profile page.";
+            return View(model);
+        }
 
         // GET: /Customer/
         public ActionResult Index()
@@ -227,22 +230,6 @@ namespace UI.Web.Controllers
             return PartialView(model);
         }
 
-        //SORT THESE TWO OUT!!!
-
-        /// <summary>
-        /// Display selected customer's projects
-        /// </summary>
-        /// <returns></returns>
-        public PartialViewResult CustomerProjectsListPartial(int? id)
-        {
-            //user will select a customer from the dropdown
-            //selected customer is passed here
-
-            SelectList projectList = new SelectList(db.Projects
-                .Where(x => x.CustomerId == id).ToList(), "Name", "Name");
-            return PartialView(projectList);
-        }
-
         /// <summary>
         /// Display projects for selected customer
         /// </summary>
@@ -265,28 +252,8 @@ namespace UI.Web.Controllers
                 ViewBag.CustomerId = customerId;
             }
 
-            return PartialView(model);
+            return View("Profile", model);
         }
-
-        //Populate the selected customer to re-use in the view
-        [HttpPost]
-        public ActionResult SelectedCustomer(int? customerId)
-        {
-            CustomerViewModel model = new CustomerViewModel();
-
-            if (customerId != null)
-            {
-
-                //construct the model for the view
-                model.SelectedCustomer = db.Customers
-                .Where(x => x.Id == customerId);
-
-                //ViewBag.CustomerId = customerId;
-            }
-
-            //return View(model);
-            return PartialView(model);
-        }
-
+  
     }
 }
