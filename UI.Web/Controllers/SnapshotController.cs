@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -37,9 +38,16 @@ namespace UI.Web.Controllers
         }
 
         // GET: Snapshot/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
+            //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name");
+
+            //Auto-assign properties
+            Snapshot model = new Snapshot();
+            model.ProjectId = Convert.ToInt32(id);
+            model.DateTimeStamp = DateTime.Now;
+            model.Status = "test";
+
             return View();
         }
 
@@ -127,6 +135,23 @@ namespace UI.Web.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //Custom methods
+
+        [HttpPost]
+        public ActionResult Index(IEnumerable<HttpPostedFileBase> files)
+        {
+            foreach (var file in files)
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                    file.SaveAs(path);
+                }
+            }
+            return RedirectToAction("Index");
         }
     }
 }

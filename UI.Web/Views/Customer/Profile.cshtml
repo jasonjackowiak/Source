@@ -12,8 +12,6 @@
 
 @{Html.RenderAction("AccountCustomersPartial");}
 
-@*@{Html.RenderAction("CustomerProjectsPartial", Model);}*@
-
 @if (Model != null)
     {
         if (Model.CustomerProjects != null)
@@ -31,6 +29,10 @@
                 }
             </div>
         }
+
+        <br />
+        <br />
+        @Html.ActionLink("Upload new source files", "Create", "Snapshot", new { id = ViewBag.ProjectId }, "")<br />
     }
     
 @if (Model != null)
