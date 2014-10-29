@@ -8,27 +8,19 @@
     </div>
 
     <div>
-        You are registered to the following companies:
+        You are registered to the following customers:
         @if (Model != null)
         {
             Html.RenderAction("RegisteredCustomerListPartial", "Customer");
-
         }
     </div>
 
     <div>
-        Want to add a new customer?
         @Html.ActionLink("Create a new customer now", "Create", "Customer")<br />
 
-        Or register with existing companies: 
+        Or register with an existing customer: 
         @{Html.RenderAction("UnregisteredCustomerListPartial", "Customer");
 }
-        @*@Html.DropDownList("dropdownlist", new SelectList(Model.CurrentUserUnregisteredCustomers, "Name", "Name"))*@
     </div>
-
-
-
-
-
 }
 

@@ -17,6 +17,7 @@ namespace UI.Web.Models.ViewModel
         public IEnumerable<Project> Projects { get; set; }
         public IEnumerable<Project> CustomerProjects { get; set; }
         public IEnumerable<Snapshot> Snapshots { get; set; }
+        public IEnumerable<Snapshot> ProjectSnapshots { get; set; }
     }
 
 }

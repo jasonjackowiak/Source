@@ -2,6 +2,6 @@
 
 @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
 { 
-@Html.DropDownList("customerId", new SelectList(Model.CurrentUserRegisteredCustomers, "Id", "Name"))
+@Html.DropDownList("id", new SelectList(Model.CurrentUserRegisteredCustomers, "Id", "Name"))
     <button type="submit">View Projects</button>
 }

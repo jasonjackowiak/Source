@@ -7,7 +7,7 @@
         <div>
             @using (Html.BeginForm("ProjectSnapshotsPartial", "Customer"))
             {
-                @Html.DropDownList("id", new SelectList(Model.CustomerProjects, "Id", "Name"))
+                @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
                 <button type="submit">View Snapshots TODO</button>
             }
         </div>

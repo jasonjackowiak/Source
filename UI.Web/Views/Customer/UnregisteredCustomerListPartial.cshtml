@@ -1,4 +1,7 @@
 ﻿@model UI.Web.Models.ViewModel.CustomerViewModel
 
-@Html.DropDownList("dropdownlist", new SelectList(Model.CurrentUserRegisteredCustomers, "Name", "Name"))
-
+@using (Html.BeginForm("CustomerApplication", "Customer"))
+{
+    @Html.DropDownList("id", new SelectList(Model.CurrentUserUnregisteredCustomers, "Id", "Name"))
+    <button type="submit">Apply</button>
+}

@@ -12,21 +12,41 @@
 
 @{Html.RenderAction("AccountCustomersPartial");}
 
+@*@{Html.RenderAction("CustomerProjectsPartial", Model);}*@
+
+@if (Model != null)
+    {
+        if (Model.CustomerProjects != null)
+        {
+            <div>
+                <br />
+                <br />
+                @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
+
+
+                @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
+                {
+                    @Html.DropDownList("id", new SelectList(Model.CustomerProjects, "Id", "Name"))
+                    <button type="submit">View Snapshots TODO</button>
+                }
+            </div>
+        }
+    }
+    
 @if (Model != null)
 {
-    if (Model.CustomerProjects != null)
+    if (Model.ProjectSnapshots != null)
     {
-
         <div>
             <br />
             <br />
-            Want to add a new project?
-            @Html.ActionLink("Create a new project", "Create", "Project", new { id = ViewBag.CustomerId }, "")<br />
+            @Html.ActionLink("Upload new source files", "Create", "Snapshot", new { id = ViewBag.ProjectId }, "")<br />
+
 
             @using (Html.BeginForm("CustomerProjectsPartial", "Customer"))
             {
-                @Html.DropDownList("projectId", new SelectList(Model.CustomerProjects, "Id", "Name"))
-                <button type="submit">View Snapshots TODO</button>
+                @Html.DropDownList("id", new SelectList(Model.ProjectSnapshots, "Id", "DateTimeStamp"))
+                <button type="submit">View Snapshot details</button>
             }
         </div>
     }

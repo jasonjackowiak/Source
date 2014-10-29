@@ -1,0 +1,50 @@
+﻿@model UI.Web.Models.Snapshot
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Snapshot</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <!--We will upload all relevent files (records), then populate the snapshot details quietly-->
+
+        @Url.Action("GetImage", "Image", new { Model.ImageID })" />
+        }
+        <div>
+            Upload new image:
+            <input type="file" name="imType" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-default">Save</button>
+
+
+        @Html.HiddenFor(model => model.ProjectId)
+        @Html.HiddenFor(model => model.Status)
+        @Html.HiddenFor(model => model.DateTimeStamp)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

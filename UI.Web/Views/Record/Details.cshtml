@@ -1,0 +1,50 @@
+﻿@model UI.Web.Models.Record
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Record</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.InputFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InputFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeStamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguageReference.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguageReference.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Snapshot.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Snapshot.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
