@@ -14,6 +14,13 @@ namespace Project1
     
     public partial class Record
     {
+        public Record()
+        {
+            this.BusinessLogics = new HashSet<BusinessLogic>();
+            this.DataLogics = new HashSet<DataLogic>();
+            this.PresentationLogics = new HashSet<PresentationLogic>();
+        }
+    
         public int Id { get; set; }
         public int SnapshotId { get; set; }
         public int LanguageId { get; set; }
@@ -22,5 +29,8 @@ namespace Project1
     
         public virtual LanguageReference LanguageReference { get; set; }
         public virtual Snapshot Snapshot { get; set; }
+        public virtual ICollection<BusinessLogic> BusinessLogics { get; set; }
+        public virtual ICollection<DataLogic> DataLogics { get; set; }
+        public virtual ICollection<PresentationLogic> PresentationLogics { get; set; }
     }
 }

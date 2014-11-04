@@ -12,12 +12,18 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class RuleDefinition
+    public partial class PresentationLogic
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int CodeLine { get; set; }
-        public string Body { get; set; }
-        public string Unit { get; set; }
+        public int RecordId { get; set; }
+        public string Annotation { get; set; }
+        public string AnnotationType { get; set; }
+        public Nullable<int> BuildRuleId { get; set; }
+        public string Description { get; set; }
+        public string PFKey { get; set; }
+        public Nullable<int> PFKeyRuleId { get; set; }
+    
+        public virtual Record Record { get; set; }
     }
 }

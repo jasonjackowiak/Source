@@ -12,20 +12,29 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class TriggerDefinition
+    public partial class BusinessLogic
     {
         public int Id { get; set; }
+        public string Name { get; set; }
+        public int RecordId { get; set; }
+        public int CodeLine { get; set; }
+        public string Body { get; set; }
+        public string Annotation { get; set; }
+        public string AnnotationType { get; set; }
+        public string PackageType { get; set; }
+        public string LineType { get; set; }
         public Nullable<int> TableSourceId { get; set; }
         public string TableName { get; set; }
         public Nullable<int> RuleSourceId { get; set; }
         public string RuleName { get; set; }
         public string Access { get; set; }
         public string Type { get; set; }
-        public string Name { get; set; }
         public string TriggeringEvent { get; set; }
         public string BaseObjectType { get; set; }
         public string WhenClause { get; set; }
-        public string Body { get; set; }
-        public string Unit { get; set; }
+        public Nullable<int> PackageId { get; set; }
+        public int JobCardNumber { get; set; }
+    
+        public virtual Record Record { get; set; }
     }
 }

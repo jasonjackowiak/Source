@@ -12,10 +12,13 @@ namespace Project1
     using System;
     using System.Collections.Generic;
     
-    public partial class TableDefinition
+    public partial class DataLogic
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int RecordId { get; set; }
+        public string Annotation { get; set; }
+        public string AnnotationType { get; set; }
         public string FieldName { get; set; }
         public string FieldType { get; set; }
         public string FieldSyntax { get; set; }
@@ -25,5 +28,8 @@ namespace Project1
         public string KeyType { get; set; }
         public string TableType { get; set; }
         public string Unit { get; set; }
+        public string ConstraintName { get; set; }
+    
+        public virtual Record Record { get; set; }
     }
 }

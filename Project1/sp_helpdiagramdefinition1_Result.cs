@@ -10,16 +10,10 @@
 namespace Project1
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TransactionDefinition
+    public partial class sp_helpdiagramdefinition1_Result
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string BuildRule { get; set; }
-        public string Description { get; set; }
-        public string PFKey { get; set; }
-        public string PFKeyRule { get; set; }
-        public string Unit { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

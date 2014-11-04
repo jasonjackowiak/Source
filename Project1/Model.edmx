@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FAASDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FAASDB.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -98,12 +98,57 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="BusinessLogics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecordId" Type="int" Nullable="false" />
+          <Property Name="CodeLine" Type="int" Nullable="false" />
+          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Annotation" Type="nvarchar" MaxLength="20" />
+          <Property Name="AnnotationType" Type="nvarchar" MaxLength="20" />
+          <Property Name="PackageType" Type="nvarchar" MaxLength="50" />
+          <Property Name="LineType" Type="nvarchar" MaxLength="50" />
+          <Property Name="TableSourceId" Type="int" />
+          <Property Name="TableName" Type="nvarchar" MaxLength="50" />
+          <Property Name="RuleSourceId" Type="int" />
+          <Property Name="RuleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Access" Type="nvarchar" MaxLength="10" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="TriggeringEvent" Type="nvarchar" MaxLength="50" />
+          <Property Name="BaseObjectType" Type="nvarchar" MaxLength="50" />
+          <Property Name="WhenClause" Type="nvarchar(max)" />
+          <Property Name="PackageId" Type="int" />
+          <Property Name="JobCardNumber" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Customers">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DataLogics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RecordId" Type="int" Nullable="false" />
+          <Property Name="Annotation" Type="nvarchar" MaxLength="20" />
+          <Property Name="AnnotationType" Type="nvarchar" MaxLength="20" />
+          <Property Name="FieldName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FieldType" Type="nvarchar" MaxLength="10" />
+          <Property Name="FieldSyntax" Type="nvarchar" MaxLength="10" />
+          <Property Name="FieldLength" Type="int" />
+          <Property Name="FieldDecimal" Type="int" />
+          <Property Name="FieldNumber" Type="int" />
+          <Property Name="KeyType" Type="nvarchar" MaxLength="10" />
+          <Property Name="TableType" Type="nvarchar" MaxLength="10" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+          <Property Name="ConstraintName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Entities">
           <Key>
@@ -143,18 +188,6 @@
           <Property Name="InternalWeight" Type="int" Nullable="false" />
           <Property Name="ExternalWeight" Type="int" Nullable="false" />
           <Property Name="ExternalSources" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="FunctionDefinitions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PackageId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CodeLine" Type="int" Nullable="false" />
-          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <EntityType Name="InterfaceReportings">
           <Key>
@@ -196,17 +229,19 @@
           <Property Name="Variant" Type="nvarchar" MaxLength="8" Nullable="false" />
           <Property Name="Version" Type="decimal" Precision="2" Scale="0" />
         </EntityType>
-        <EntityType Name="PackageDefinitions">
+        <EntityType Name="PresentationLogics">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LineType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CodeLine" Type="int" Nullable="false" />
-          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="PackageType" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
+          <Property Name="RecordId" Type="int" Nullable="false" />
+          <Property Name="Annotation" Type="nvarchar" MaxLength="20" />
+          <Property Name="AnnotationType" Type="nvarchar" MaxLength="20" />
+          <Property Name="BuildRuleId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="PFKey" Type="nvarchar" MaxLength="50" />
+          <Property Name="PFKeyRuleId" Type="int" />
         </EntityType>
         <EntityType Name="Projects">
           <Key>
@@ -226,18 +261,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SnapshotId" Type="int" Nullable="false" />
           <Property Name="LanguageId" Type="int" Nullable="false" />
-          <Property Name="InputFileName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DateTimeStamp" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="RuleDefinitions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CodeLine" Type="int" Nullable="false" />
-          <Property Name="Body" Type="nvarchar" MaxLength="400" Nullable="false" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="InputFileName" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Snapshots">
           <Key>
@@ -257,60 +282,6 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="TableDefinitions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="FieldName" Type="nvarchar" MaxLength="50" />
-          <Property Name="FieldType" Type="nvarchar" MaxLength="10" />
-          <Property Name="FieldSyntax" Type="nvarchar" MaxLength="10" />
-          <Property Name="FieldLength" Type="int" />
-          <Property Name="FieldDecimal" Type="int" />
-          <Property Name="FieldNumber" Type="int" />
-          <Property Name="KeyType" Type="nvarchar" MaxLength="10" />
-          <Property Name="TableType" Type="nvarchar" MaxLength="10" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
-        </EntityType>
-        <EntityType Name="TableForeignConstraints">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ConastraintName" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TransactionDefinitions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="BuildRule" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="PFKey" Type="nvarchar" MaxLength="50" />
-          <Property Name="PFKeyRule" Type="nvarchar" MaxLength="50" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
-        </EntityType>
-        <EntityType Name="TriggerDefinitions">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TableSourceId" Type="int" />
-          <Property Name="TableName" Type="nvarchar" MaxLength="50" />
-          <Property Name="RuleSourceId" Type="int" />
-          <Property Name="RuleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Access" Type="nvarchar" MaxLength="10" />
-          <Property Name="Type" Type="nvarchar" MaxLength="50" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="TriggeringEvent" Type="nvarchar" MaxLength="50" />
-          <Property Name="BaseObjectType" Type="nvarchar" MaxLength="50" />
-          <Property Name="WhenClause" Type="nvarchar(max)" />
-          <Property Name="Body" Type="nvarchar(max)" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="8" />
         </EntityType>
         <Association Name="FK_AspNetUserCustomers_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
@@ -357,6 +328,30 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessLogics_Records">
+          <End Role="Records" Type="Self.Records" Multiplicity="1" />
+          <End Role="BusinessLogics" Type="Self.BusinessLogics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessLogics">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataLogics_Records">
+          <End Role="Records" Type="Self.Records" Multiplicity="1" />
+          <End Role="DataLogics" Type="Self.DataLogics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataLogics">
+              <PropertyRef Name="RecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -445,6 +440,18 @@
             </Principal>
             <Dependent Role="InternalInterfaces">
               <PropertyRef Name="TargetEntityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PresentationLogics_Records">
+          <End Role="Records" Type="Self.Records" Multiplicity="1" />
+          <End Role="PresentationLogics" Type="Self.PresentationLogics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PresentationLogics">
+              <PropertyRef Name="RecordId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -538,26 +545,22 @@
           <EntitySet Name="BucketConnections" EntityType="Self.BucketConnections" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BucketReportings" EntityType="Self.BucketReportings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Buckets" EntityType="Self.Buckets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusinessLogics" EntityType="Self.BusinessLogics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataLogics" EntityType="Self.DataLogics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Entities" EntityType="Self.Entities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityOwnershipStrengths" EntityType="Self.EntityOwnershipStrengths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityRelationships" EntityType="Self.EntityRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EntityResidences" EntityType="Self.EntityResidences" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FunctionDefinitions" EntityType="Self.FunctionDefinitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InterfaceReportings" EntityType="Self.InterfaceReportings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Interfaces" EntityType="Self.Interfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InternalInterfaces" EntityType="Self.InternalInterfaces" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LanguageReferences" EntityType="Self.LanguageReferences" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PackageDefinitions" EntityType="Self.PackageDefinitions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PresentationLogics" EntityType="Self.PresentationLogics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RuleDefinitions" EntityType="Self.RuleDefinitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Snapshots" EntityType="Self.Snapshots" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TableDefinitions" EntityType="Self.TableDefinitions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TableForeignConstraints" EntityType="Self.TableForeignConstraints" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TransactionDefinitions" EntityType="Self.TransactionDefinitions" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TriggerDefinitions" EntityType="Self.TriggerDefinitions" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUserCustomers_AspNetUsers" Association="Self.FK_AspNetUserCustomers_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserCustomers" EntitySet="AspNetUserCustomers" />
@@ -573,6 +576,14 @@
           <AssociationSet Name="FK_AspNetUserRoles_AspNetUser" Association="Self.FK_AspNetUserRoles_AspNetUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessLogics_Records" Association="Self.FK_BusinessLogics_Records">
+            <End Role="Records" EntitySet="Records" />
+            <End Role="BusinessLogics" EntitySet="BusinessLogics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataLogics_Records" Association="Self.FK_DataLogics_Records">
+            <End Role="Records" EntitySet="Records" />
+            <End Role="DataLogics" EntitySet="DataLogics" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -601,6 +612,10 @@
           <AssociationSet Name="FK_InternalInterface_Entity" Association="Self.FK_InternalInterface_Entity">
             <End Role="Entities" EntitySet="Entities" />
             <End Role="InternalInterfaces" EntitySet="InternalInterfaces" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PresentationLogics_Records" Association="Self.FK_PresentationLogics_Records">
+            <End Role="Records" EntitySet="Records" />
+            <End Role="PresentationLogics" EntitySet="PresentationLogics" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_Customer" Association="Self.FK_Project_Customer">
             <End Role="Customers" EntitySet="Customers" />
@@ -636,21 +651,14 @@
           <EntitySet Name="EntityOwnershipStrengths" EntityType="FAASDB.EntityOwnershipStrength" />
           <EntitySet Name="EntityRelationships" EntityType="FAASDB.EntityRelationship" />
           <EntitySet Name="EntityResidences" EntityType="FAASDB.EntityResidence" />
-          <EntitySet Name="FunctionDefinitions" EntityType="FAASDB.FunctionDefinition" />
           <EntitySet Name="InterfaceReportings" EntityType="FAASDB.InterfaceReporting" />
           <EntitySet Name="Interfaces" EntityType="FAASDB.Interface" />
           <EntitySet Name="InternalInterfaces" EntityType="FAASDB.InternalInterface" />
           <EntitySet Name="LanguageReferences" EntityType="FAASDB.LanguageReference" />
-          <EntitySet Name="PackageDefinitions" EntityType="FAASDB.PackageDefinition" />
           <EntitySet Name="Projects" EntityType="FAASDB.Project" />
           <EntitySet Name="Records" EntityType="FAASDB.Record" />
-          <EntitySet Name="RuleDefinitions" EntityType="FAASDB.RuleDefinition" />
           <EntitySet Name="Snapshots" EntityType="FAASDB.Snapshot" />
           <EntitySet Name="sysdiagrams" EntityType="FAASDB.sysdiagram" />
-          <EntitySet Name="TableDefinitions" EntityType="FAASDB.TableDefinition" />
-          <EntitySet Name="TableForeignConstraints" EntityType="FAASDB.TableForeignConstraint" />
-          <EntitySet Name="TransactionDefinitions" EntityType="FAASDB.TransactionDefinition" />
-          <EntitySet Name="TriggerDefinitions" EntityType="FAASDB.TriggerDefinition" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="FAASDB.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -739,6 +747,51 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="BusinessLogics" EntityType="FAASDB.BusinessLogic" />
+          <EntitySet Name="DataLogics" EntityType="FAASDB.DataLogic" />
+          <EntitySet Name="PresentationLogics" EntityType="FAASDB.PresentationLogic" />
+          <AssociationSet Name="FK_BusinessLogics_Records" Association="FAASDB.FK_BusinessLogics_Records">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="BusinessLogic" EntitySet="BusinessLogics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataLogics_Records" Association="FAASDB.FK_DataLogics_Records">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="DataLogic" EntitySet="DataLogics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PresentationLogics_Records" Association="FAASDB.FK_PresentationLogics_Records">
+            <End Role="Record" EntitySet="Records" />
+            <End Role="PresentationLogic" EntitySet="PresentationLogics" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition1" ReturnType="Collection(FAASDB.sp_helpdiagramdefinition1_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams1" ReturnType="Collection(FAASDB.sp_helpdiagrams1_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams1" />
         </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -869,18 +922,6 @@
           <Property Name="ExternalSources" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Entity" Relationship="FAASDB.FK_EntityResidence_Entity" FromRole="EntityResidence" ToRole="Entity" />
         </EntityType>
-        <EntityType Name="FunctionDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PackageId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodeLine" Type="Int32" Nullable="false" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="InterfaceReporting">
           <Key>
             <PropertyRef Name="Id" />
@@ -927,18 +968,6 @@
           <Property Name="Version" Type="Decimal" Precision="2" Scale="0" />
           <NavigationProperty Name="Records" Relationship="FAASDB.FK_Record_LanguageReference" FromRole="LanguageReference" ToRole="Record" />
         </EntityType>
-        <EntityType Name="PackageDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LineType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodeLine" Type="Int32" Nullable="false" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="PackageType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="Id" />
@@ -963,16 +992,9 @@
           <NavigationProperty Name="LanguageReference" Relationship="FAASDB.FK_Record_LanguageReference" FromRole="Record" ToRole="LanguageReference" />
           <NavigationProperty Name="Snapshot" Relationship="FAASDB.FK_Record_Snapshot" FromRole="Record" ToRole="Snapshot" />
           <Property Name="InputFileName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="RuleDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodeLine" Type="Int32" Nullable="false" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BusinessLogics" Relationship="FAASDB.FK_BusinessLogics_Records" FromRole="Record" ToRole="BusinessLogic" />
+          <NavigationProperty Name="DataLogics" Relationship="FAASDB.FK_DataLogics_Records" FromRole="Record" ToRole="DataLogic" />
+          <NavigationProperty Name="PresentationLogics" Relationship="FAASDB.FK_PresentationLogics_Records" FromRole="Record" ToRole="PresentationLogic" />
         </EntityType>
         <EntityType Name="Snapshot">
           <Key>
@@ -994,60 +1016,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TableDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FieldType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="FieldSyntax" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="FieldLength" Type="Int32" />
-          <Property Name="FieldDecimal" Type="Int32" />
-          <Property Name="FieldNumber" Type="Int32" />
-          <Property Name="KeyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="TableType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TableForeignConstraint">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ConastraintName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TransactionDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildRule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PFKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PFKeyRule" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TriggerDefinition">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TableSourceId" Type="Int32" />
-          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RuleSourceId" Type="Int32" />
-          <Property Name="RuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Access" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TriggeringEvent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BaseObjectType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="WhenClause" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
           <End Type="FAASDB.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1242,6 +1210,115 @@
           <End Type="FAASDB.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="FAASDB.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
+        <EntityType Name="BusinessLogic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordId" Type="Int32" Nullable="false" />
+          <Property Name="CodeLine" Type="Int32" Nullable="false" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Annotation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AnnotationType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PackageType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LineType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TableSourceId" Type="Int32" />
+          <Property Name="TableName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RuleSourceId" Type="Int32" />
+          <Property Name="RuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Access" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TriggeringEvent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BaseObjectType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WhenClause" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PackageId" Type="Int32" />
+          <Property Name="JobCardNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Record" Relationship="FAASDB.FK_BusinessLogics_Records" FromRole="BusinessLogic" ToRole="Record" />
+        </EntityType>
+        <EntityType Name="DataLogic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordId" Type="Int32" Nullable="false" />
+          <Property Name="Annotation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AnnotationType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FieldName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FieldType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FieldSyntax" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FieldLength" Type="Int32" />
+          <Property Name="FieldDecimal" Type="Int32" />
+          <Property Name="FieldNumber" Type="Int32" />
+          <Property Name="KeyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TableType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="ConstraintName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Record" Relationship="FAASDB.FK_DataLogics_Records" FromRole="DataLogic" ToRole="Record" />
+        </EntityType>
+        <EntityType Name="PresentationLogic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecordId" Type="Int32" Nullable="false" />
+          <Property Name="Annotation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AnnotationType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BuildRuleId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PFKey" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PFKeyRuleId" Type="Int32" />
+          <NavigationProperty Name="Record" Relationship="FAASDB.FK_PresentationLogics_Records" FromRole="PresentationLogic" ToRole="Record" />
+        </EntityType>
+        <Association Name="FK_BusinessLogics_Records">
+          <End Type="FAASDB.Record" Role="Record" Multiplicity="1" />
+          <End Type="FAASDB.BusinessLogic" Role="BusinessLogic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessLogic">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataLogics_Records">
+          <End Type="FAASDB.Record" Role="Record" Multiplicity="1" />
+          <End Type="FAASDB.DataLogic" Role="DataLogic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DataLogic">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PresentationLogics_Records">
+          <End Type="FAASDB.Record" Role="Record" Multiplicity="1" />
+          <End Type="FAASDB.PresentationLogic" Role="PresentationLogic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Record">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PresentationLogic">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_helpdiagramdefinition1_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams1_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1374,19 +1451,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FunctionDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.FunctionDefinition">
-              <MappingFragment StoreEntitySet="FunctionDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="InterfaceReportings">
             <EntityTypeMapping TypeName="FAASDB.InterfaceReporting">
               <MappingFragment StoreEntitySet="InterfaceReportings">
@@ -1431,19 +1495,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PackageDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.PackageDefinition">
-              <MappingFragment StoreEntitySet="PackageDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="PackageType" ColumnName="PackageType" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-                <ScalarProperty Name="LineType" ColumnName="LineType" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="FAASDB.Project">
               <MappingFragment StoreEntitySet="Projects">
@@ -1463,17 +1514,6 @@
                 <ScalarProperty Name="DateTimeStamp" ColumnName="DateTimeStamp" />
                 <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="SnapshotId" ColumnName="SnapshotId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RuleDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.RuleDefinition">
-              <MappingFragment StoreEntitySet="RuleDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1499,88 +1539,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TableDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.TableDefinition">
-              <MappingFragment StoreEntitySet="TableDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="TableType" ColumnName="TableType" />
-                <ScalarProperty Name="KeyType" ColumnName="KeyType" />
-                <ScalarProperty Name="FieldNumber" ColumnName="FieldNumber" />
-                <ScalarProperty Name="FieldDecimal" ColumnName="FieldDecimal" />
-                <ScalarProperty Name="FieldLength" ColumnName="FieldLength" />
-                <ScalarProperty Name="FieldSyntax" ColumnName="FieldSyntax" />
-                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
-                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TableForeignConstraints">
-            <EntityTypeMapping TypeName="FAASDB.TableForeignConstraint">
-              <MappingFragment StoreEntitySet="TableForeignConstraints">
-                <ScalarProperty Name="ConastraintName" ColumnName="ConastraintName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TransactionDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.TransactionDefinition">
-              <MappingFragment StoreEntitySet="TransactionDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="PFKeyRule" ColumnName="PFKeyRule" />
-                <ScalarProperty Name="PFKey" ColumnName="PFKey" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="BuildRule" ColumnName="BuildRule" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TriggerDefinitions">
-            <EntityTypeMapping TypeName="FAASDB.TriggerDefinition">
-              <MappingFragment StoreEntitySet="TriggerDefinitions">
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
-                <ScalarProperty Name="BaseObjectType" ColumnName="BaseObjectType" />
-                <ScalarProperty Name="TriggeringEvent" ColumnName="TriggeringEvent" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Access" ColumnName="Access" />
-                <ScalarProperty Name="RuleName" ColumnName="RuleName" />
-                <ScalarProperty Name="RuleSourceId" ColumnName="RuleSourceId" />
-                <ScalarProperty Name="TableName" ColumnName="TableName" />
-                <ScalarProperty Name="TableSourceId" ColumnName="TableSourceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="FAASDB.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="FAASDB.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="FAASDB.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="FAASDB.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FAASDB.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="FAASDB.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FAASDB.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="FAASDB.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="FAASDB.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="FAASDB.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -1606,6 +1564,92 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="BusinessLogics">
+            <EntityTypeMapping TypeName="FAASDB.BusinessLogic">
+              <MappingFragment StoreEntitySet="BusinessLogics">
+                <ScalarProperty Name="JobCardNumber" ColumnName="JobCardNumber" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="WhenClause" ColumnName="WhenClause" />
+                <ScalarProperty Name="BaseObjectType" ColumnName="BaseObjectType" />
+                <ScalarProperty Name="TriggeringEvent" ColumnName="TriggeringEvent" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Access" ColumnName="Access" />
+                <ScalarProperty Name="RuleName" ColumnName="RuleName" />
+                <ScalarProperty Name="RuleSourceId" ColumnName="RuleSourceId" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="TableSourceId" ColumnName="TableSourceId" />
+                <ScalarProperty Name="LineType" ColumnName="LineType" />
+                <ScalarProperty Name="PackageType" ColumnName="PackageType" />
+                <ScalarProperty Name="AnnotationType" ColumnName="AnnotationType" />
+                <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="CodeLine" ColumnName="CodeLine" />
+                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataLogics">
+            <EntityTypeMapping TypeName="FAASDB.DataLogic">
+              <MappingFragment StoreEntitySet="DataLogics">
+                <ScalarProperty Name="ConstraintName" ColumnName="ConstraintName" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="TableType" ColumnName="TableType" />
+                <ScalarProperty Name="KeyType" ColumnName="KeyType" />
+                <ScalarProperty Name="FieldNumber" ColumnName="FieldNumber" />
+                <ScalarProperty Name="FieldDecimal" ColumnName="FieldDecimal" />
+                <ScalarProperty Name="FieldLength" ColumnName="FieldLength" />
+                <ScalarProperty Name="FieldSyntax" ColumnName="FieldSyntax" />
+                <ScalarProperty Name="FieldType" ColumnName="FieldType" />
+                <ScalarProperty Name="FieldName" ColumnName="FieldName" />
+                <ScalarProperty Name="AnnotationType" ColumnName="AnnotationType" />
+                <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PresentationLogics">
+            <EntityTypeMapping TypeName="FAASDB.PresentationLogic">
+              <MappingFragment StoreEntitySet="PresentationLogics">
+                <ScalarProperty Name="PFKeyRuleId" ColumnName="PFKeyRuleId" />
+                <ScalarProperty Name="PFKey" ColumnName="PFKey" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BuildRuleId" ColumnName="BuildRuleId" />
+                <ScalarProperty Name="AnnotationType" ColumnName="AnnotationType" />
+                <ScalarProperty Name="Annotation" ColumnName="Annotation" />
+                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram1" FunctionName="FAASDB.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram1" FunctionName="FAASDB.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram1" FunctionName="FAASDB.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition1" FunctionName="FAASDB.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FAASDB.sp_helpdiagramdefinition1_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams1" FunctionName="FAASDB.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FAASDB.sp_helpdiagrams1_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram1" FunctionName="FAASDB.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams1" FunctionName="FAASDB.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -1627,7 +1671,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <edmx:Diagram Name="Model1" ZoomLevel="82">
+      <edmx:Diagram Name="Model1" ZoomLevel="72">
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetUser" Width="1.5" PointX="3.375" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetUserClaim" Width="1.5" PointX="6" PointY="13.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.AspNetUserLogin" Width="1.5" PointX="6" PointY="16.5" />
@@ -1640,21 +1684,14 @@
         <edmx:EntityTypeShape EntityType="FAASDB.EntityOwnershipStrength" Width="1.5" PointX="12.75" PointY="4.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.EntityRelationship" Width="1.5" PointX="10.75" PointY="12.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.EntityResidence" Width="1.5" PointX="3" PointY="5.625" />
-        <edmx:EntityTypeShape EntityType="FAASDB.FunctionDefinition" Width="1.5" PointX="12.75" PointY="12.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.InterfaceReporting" Width="1.5" PointX="5.25" PointY="9.125" />
         <edmx:EntityTypeShape EntityType="FAASDB.Interface" Width="1.5" PointX="3" PointY="11.125" />
         <edmx:EntityTypeShape EntityType="FAASDB.InternalInterface" Width="1.5" PointX="3" PointY="8.375" />
         <edmx:EntityTypeShape EntityType="FAASDB.LanguageReference" Width="1.5" PointX="10.25" PointY="5.25" />
-        <edmx:EntityTypeShape EntityType="FAASDB.PackageDefinition" Width="1.5" PointX="13.75" PointY="7.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.Project" Width="1.5" PointX="8" PointY="1" />
         <edmx:EntityTypeShape EntityType="FAASDB.Record" Width="1.5" PointX="12.5" PointY="1.125" />
-        <edmx:EntityTypeShape EntityType="FAASDB.RuleDefinition" Width="1.5" PointX="14.75" PointY="0.75" />
         <edmx:EntityTypeShape EntityType="FAASDB.Snapshot" Width="1.5" PointX="10.25" PointY="1" />
         <edmx:EntityTypeShape EntityType="FAASDB.sysdiagram" Width="1.5" PointX="0.75" PointY="14.75" />
-        <edmx:EntityTypeShape EntityType="FAASDB.TableDefinition" Width="1.5" PointX="2.75" PointY="14.75" />
-        <edmx:EntityTypeShape EntityType="FAASDB.TableForeignConstraint" Width="1.5" PointX="14.75" PointY="3.75" />
-        <edmx:EntityTypeShape EntityType="FAASDB.TransactionDefinition" Width="1.5" PointX="14.75" PointY="11.75" />
-        <edmx:EntityTypeShape EntityType="FAASDB.TriggerDefinition" Width="1.5" PointX="15.75" PointY="6.75" />
         <edmx:AssociationConnector Association="FAASDB.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
         <edmx:AssociationConnector Association="FAASDB.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <edmx:AssociationConnector Association="FAASDB.FK_Project_Customer" />
@@ -1671,6 +1708,12 @@
         <edmx:AssociationConnector Association="FAASDB.FK_AspNetUserCustomers_AspNetUsers" />
         <edmx:AssociationConnector Association="FAASDB.FK_AspNetUserCustomers_Customers" />
         <edmx:AssociationConnector Association="FAASDB.AspNetUserRoles" />
+        <edmx:EntityTypeShape EntityType="FAASDB.BusinessLogic" Width="1.5" PointX="14.75" PointY="8.375" />
+        <edmx:EntityTypeShape EntityType="FAASDB.DataLogic" Width="1.5" PointX="14.75" PointY="14.25" />
+        <edmx:EntityTypeShape EntityType="FAASDB.PresentationLogic" Width="1.5" PointX="14.75" PointY="19" />
+        <edmx:AssociationConnector Association="FAASDB.FK_BusinessLogics_Records" />
+        <edmx:AssociationConnector Association="FAASDB.FK_DataLogics_Records" />
+        <edmx:AssociationConnector Association="FAASDB.FK_PresentationLogics_Records" />
       </edmx:Diagram>
       <edmx:Diagram DiagramId="34e71bec20b44a87a54fb393f3f69158" Name="Diagram1">
       </edmx:Diagram>
